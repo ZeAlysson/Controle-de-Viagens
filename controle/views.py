@@ -3,6 +3,9 @@ from .forms import ControleForm
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect
 
+def calcular_total_km_rodados(veiculo):
+    return Controle.objects.filter(veiculo=veiculo).aggregate(Sum('km_percorrido'))['km_percorrido__sum']
+
 def tela_controle(request):
     # consulta por período
     data_inicio = request.GET.get('data_inicio')
@@ -36,7 +39,7 @@ def visualizar_controle(request, controle_id):
 
 def editar_controle(request, controle_id):
     controle = get_object_or_404(Controle, pk=controle_id)
-
+    total_km_rodados = calcular_total_km_rodados(controle.veiculo)
     if request.method == 'POST':
         form = ControleForm(request.POST, instance=controle)
         if form.is_valid():
@@ -45,7 +48,7 @@ def editar_controle(request, controle_id):
     else:
         form = ControleForm(instance=controle)
 
-    return render(request, 'controle/editar_controle.html', {'form': form, 'controle': controle})
+    return render(request, 'controle/editar_controle.html', {'form': form, 'controle': controle, 'total_km_rodados': total_km_rodados})
 
 
 

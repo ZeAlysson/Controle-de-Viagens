@@ -71,6 +71,8 @@
                     {{ form.km_percorrido }}
                 </div>
             </div>
+
+            <p>Com base em todos os registros a quilometragem total desse veiculo é: {{ total_km_rodados }} km</p>
             <button class="btn btn-primary mb-3" type="submit">Salvar edições</button> 
             <a href="{% url 'tela_controle' %}" class="mx-2">Cancelar</a>
         </form>

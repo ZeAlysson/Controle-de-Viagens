@@ -74,12 +74,14 @@
                 <label for="km_percorrido" class="form-label">Km percorrido</label>
                 <input type="text" class="form-control" id="km_percorrido" name="km_percorrido" value="{{ controle.km_percorrido }} Km" required readonly>
             </div>
-    </div>
 
-    </div>
+        </div>
+        <p>Quilometragem Total (todos os registros): {{ total_km_rodados }} km</p>
+
         {% if alerta_troca_oleo %}
             <p style="color: red;">Atenção: O veiculo esta proximo ou ultrapassou a quilometragem recomendada para a troca de oleo.</p>
         {% endif %}
+    
         
         
         
@@ -106,7 +108,7 @@
             </div>
         </div>
     </div>
-    
+</div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
