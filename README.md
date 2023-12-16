@@ -64,7 +64,7 @@ source venv/bin/activate
 
 # 6. Configuração do Ambiente de Desenvolvimento
 Siga os passos abaixo para configurar e executar o projeto:
-1. Clone o repositório para sua máquina local. `https://github.com/gnneto/ag-dev.git`
+1. Clone o repositório para sua máquina local. `https://github.com/gnneto/django_ag_test.git`
 2. Configure o ambiente virtual e instale as dependências utilizando `pip install -r requirements.txt`.
 3. Execute as migrações do banco de dados com `python manage.py migrate`.
 4. Crie um superusuário com `python manage.py createsuperuser`.
