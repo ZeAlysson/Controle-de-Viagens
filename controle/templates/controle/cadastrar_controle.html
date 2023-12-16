@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Controle{% endblock title%}
+
+{% block content %}
+
+<body>
+    <div class="container">
+        <h1 class="my-5">Cadastrar Controle</h1>
+        <form method="post">
+            {% csrf_token %}
+            <!-- veiculo e motorista  -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.veiculo.id_for_label }}" class="form-label">Veículo</label>
+                    {{ form.veiculo }}
+
+                </div>
+                <div class="col-md-6">
+                    <label for="motorista" class="form-label">Motorista</label>
+                    {{ form.motorista }}
+                </div>
+            </div>
+
+            <!-- data e hora saida  -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.data_saida.id_for_label }}" class="form-label">Data saida</label>
+                    {{ form.data_saida }}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.hora_saida.id_for_label }}" class="form-label">Hora saida</label>
+                    {{ form.hora_saida }}
+                </div>
+            </div>
+
+            <!-- destino -->
+            <div class="row mb-3">
+                <div class="col-md">
+                    <label for="{{ form.destino.id_for_label }}" class="form-label">Destino</label>
+                    {{ form.destino }}
+                </div>
+            </div>
+
+            <!-- data e hora retorno -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.data_retorno.id_for_label }}" class="form-label">Data retorno</label>
+                    {{ form.data_retorno }}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.hora_retorno.id_for_label }}" class="form-label">Data retorno</label>
+                    {{ form.hora_retorno }}
+                </div>
+            </div>
+
+            <!-- kmsaida e retorno -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.km_saida.id_for_label }}" class="form-label">Km saida</label>
+                    {{ form.km_saida }}
+                </div>
+
+                <div class="col-md-6">
+                    <label for="{{ form.km_retorno.id_for_label }}" class="form-label">Km retorno</label>
+                    {{ form.km_retorno }}
+                </div>
+            </div>
+
+            
+            <!-- km percorrido -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.km_percorrido.id_for_label }}" class="form-label">Km percorrido</label>
+                    {{ form.km_percorrido }}
+
+                </div>
+                
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <a href="{% url 'tela_principal' %}" class="mx-2">Controles</a>
+
+
+
+        </form>
+    </div>
+
+    <div class="modal fade" id="kmModal" tabindex="-1" aria-labelledby="kmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kmModalLabel">Erro de Validação</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    O valor de Km Retorno não pode ser menor ou igual a Km Saída.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        //calcula o Km prcorrido
+        function calcularKmPercorrido() {
+
+            var kmSaida = document.getElementById('id_km_saida');
+            var kmRetorno = document.getElementById('id_km_retorno');
+            var kmPercorrido = document.getElementById('id_km_percorrido');
+
+            
+            kmPercorrido.value = kmRetorno.value - kmSaida.value;
+        }
+        document.addEventListener('input', calcularKmPercorrido);
+        
+        {% for field in form %}
+            document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+        {% endfor %}
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+            const kmSaidaInput = document.getElementById("id_km_saida");
+            const kmRetornoInput = document.getElementById("id_km_retorno");
+    
+            form.addEventListener('submit', function (event) {
+                const kmSaida = parseFloat(kmSaidaInput.value);
+                const kmRetorno = parseFloat(kmRetornoInput.value);
+    
+                if (isNaN(kmSaida) || isNaN(kmRetorno) || kmRetorno <= kmSaida) {
+                    // Abre o modal
+                    var myModal = new bootstrap.Modal(document.getElementById('kmModal'));
+                    myModal.show();
+    
+                    // Impede o envio do formulário
+                    event.preventDefault();
+                }
+            });
+        });
+    </script>
+
+</body>
+{% endblock %}

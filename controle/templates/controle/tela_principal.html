@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title%}Controles{% endblock title%}
+
+{% block content %}
+<h1 class="mb-4">Tela Principal</h1>
+
+
+<!-- consulta-->
+<div class="d-flex">
+    <div class="form-group">
+        <form method="get" action="{% url 'tela_controle' %}" class="form-inline">
+            <label for="data_inicio" class="mr-2">Data Início:</label>
+            <input class="form-control mr-2" type="date" name="data_inicio">
+
+            <label for="data_fim" class="mr-2">Data Fim:</label>
+            <input class="form-control mr-2" type="date" name="data_fim">
+
+            <button class="btn btn-primary mx-2" type="submit">Consultar</button>
+        </form>
+    </div>
+
+    <!-- limpar consulta -->
+    <div class="form-group">
+        <form method="get" action="{% url 'tela_controle' %}" class="form-inline">
+            <button type="submit" class="btn btn-primary">Limpar Consulta</button>
+        </form>
+    </div>
+</div>
+
+<a class="btn btn-primary mb-3" href="{% url 'cadastrar_controle' %}">Cadastrar controle</a>
+
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <tr class="table-primary">
+            <th scope="col" class="col-md-3">Veículo</th>
+            <th scope="col" class="col-md-3">Motorista</th>
+            <th scope="col" class="col-md-3">Data Saída</th>
+            <th scope="col" class="col-md-3">Hora Saída</th>
+            <th scope="col" class="col-md-3">Destino</th>
+            <th scope="col" class="col-md-3">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for controle in controles %}
+        <tr>
+            <td>{{ controle.veiculo }}</td>
+            <td>{{ controle.motorista }}</td>
+            <td>{{ controle.data_saida }}</td>
+            <td>{{ controle.hora_saida }}</td>
+            <td>{{ controle.destino }}</td>
+            <td>
+                <div class="d-flex">
+                    <a class="btn btn-info mx-1" href="{% url 'visualizar_controle' controle.id %}">Visualizar</a>
+                    <a class="btn btn-warning mx-1" href="{% url 'editar_controle' controle.id %}">Editar</a>
+                    <a class="btn btn-danger mx-1" href="#" onclick="confirmarExclusao('{{ controle.id }}')">Excluir</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<div class="modal" tabindex="-1" role="dialog" id="confirmarExclusaoModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir este registro?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelarExclusaoBtn">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function confirmarExclusao(controleId) {
+        $('#confirmarExclusaoModal').modal('show');
+        $('#confirmarExclusaoBtn').on('click', function () {
+            $('#confirmarExclusaoModal').modal('hide');
+            window.location.href = `/controle/excluir-controle/${controleId}/`;
+        });
+        $('#cancelarExclusaoBtn').on('click', function () {
+            $('#confirmarExclusaoModal').modal('hide');
+        });
+    }
+</script>
+{% endblock %}

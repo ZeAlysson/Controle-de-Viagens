@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title%}Motoristas{% endblock title%}
+
+{% block content %}
+
+
+<div class="container">
+    <h1 class="mb-4">Motoristas</h1>
+    <a class="btn btn-primary mb-3" href="{% url 'cadastrar_motorista' %}">Cadastrar motorista</a>
+
+    
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr class="table-primary">
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">CNH</th>
+                <th scope="col">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for motorista in motoristas %}
+                <tr>
+                    <th scope="row">{{ motorista.id }}</th>
+                    <td>{{ motorista.nome }}</td>
+                    <td>{{ motorista.telefone }}</td>
+                    <td>{{ motorista.cnh }}</td>
+                    <td>
+                        <a href="{% url 'editar_motorista' motorista.id %}" class="btn btn-warning mx-1">Editar</a>
+                        <a class="btn btn-danger mx-1" href="#" onclick="confirmarExclusao('{{ motorista.id }}')">Excluir</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="modal" tabindex="-1" role="dialog" id="confirmarExclusaoModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Confirmar Exclusão</h5>
+            </div>
+            <div class="modal-body">
+                <p>Deseja realmente excluir os dados desse motorista?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="cancelarExclusaoBtn">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function confirmarExclusao(motoristaId) {
+        $('#confirmarExclusaoModal').modal('show');
+        $('#confirmarExclusaoBtn').on('click', function () {
+            $('#confirmarExclusaoModal').modal('hide');
+            window.location.href = `/motoristas/excluir-motorista/${motoristaId}/`;
+        });
+        $('#cancelarExclusaoBtn').on('click', function () {
+            $('#confirmarExclusaoModal').modal('hide');
+        });
+    }
+</script>
+{% endblock %}

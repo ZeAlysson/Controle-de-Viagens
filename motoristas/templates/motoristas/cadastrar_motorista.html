@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+{% block title%}Cadastrar Motorista{% endblock title%}
+
+{% block content %}
+
+<div class="container">
+        <h1 class="my-5">Cadastrar Motorista</h1>
+        <form method="post">
+            {% csrf_token %}
+            <!-- nome -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.nome.id_for_label }}" class="form-label">Nome</label>
+                    {{ form.nome }}
+                </div>
+            </div>
+
+            <!-- telefone-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.telefone.id_for_label }}" class="form-label">Telefone</label>
+                    {{ form.telefone }}
+                </div>
+            </div>
+
+            <!--cnh-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.cnh.id_for_label }}" class="form-label">CNH</label>
+                    {{ form.cnh }}
+                </div>
+            </div>
+    
+            <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
+            <a href="{% url 'listar_motoristas' %}" class="mx-2">Lista de motoristas</a>
+        </form>
+    </div>
+
+<script>
+    {% for field in form %}
+        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+    {% endfor %}
+</script>
+{% endblock %}

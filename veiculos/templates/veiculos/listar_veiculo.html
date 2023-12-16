@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block title%}Veiculos{% endblock title%}
+
+{% block content %}
+    <div class='container'>
+        <h1 class="mb-4">Veiculos</h1>
+        <a class="btn btn-primary mb-3" href="{% url 'cadastrar_veiculo' %}">Cadastrar veiculo</a>
+
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr class="table-primary">
+                    <th scope="col">ID</th>
+                    <th scope="col">Placa</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Veiculo</th>
+                    <th scope="col">Troca de oleo KM</th>
+                    <th scope="col">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for veiculo in veiculos %}
+                    <tr>
+                        <th scope="row">{{ veiculo.id }}</th>
+                        <td>{{ veiculo.placa }}</td>
+                        <td>{{ veiculo.marca }}</td>
+                        <td>{{ veiculo.veiculo }}</td>
+                        <td>{{ veiculo.km_troca_oleo }}</td>
+                        <td>
+                            <a href="{% url 'editar_veiculo' veiculo.id %}" class="btn btn-warning mx-1">Editar</a>
+                            <a href="#" class="btn btn-danger mx-1" onclick="confirmarExclusao('{{ veiculo.id }}')">Excluir</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="modal" tabindex="-1" role="dialog" id="confirmarExclusaoModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmar Exclusão</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Deseja realmente excluir os dados desse veiculo?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="cancelarExclusaoBtn">Cancelar</button>
+                    <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function confirmarExclusao(veiculoId) {
+            $('#confirmarExclusaoModal').modal('show');
+            $('#confirmarExclusaoBtn').on('click', function () {
+                $('#confirmarExclusaoModal').modal('hide');
+                window.location.href = `/veiculos/excluir-veiculo/${veiculoId}`;
+            });
+            $('#cancelarExclusaoBtn').on('click', function () {
+                $('#confirmarExclusaoModal').modal('hide');
+            });
+        }
+    </script>
+
+
+{% endblock %}

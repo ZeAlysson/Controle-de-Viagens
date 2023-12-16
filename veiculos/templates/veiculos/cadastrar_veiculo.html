@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title%}Cadastrar Veiculo{% endblock title%}
+
+{% block content %}
+<body>
+    <h1 class="my-5">Cadastrar Veículo</h1>
+   
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <!-- placa -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.placa.id_for_label }}" class="form-label">Placa</label>
+                    {{ form.placa }}
+                </div>
+            </div>
+
+            <!-- marca-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.marca.id_for_label }}" class="form-label">Marca</label>
+                    {{ form.marca }}
+                </div>
+            </div>
+
+            <!--veiculo-->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.veiculo.id_for_label }}" class="form-label">Veiculo</label>
+                    {{ form.veiculo }}
+                </div>
+            </div>
+
+            <!--km para troca de oleo -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label">KM troca oleo</label>
+                    {{ form.km_troca_oleo }}
+                </div>
+            </div>
+    
+            <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
+            <a href="{% url 'listar_veiculo' %}" class="mx-2">Lista de veiculos</a>
+        </form>
+        <a href="{% url 'tela_controle' %}">Voltar para a tela principal</a>
+    </div>
+</body>
+
+<script>
+    {% for field in form %}
+        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
+    {% endfor %}
+</script>
+{% endblock %}

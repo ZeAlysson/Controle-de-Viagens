@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+{% block title%}Detalhes do controle{% endblock title%}
+
+{% block content %}
+
+<body>
+    <div class="container">
+        <h1 class="my-5">Detalhes do Controle</h1>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="veiculo" class="form-label">Veiculo</label>
+                <input type="text" class="form-control" id="veiculo" name="veiculo" value="{{ controle.veiculo }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="motorista" class="form-label">Motorista</label>
+                <input type="text" class="form-control" id="motorista" name="motorista" value="{{ controle.motorista }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="data_saida" class="form-label">Data de saida</label>
+                <input type="text" class="form-control" id="data_saida" name="data_saida" value="{{ controle.data_saida }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="hora_saida" class="form-label">Hora de saida</label>
+                <input type="text" class="form-control" id="hora_saida" name="hora_saida" value="{{ controle.hora_saida }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="km_saida" class="form-label">Km de saida</label>
+                <input type="text" class="form-control" id="km_saida" name="km_saida" value="{{ controle.km_saida }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="destino" class="form-label">Destino</label>
+                <input type="text" class="form-control" id="destino" name="destino" value="{{ controle.destino }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="data_retorno" class="form-label">Data de retorno</label>
+                <input type="text" class="form-control" id="data_retorno" name="data_retorno" value="{{ controle.data_retorno }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="hora_retorno" class="form-label">Hora de retorno</label>
+                <input type="text" class="form-control" id="hora_retorno" name="hora_retorno" value="{{ controle.hora_retorno }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="km_retorno" class="form-label">Km de retorno</label>
+                <input type="text" class="form-control" id="km_retorno" name="km_retorno" value="{{ controle.km_retorno }}" required readonly>
+            </div>
+        </div>
+        
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <label for="km_percorrido" class="form-label">Km percorrido</label>
+                <input type="text" class="form-control" id="km_percorrido" name="km_percorrido" value="{{ controle.km_percorrido }} Km" required readonly>
+            </div>
+    </div>
+
+    </div>
+        {% if alerta_troca_oleo %}
+            <p style="color: red;">Atenção: O veiculo esta proximo ou ultrapassou a quilometragem recomendada para a troca de oleo.</p>
+        {% endif %}
+        
+        
+        
+        <a class="btn btn-warning mt-2" href="{% url 'editar_controle' controle.id %}">Editar</a><br>
+        <a href="{% url 'tela_controle' %}">Voltar para a Tela principal</a>
+    </div>
+    
+    <!-- modal aviso da troca de oleo-->
+    <div class="modal fade" id="avisoTrocaOleoModal" tabindex="-1" role="dialog" aria-labelledby="avisoTrocaOleoModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="avisoTrocaOleoModalLabel">Aviso de troca de oleo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Atenção: O veiculo esta proximo ou ultrapassou a quilometragem recomendada para a troca de oleo. Recomendamos verificar e realizar a troca o mais breve possivel.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    
+    
+    {% if alerta_troca_oleo %}
+    <script>
+        $(document).ready(function () {
+            var trocaOleoProxima = true;
+            
+            if (trocaOleoProxima) {
+                $('#avisoTrocaOleoModal').modal('show');
+            }
+        });
+        
+    </script>
+    {% endif %}
+</body>
+
+{% endblock %}
