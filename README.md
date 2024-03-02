@@ -91,4 +91,4 @@ Para evitar problemas com o banco de dados, é necessário migrar os modelos de 
 ## Requisitos:
 - Python
 - Django
-- MySQL
+- MySQL 
