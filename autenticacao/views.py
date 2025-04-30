@@ -29,5 +29,5 @@ def login_usuario(request):
         return render(request, 'login/login.html', {'form': form})
 
 @login_required
-def logado(request):
+def logado():
     return redirect('listar_veiculo')
