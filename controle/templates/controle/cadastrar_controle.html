@@ -1,146 +1,211 @@
 {% extends 'base.html' %}
-{% block title%}Cadastrar Controle{% endblock title%}
+{% load static %}
+{% block title %}Cadastrar Controle{% endblock title %}
 
 {% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-clipboard-list"></i> Cadastrar Novo Controle</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
 
-<body>
-    <div class="container">
-        <h1 class="my-5">Cadastrar Controle</h1>
-        <form method="post">
-            {% csrf_token %}
-            <!-- veiculo e motorista  -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.veiculo.id_for_label }}" class="form-label">Veículo</label>
-                    {{ form.veiculo }}
-
-                </div>
-                <div class="col-md-6">
-                    <label for="motorista" class="form-label">Motorista</label>
-                    {{ form.motorista }}
-                </div>
-            </div>
-
-            <!-- data e hora saida  -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.data_saida.id_for_label }}" class="form-label">Data saida</label>
-                    {{ form.data_saida }}
-                </div>
-                <div class="col-md-6">
-                    <label for="{{ form.hora_saida.id_for_label }}" class="form-label">Hora saida</label>
-                    {{ form.hora_saida }}
-                </div>
-            </div>
-
-            <!-- destino -->
-            <div class="row mb-3">
-                <div class="col-md">
-                    <label for="{{ form.destino.id_for_label }}" class="form-label">Destino</label>
-                    {{ form.destino }}
-                </div>
-            </div>
-
-            <!-- data e hora retorno -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.data_retorno.id_for_label }}" class="form-label">Data retorno</label>
-                    {{ form.data_retorno }}
-                </div>
-                <div class="col-md-6">
-                    <label for="{{ form.hora_retorno.id_for_label }}" class="form-label">Data retorno</label>
-                    {{ form.hora_retorno }}
-                </div>
-            </div>
-
-            <!-- kmsaida e retorno -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.km_saida.id_for_label }}" class="form-label">Km saida</label>
-                    {{ form.km_saida }}
+                <h5 class="text-primary mb-3"><i class="fas fa-info-circle"></i> Informações Gerais</h5>
+                <div class="row mb-4">
+                    <!-- Veículo -->
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car"></i> Veículo</label>
+                        {{ form.veiculo }}
+                        <div class="invalid-feedback">Por favor, selecione um veículo.</div>
+                    </div>
+                    <!-- Motorista -->
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.motorista.id_for_label }}" class="form-label"><i class="fas fa-user"></i> Motorista</label>
+                        {{ form.motorista }}
+                        <div class="invalid-feedback">Por favor, selecione um motorista.</div>
+                    </div>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="{{ form.km_retorno.id_for_label }}" class="form-label">Km retorno</label>
-                    {{ form.km_retorno }}
+                <!-- Destino -->
+                <div class="row mb-4">
+                    <div class="col-md-12 form-group">
+                        <label for="{{ form.destino.id_for_label }}" class="form-label"><i class="fas fa-map-marker-alt"></i> Destino</label>
+                        {{ form.destino }}
+                        <div class="invalid-feedback">Por favor, informe o destino.</div>
+                    </div>
                 </div>
-            </div>
 
-            
-            <!-- km percorrido -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.km_percorrido.id_for_label }}" class="form-label">Km percorrido</label>
-                    {{ form.km_percorrido }}
+                <hr>
 
+                <h5 class="text-primary mb-3"><i class="fas fa-calendar-alt"></i> Datas e Horas</h5>
+                <!-- Data e Hora Saída -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.data_saida.id_for_label }}" class="form-label"><i class="fas fa-calendar-day"></i> Data Saída</label>
+                        {{ form.data_saida }}
+                        <div class="invalid-feedback">Por favor, informe a data de saída.</div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.hora_saida.id_for_label }}" class="form-label"><i class="fas fa-clock"></i> Hora Saída</label>
+                        {{ form.hora_saida }}
+                        <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
+                    </div>
                 </div>
-                
-            </div>
-            <button type="submit" class="btn btn-primary">Enviar</button>
-            <a href="{% url 'tela_principal' %}" class="mx-2">Controles</a>
+                <!-- Data e Hora Retorno -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.data_retorno.id_for_label }}" class="form-label"><i class="fas fa-calendar-check"></i> Data Retorno</label>
+                        {{ form.data_retorno }}
+                        <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.hora_retorno.id_for_label }}" class="form-label"><i class="fas fa-history"></i> Hora Retorno</label>
+                        {{ form.hora_retorno }}
+                        <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
+                    </div>
+                </div>
 
+                <hr>
 
+                <h5 class="text-primary mb-3"><i class="fas fa-tachometer-alt"></i> Quilometragem</h5>
+                <!-- KM Saída e Retorno -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.km_saida.id_for_label }}" class="form-label"><i class="fas fa-road"></i> Km Saída</label>
+                        {{ form.km_saida }}
+                        <div class="invalid-feedback">Por favor, informe a quilometragem de saída.</div>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.km_retorno.id_for_label }}" class="form-label"><i class="fas fa-undo-alt"></i> Km Retorno</label>
+                        {{ form.km_retorno }}
+                        <div class="invalid-feedback" id="kmRetornoFeedback">Por favor, informe a quilometragem de retorno.</div>
+                    </div>
+                </div>
+                <!-- KM Percorrido -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.km_percorrido.id_for_label }}" class="form-label"><i class="fas fa-route"></i> Km Percorrido</label>
+                        {{ form.km_percorrido }}
+                        <small class="form-text text-muted">Calculado automaticamente.</small>
+                    </div>
+                </div>
 
-        </form>
+                <!-- Botões -->
+                <div class="d-flex justify-content-between mt-5">
+                    <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Salvar Controle</button>
+                    <a href="{% url 'tela_principal' %}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Voltar</a>
+                </div>
+            </form>
+        </div>
     </div>
+</div>
 
-    <div class="modal fade" id="kmModal" tabindex="-1" aria-labelledby="kmModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="kmModalLabel">Erro de Validação</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    O valor de Km Retorno não pode ser menor ou igual a Km Saída.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                </div>
+<!-- Modal de Erro KM -->
+<div class="modal fade" id="kmModal" tabindex="-1" aria-labelledby="kmModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-danger">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="kmModalLabel"><i class="fas fa-exclamation-triangle"></i> Erro de Validação</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body text-danger">
+                <p>O valor de <strong>Km Retorno</strong> não pode ser menor ou igual a <strong>Km Saída</strong>.</p>
+                <p>Por favor, corrija os valores.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fas fa-times"></i> Fechar</button>
             </div>
         </div>
     </div>
+</div>
 
+<script>
+    // Adiciona classes Bootstrap aos campos do formulário
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const kmSaidaInput = document.getElementById("id_km_saida");
+        const kmRetornoInput = document.getElementById("id_km_retorno");
+        const kmPercorridoInput = document.getElementById("id_km_percorrido");
+        const kmRetornoFeedback = document.getElementById("kmRetornoFeedback");
 
-    <script>
-        //calcula o Km prcorrido
-        function calcularKmPercorrido() {
-
-            var kmSaida = document.getElementById('id_km_saida');
-            var kmRetorno = document.getElementById('id_km_retorno');
-            var kmPercorrido = document.getElementById('id_km_percorrido');
-
-            
-            kmPercorrido.value = kmRetorno.value - kmSaida.value;
-        }
-        document.addEventListener('input', calcularKmPercorrido);
-        
-        {% for field in form %}
-            document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
-        {% endfor %}
-
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.querySelector('form');
-            const kmSaidaInput = document.getElementById("id_km_saida");
-            const kmRetornoInput = document.getElementById("id_km_retorno");
-    
-            form.addEventListener('submit', function (event) {
-                const kmSaida = parseFloat(kmSaidaInput.value);
-                const kmRetorno = parseFloat(kmRetornoInput.value);
-    
-                if (isNaN(kmSaida) || isNaN(kmRetorno) || kmRetorno <= kmSaida) {
-                    // Abre o modal
-                    var myModal = new bootstrap.Modal(document.getElementById('kmModal'));
-                    myModal.show();
-    
-                    // Impede o envio do formulário
-                    event.preventDefault();
-                }
-            });
+        // Adiciona classe 'form-control' a todos os inputs, selects e textareas
+        form.querySelectorAll('input, select, textarea').forEach(function(field) {
+            if (field.type !== 'checkbox' && field.type !== 'radio') {
+                field.classList.add('form-control');
+            }
+            // Adiciona 'is-invalid' se o campo tiver erros (opcional, depende da validação do Django)
+            // if (field.closest('.form-group').querySelector('.errorlist')) {
+            //     field.classList.add('is-invalid');
+            // }
         });
-    </script>
 
-</body>
+        // Desabilita e estiliza o campo KM Percorrido
+        if (kmPercorridoInput) {
+            kmPercorridoInput.readOnly = true;
+            kmPercorridoInput.classList.add('bg-light'); // Estilo visual para indicar que é readonly
+        }
+
+        // Calcula o Km percorrido dinamicamente
+        function calcularKmPercorrido() {
+            const kmSaida = parseFloat(kmSaidaInput.value) || 0;
+            const kmRetorno = parseFloat(kmRetornoInput.value) || 0;
+
+            if (kmRetorno > kmSaida) {
+                kmPercorridoInput.value = (kmRetorno - kmSaida).toFixed(2); // Ajuste para casas decimais se necessário
+                kmRetornoInput.classList.remove('is-invalid');
+                kmRetornoFeedback.textContent = 'Por favor, informe a quilometragem de retorno.'; // Mensagem padrão
+            } else {
+                kmPercorridoInput.value = ''; // Limpa se inválido
+                if (kmRetornoInput.value && kmSaidaInput.value) { // Só mostra erro se ambos preenchidos
+                     kmRetornoInput.classList.add('is-invalid');
+                     kmRetornoFeedback.textContent = 'Km Retorno deve ser maior que Km Saída.';
+                } else {
+                     kmRetornoInput.classList.remove('is-invalid');
+                     kmRetornoFeedback.textContent = 'Por favor, informe a quilometragem de retorno.';
+                }
+            }
+        }
+
+        // Adiciona listeners para recalcular ao digitar
+        if (kmSaidaInput && kmRetornoInput && kmPercorridoInput) {
+            kmSaidaInput.addEventListener('input', calcularKmPercorrido);
+            kmRetornoInput.addEventListener('input', calcularKmPercorrido);
+            // Calcula inicialmente ao carregar a página
+            calcularKmPercorrido();
+        }
+
+        // Validação Bootstrap e KM no submit
+        form.addEventListener('submit', function (event) {
+            // Aplica validação Bootstrap
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+
+            // Validação específica KM
+            const kmSaida = parseFloat(kmSaidaInput.value);
+            const kmRetorno = parseFloat(kmRetornoInput.value);
+
+            if (!isNaN(kmSaida) && !isNaN(kmRetorno) && kmRetorno <= kmSaida) {
+                // Mostra o modal de erro
+                var kmModal = new bootstrap.Modal(document.getElementById('kmModal'));
+                kmModal.show();
+                kmRetornoInput.classList.add('is-invalid'); // Marca o campo como inválido
+                kmRetornoFeedback.textContent = 'Km Retorno deve ser maior que Km Saída.';
+
+                // Impede o envio do formulário
+                event.preventDefault();
+                event.stopPropagation();
+            } else if (!isNaN(kmRetorno)) {
+                 kmRetornoInput.classList.remove('is-invalid'); // Remove a classe se for válido
+                 kmRetornoFeedback.textContent = 'Por favor, informe a quilometragem de retorno.';
+            }
+        });
+    });
+</script>
 {% endblock %}

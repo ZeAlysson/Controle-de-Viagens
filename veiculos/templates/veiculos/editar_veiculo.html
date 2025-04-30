@@ -1,55 +1,104 @@
 {% extends 'base.html' %}
-{% block title%}Editar veiuclo{% endblock title%}
+{% load static %}
+{% block title %}Editar Veículo{% endblock title %}
 
 {% block content %}
-<h1 class="my-5">Editar veiculo</h1>
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-edit"></i> Editar Veículo #{{ form.instance.id }}</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
 
-<form method="post">
-    {% csrf_token %}
-    <!-- placa -->
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="{{ form.placa.id_for_label }}" class="form-label">Placa</label>
-            {{ form.placa }}
+                <!-- Placa -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.placa.id_for_label }}" class="form-label"><i class="fas fa-digital-tachograph"></i> Placa</label>
+                    {{ form.placa }}
+                    <div class="invalid-feedback">Por favor, insira uma placa válida (ex: ABC1D23).</div>
+                    {% if form.placa.errors %}
+                        <div class="alert alert-danger mt-1 p-1">
+                            {% for error in form.placa.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Marca -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.marca.id_for_label }}" class="form-label"><i class="fas fa-copyright"></i> Marca</label>
+                    {{ form.marca }}
+                    <div class="invalid-feedback">Por favor, selecione uma marca.</div>
+                    {% if form.marca.errors %}
+                        <div class="alert alert-danger mt-1 p-1">
+                            {% for error in form.marca.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Modelo do Veículo -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car-alt"></i> Modelo</label>
+                    {{ form.veiculo }}
+                    <div class="invalid-feedback">Por favor, informe o modelo do veículo.</div>
+                    {% if form.veiculo.errors %}
+                        <div class="alert alert-danger mt-1 p-1">
+                            {% for error in form.veiculo.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- KM para troca de óleo -->
+                <div class="form-group mb-4">
+                    <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label"><i class="fas fa-oil-can"></i> KM Próxima Troca de Óleo</label>
+                    {{ form.km_troca_oleo }}
+                    <div class="invalid-feedback">Por favor, insira um valor válido para a quilometragem da próxima troca.</div>
+                    <small class="form-text text-muted">Informe a quilometragem em que a próxima troca de óleo deve ser realizada.</small>
+                    {% if form.km_troca_oleo.errors %}
+                        <div class="alert alert-danger mt-1 p-1">
+                            {% for error in form.km_troca_oleo.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Botões -->
+                <div class="d-flex justify-content-between mt-5">
+                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Alterações</button>
+                    <a href="{% url 'listar_veiculo' %}" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                </div>
+            </form>
         </div>
     </div>
-
-    <!-- marca-->
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="{{ form.marca.id_for_label }}" class="form-label">Marca</label>
-            {{ form.marca }}
-        </div>
-    </div>
-
-    <!--veiculo-->
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="{{ form.veiculo.id_for_label }}" class="form-label">Veiculo</label>
-            {{ form.veiculo }}
-        </div>
-    </div>
-
-        <!--km para troca de oleo -->
-    <div class="row mb-3">
-        <div class="col-md-6">
-            <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label">KM troca oleo</label>
-            {{ form.km_troca_oleo }}
-        </div>
-    </div>
-    <button class="btn btn-primary mb-3" type="submit">Salvar alterações</button>
-    <a href="{% url 'listar_veiculo' %}" class="mx-2">Cancelar</a>
-</form>
-
-
-
-
-
-
+</div>
 
 <script>
-    {% for field in form %}
-        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
-    {% endfor %}
+    // Adiciona classes Bootstrap aos campos do formulário (redundante se já estiver no widget, mas garante)
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        // Adiciona classe 'form-control' a todos os inputs, selects e textareas
+        form.querySelectorAll('input, select, textarea').forEach(function(field) {
+            if (field.type !== 'checkbox' && field.type !== 'radio') {
+                field.classList.add('form-control');
+            }
+        });
+
+        // Validação Bootstrap
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
 </script>
 {% endblock %}

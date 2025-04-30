@@ -1,45 +1,74 @@
-
 {% extends 'base.html' %}
-{% block title%}Cadastrar Motorista{% endblock title%}
+{% load static %}
+{% block title %}Cadastrar Motorista{% endblock title %}
 
 {% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-user-plus"></i> Cadastrar Novo Motorista</h2>
+        </div>
+        <div class="card-body">
+            <!-- Adiciona row e colunas para controlar a largura -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8"> <!-- Ajuste colunas (ex: col-lg-6, col-md-8) -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
 
-<div class="container">
-        <h1 class="my-5">Cadastrar Motorista</h1>
-        <form method="post">
-            {% csrf_token %}
-            <!-- nome -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.nome.id_for_label }}" class="form-label">Nome</label>
-                    {{ form.nome }}
-                </div>
-            </div>
+                        <!-- Nome -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.nome.id_for_label }}" class="form-label"><i class="fas fa-user-tag"></i> Nome Completo</label>
+                            {{ form.nome }}
+                            <div class="invalid-feedback">Por favor, informe o nome completo do motorista.</div>
+                        </div>
 
-            <!-- telefone-->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.telefone.id_for_label }}" class="form-label">Telefone</label>
-                    {{ form.telefone }}
-                </div>
-            </div>
+                        <!-- Telefone -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.telefone.id_for_label }}" class="form-label"><i class="fas fa-phone"></i> Telefone</label>
+                            {{ form.telefone }}
+                            <div class="invalid-feedback">Por favor, informe um número de telefone válido.</div>
+                            <small class="form-text text-muted">Formato sugerido: (XX) XXXXX-XXXX</small>
+                        </div>
 
-            <!--cnh-->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.cnh.id_for_label }}" class="form-label">CNH</label>
-                    {{ form.cnh }}
+                        <!-- CNH -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.cnh.id_for_label }}" class="form-label"><i class="fas fa-id-card"></i> Número da CNH</label>
+                            {{ form.cnh }}
+                            <div class="invalid-feedback">Por favor, informe o número da CNH.</div>
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Cadastrar Motorista</button>
+                            <a href="{% url 'listar_motoristas' %}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Voltar para Lista</a>
+                        </div>
+                    </form>
                 </div>
-            </div>
-    
-            <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
-            <a href="{% url 'listar_motoristas' %}" class="mx-2">Lista de motoristas</a>
-        </form>
+            </div> <!-- Fim da row -->
+        </div>
     </div>
+</div>
 
 <script>
-    {% for field in form %}
-        document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
-    {% endfor %}
+    // Adiciona classes Bootstrap aos campos do formulário
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+
+        // Adiciona classe 'form-control' a todos os inputs, selects e textareas
+        form.querySelectorAll('input, select, textarea').forEach(function(field) {
+            if (field.type !== 'checkbox' && field.type !== 'radio') {
+                field.classList.add('form-control');
+            }
+        });
+
+        // Validação Bootstrap
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    });
 </script>
 {% endblock %}

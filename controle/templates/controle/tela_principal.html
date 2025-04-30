@@ -1,78 +1,78 @@
 {% extends 'base.html' %}
-{% block title%}Controles{% endblock title%}
+{% block title %}Controle de Veículos{% endblock title %}
 
 {% block content %}
-<h1 class="mb-4">Tela Principal</h1>
-
-
-<!-- consulta-->
-<div class="d-flex">
-    <div class="form-group">
-        <form method="get" action="{% url 'tela_controle' %}" class="form-inline">
-            <label for="data_inicio" class="mr-2">Data Início:</label>
-            <input class="form-control mr-2" type="date" name="data_inicio">
-
-            <label for="data_fim" class="mr-2">Data Fim:</label>
-            <input class="form-control mr-2" type="date" name="data_fim">
-
-            <button class="btn btn-primary mx-2" type="submit">Consultar</button>
-        </form>
+<div class="container my-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-dark"><i class="fas fa-tachometer-alt"></i> Painel de Controle</h2>
+        <a class="btn btn-success" href="{% url 'cadastrar_controle' %}">
+            <i class="fas fa-plus-circle"></i> Novo Controle
+        </a>
     </div>
 
-    <!-- limpar consulta -->
-    <div class="form-group">
-        <form method="get" action="{% url 'tela_controle' %}" class="form-inline">
-            <button type="submit" class="btn btn-primary">Limpar Consulta</button>
-        </form>
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0"><i class="fas fa-list-ul"></i> Registros de Controle</h4>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover table-bordered">
+                    <thead class="thead-light text-center">
+                        <tr>
+                            <th>Data Saída</th>
+                            <th>Hora Saída</th>
+                            <th>Destino</th>
+                            <th>Veículo</th>
+                            <th>Motorista</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for controle in controles %}
+                        <tr>
+                            <td>{{ controle.data_saida|date:"d/m/Y" }}</td>
+                            <td>{{ controle.hora_saida }}</td>
+                            <td>{{ controle.destino }}</td>
+                            <td>{{ controle.veiculo.placa }}</td> {# Assumindo relação com Veiculo #}
+                            <td>{{ controle.motorista.nome }}</td> {# Assumindo relação com Motorista #}
+                            <td>
+                                <a href="{% url 'editar_controle' controle.id %}" class="btn btn-sm btn-warning mr-1" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <button type="button" class="btn btn-sm btn-danger" title="Excluir" onclick="confirmarExclusao({{ controle.id }})">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Nenhum registro de controle encontrado.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
 
-<a class="btn btn-primary mb-3" href="{% url 'cadastrar_controle' %}">Cadastrar controle</a>
-
-<table class="table table-bordered">
-    <thead class="thead-dark">
-        <tr class="table-primary">
-            <th scope="col" class="col-md-3">Veículo</th>
-            <th scope="col" class="col-md-3">Motorista</th>
-            <th scope="col" class="col-md-3">Data Saída</th>
-            <th scope="col" class="col-md-3">Hora Saída</th>
-            <th scope="col" class="col-md-3">Destino</th>
-            <th scope="col" class="col-md-3">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for controle in controles %}
-        <tr>
-            <td>{{ controle.veiculo }}</td>
-            <td>{{ controle.motorista }}</td>
-            <td>{{ controle.data_saida }}</td>
-            <td>{{ controle.hora_saida }}</td>
-            <td>{{ controle.destino }}</td>
-            <td>
-                <div class="d-flex">
-                    <a class="btn btn-info mx-1" href="{% url 'visualizar_controle' controle.id %}">Visualizar</a>
-                    <a class="btn btn-warning mx-1" href="{% url 'editar_controle' controle.id %}">Editar</a>
-                    <a class="btn btn-danger mx-1" href="#" onclick="confirmarExclusao('{{ controle.id }}')">Excluir</a>
-                </div>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-
-<div class="modal" tabindex="-1" role="dialog" id="confirmarExclusaoModal">
-    <div class="modal-dialog" role="document">
+<!-- Modal de Confirmação de Exclusão -->
+<div class="modal fade" id="confirmarExclusaoModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Confirmar Exclusão</h5>
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="modalLabel"><i class="fas fa-exclamation-triangle"></i> Confirmar Exclusão</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <p>Deseja realmente excluir este registro?</p>
+                <p>Tem certeza de que deseja excluir este registro de controle?</p>
+                <p class="text-danger font-weight-bold">Esta ação não pode ser desfeita.</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" id="cancelarExclusaoBtn">Cancelar</button>
-                <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn">Excluir</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="cancelarExclusaoBtn"><i class="fas fa-times"></i> Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirmarExclusaoBtn"><i class="fas fa-trash-alt"></i> Excluir</button>
             </div>
         </div>
     </div>
@@ -80,14 +80,19 @@
 
 <script>
     function confirmarExclusao(controleId) {
-        $('#confirmarExclusaoModal').modal('show');
-        $('#confirmarExclusaoBtn').on('click', function () {
-            $('#confirmarExclusaoModal').modal('hide');
+        // Define a URL de exclusão no botão de confirmação
+        const confirmarBtn = document.getElementById('confirmarExclusaoBtn');
+        confirmarBtn.onclick = function() {
             window.location.href = `/controle/excluir-controle/${controleId}/`;
-        });
-        $('#cancelarExclusaoBtn').on('click', function () {
-            $('#confirmarExclusaoModal').modal('hide');
-        });
+        };
+        
+        // Mostra o modal
+        $('#confirmarExclusaoModal').modal('show');
     }
+
+    // Limpa o evento onclick do botão de confirmação ao fechar o modal para evitar múltiplas exclusões
+    $('#confirmarExclusaoModal').on('hidden.bs.modal', function () {
+        document.getElementById('confirmarExclusaoBtn').onclick = null;
+    });
 </script>
 {% endblock %}
