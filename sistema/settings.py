@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-q)p2um#jpg0h5q@8)=b-bivuoo)z^y!*n^w)77lbp1yedsc%q7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["10.83.0.2"]
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'veiculos',
     'motoristas',
     'controle',
+    'autenticacao'
 ]
 
 MIDDLEWARE = [
@@ -133,3 +134,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/controle/tela-controle/'
+LOGOUT_REDIRECT_LOGOUT = '/login'

@@ -7,5 +7,4 @@ urlpatterns = [
     path('excluir-veiculo/<int:veiculo_id>/', excluir_veiculo, name='excluir_veiculo'),
     path('editar-veiculo/<int:veiculo_id>/', editar_veiculo, name='editar_veiculo'),
 
-
 ]
