@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Cadastrar Controle{% endblock title %}
+{% block title %}Cadastrar Viagem{% endblock title %}
 
 {% block content %}
 <div class="container my-5">
     <div class="card shadow-lg">
         <div class="card-header bg-dark text-white text-center">
-            <h2><i class="fas fa-clipboard-list"></i> Cadastrar Novo Controle</h2>
+            <h2><i class="fas fa-clipboard-list"></i> Cadastrar Nova Viagem</h2>
         </div>
         <div class="card-body">
             <form method="post" class="needs-validation" novalidate>
@@ -94,7 +94,7 @@
 
                 <!-- Botões -->
                 <div class="d-flex justify-content-between mt-5">
-                    <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Salvar Controle</button>
+                    <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Salvar Viagem</button>
                     <a href="{% url 'tela_principal' %}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Voltar</a>
                 </div>
             </form>

@@ -1,18 +1,18 @@
 {% extends 'base.html' %}
-{% block title %}Controle de Veículos{% endblock title %}
+{% block title %}Controle de Viagem{% endblock title %}
 
 {% block content %}
 <div class="container my-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2 class="text-dark"><i class="fas fa-tachometer-alt"></i> Painel de Controle</h2>
+        <h2 class="text-dark"><i class="fas fa-tachometer-alt"></i> Painel de Viagem</h2>
         <a class="btn btn-success" href="{% url 'cadastrar_controle' %}">
-            <i class="fas fa-plus-circle"></i> Novo Controle
+            <i class="fas fa-plus-circle"></i> Nova Viagem
         </a>
     </div>
 
     <div class="card shadow-lg">
         <div class="card-header bg-dark text-white">
-            <h4 class="mb-0"><i class="fas fa-list-ul"></i> Registros de Controle</h4>
+            <h4 class="mb-0"><i class="fas fa-list-ul"></i> Registros de Viagens</h4>
         </div>
         <div class="card-body">
             <div class="table-responsive">
@@ -46,7 +46,7 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="6" class="text-center text-muted">Nenhum registro de controle encontrado.</td>
+                            <td colspan="6" class="text-center text-muted">Nenhum registro de viagem encontrado.</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -67,7 +67,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>Tem certeza de que deseja excluir este registro de controle?</p>
+                <p>Tem certeza de que deseja excluir este registro de viagem?</p>
                 <p class="text-danger font-weight-bold">Esta ação não pode ser desfeita.</p>
             </div>
             <div class="modal-footer">
