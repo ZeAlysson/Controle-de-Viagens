@@ -135,6 +135,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/controle/tela-controle/'
-LOGOUT_REDIRECT_LOGOUT = '/login'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'controle/listar_veiculos'
+LOGOUT_REDIRECT_URL = 'login'
