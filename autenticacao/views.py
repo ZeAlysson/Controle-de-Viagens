@@ -33,4 +33,4 @@ def login_usuario(request):
 
 @login_required
 def logado():
-    return redirect('listar_veiculo')
+    return redirect('raiz')
