@@ -8,11 +8,9 @@ def registrar_usuario(request):
         form = RegistroForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('logado')
-        else:
-            print("erros: ", form.errors)
-        
+            if user != None:
+                login(request=request, user=user)
+                return redirect('logado')
     else:
         form = RegistroForm()
     return render(request, 'registro/registro.html', {'form': form})
