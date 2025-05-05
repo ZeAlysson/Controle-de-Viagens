@@ -88,5 +88,12 @@
             });
         }, false);
     })();
+
+    const placaInput = document.getElementById('{{form.placa.id_for_label}}');
+    if (placaInput) {
+        placaInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    }
 </script>
 {% endblock %}

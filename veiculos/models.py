@@ -7,4 +7,4 @@ class Veiculo(models.Model):
     km_troca_oleo = models.IntegerField()
 
     def __str__(self):
-            return f'{self.veiculo} - Placa: {self.placa} - Troca oleo: {self.km_troca_oleo} Km'
+            return f'{self.veiculo} - Placa: {self.placa} - Trocar óleo: {self.km_troca_oleo} Km'
