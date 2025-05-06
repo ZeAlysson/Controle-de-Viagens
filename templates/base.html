@@ -25,6 +25,7 @@
         .navbar-nav {
             margin: 0 auto; /* Centraliza os itens da navbar */
         }
+
     </style>
 </head>
 <body>
@@ -50,6 +51,12 @@
                 <a class="nav-link" href="{% url 'cadastrar_controle' %}"><i class="fas fa-plus-circle"></i> Cadastrar Viagem</a> <!-- Changed text -->
             </li>
         </ul>
+    </div>
+
+    <div>
+        <a href="{% url 'logout' %}" class="btn btn-danger">
+            <i class="fas fa-sign-out-alt"></i> Sair
+        </a>
     </div>
 </nav>
 
