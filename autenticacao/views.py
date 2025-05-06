@@ -30,5 +30,5 @@ def login_usuario(request):
     return render(request, 'login/login.html', {'form': form})
 
 @login_required
-def logado():
+def logado(request):
     return redirect('raiz')
