@@ -6,7 +6,7 @@
 <section class="vh-100" style="background-color: #eee; overflow-y: hidden;">
   <div class="container h-100">
     <div class="row justify-content-center h-100">
-      <div class="col-lg-12 col-xl-11 d-flex align-items-center">
+      <div class="col-lg-8 col-xl-9 d-flex align-items-center">
         <div class="card text-black shadow-lg w-100" style="border-radius: 25px;">
           <div class="card-body p-md-5">
             <div class="row justify-content-center">
@@ -91,7 +91,7 @@
                   </div>
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-paper-plane me-2"></i>Registrar</button>
+                    <button type="submit" class="btn btn-primary btn-lg"></i>Registrar</button>
                   </div>
 
                    <div class="text-center">
@@ -103,10 +103,10 @@
               </div>
               <!-- Coluna da Imagem Modificada -->
               <div class="col-md-10 col-lg-6 col-xl-7 d-none d-lg-flex align-items-center justify-content-center order-1 order-lg-2">
-                <img src="{% static 'images/register_image.jpg' %}"
+                <img src="{% static 'images/login_image.jpg' %}"
                      class="img-fluid"
                      alt="Imagem Ilustrativa do Registro"
-                     style="max-width: 75%; height: auto; border-radius: 15px;">
+                     style="max-width: 70%; height: auto; border-radius: 15px;">
               </div>
             </div>
           </div>
@@ -147,9 +147,9 @@ document.addEventListener('DOMContentLoaded', function () {
     // Inicialização de componentes MDB (se necessário para form-outline)
     // Para MDB 5, form-outline geralmente é inicializado automaticamente se o JS do MDB estiver carregado.
     // Se os campos ainda estiverem sem estilo, e o MDB JS estiver carregado, tente descomentar:
-    // document.querySelectorAll('.form-outline').forEach((formOutline) => {
-    //   new mdb.Input(formOutline).init();
-    // });
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+      new mdb.Input(formOutline).init();
+    });
 });
 </script>
 {% endblock %}

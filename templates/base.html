@@ -53,8 +53,9 @@
         </ul>
     </div>
 
-    <div>
-        <a href="{% url 'logout' %}" class="btn btn-danger">
+    <div class="d-flex align-items-center">
+        <span class="text-white me-2 mr-2">{{ request.user.username }}</span>
+        <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
             <i class="fas fa-sign-out-alt"></i> Sair
         </a>
     </div>
