@@ -7,11 +7,20 @@ Este projeto consiste em um sistema de gestão de veículos e motoristas, desenv
 # 2. Estrutura do Projeto
 O projeto está organizado em 3 aplicativos do Django, cada um responsável por uma área específica:
 
+- **autenticacao**: Responsável por autenticar os usuários
 - **controle**: Responsável pela gestão do controle de veículos.
 - **motoristas**: Responsável pelo cadastro e gerenciamento de motoristas.
 - **veiculos**: Responsável pelo cadastro e gerenciamento de veículos.
 
+
 # Funcionalidades Principais
+
+### Autenticação
+- **Registrar usário**
+  -Permite o cadastro/Registro de novos usuários.
+- **Efetuar Login**
+  -Permite usuários cadastrados efetuar o login.
+
 ### Controle de Veículos
 - **Cadastro de Controle:**
   - Permite o cadastro de informações relacionadas a cada viagem, como veículo utilizado, motorista, data e hora de saída e retorno, quilometragem percorrida, etc.
@@ -39,12 +48,12 @@ O projeto está organizado em 3 aplicativos do Django, cada um responsável por 
 # 3. Tecnologias Utilizadas
 - Linguagem de Programação: Python
 - Framework Web: Django
-- Banco de Dados: MySQL
+- Banco de Dados: Postgresql
 - Frontend: HTML, CSS, Bootstrap
 - Controle de Versão: Git
 
 
-Com o objetivo de simplificar testes e demais processos, o projeto está utilizando o banco de dados SQLite. Vale ressaltar que, para ambientes de produção ou aplicações em larga escala, é altamente recomendável considerar a migração para bancos de dados mais robustos, como MySQL.
+Com o objetivo de simplificar testes e demais processos, o projeto está utilizando o banco de dados SQLite. Vale ressaltar que, para ambientes de produção ou aplicações em larga escala, é altamente recomendável considerar a migração para bancos de dados mais robustos, como Postgresql.
 
 # 4. Crie e ative um ambiente virtual para isolar as dependências do projeto:
 
@@ -91,4 +100,4 @@ Para evitar problemas com o banco de dados, é necessário migrar os modelos de 
 ## Requisitos:
 - Python
 - Django
-- MySQL 
+- Postgresql 
