@@ -21,4 +21,4 @@ class Controle(models.Model):
         return self.data_retorno.strftime("%Y-%m-%d")
 
     def __str__(self):
-        return f'Motorista: {self.motorista.nome} - Saida: {self.data_saida} {self.hora_saida} - Carro: {self.veiculo.veiculo} ({self.veiculo.marca}) - Retorno: {self.data_retorno} {self.hora_retorno}'
+        return f'Motorista: {self.motorista.nome} - Saída: {self.data_saida} {self.hora_saida} - Carro: {self.veiculo.veiculo} ({self.veiculo.marca}) - Retorno: {self.data_retorno} {self.hora_retorno}'

@@ -1,55 +1,99 @@
 {% extends 'base.html' %}
-{% block title%}Cadastrar Veiculo{% endblock title%}
+{% block title %}Cadastrar Veículo{% endblock title %}
 
 {% block content %}
-<body>
-    <h1 class="my-5">Cadastrar Veículo</h1>
-   
-    <div class="container">
-        <form method="post">
-            {% csrf_token %}
-            <!-- placa -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.placa.id_for_label }}" class="form-label">Placa</label>
-                    {{ form.placa }}
-                </div>
-            </div>
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-car"></i> Cadastrar Veículo</h2>
+        </div>
+        <div class="card-body">
+            <!-- Adiciona row e colunas para controlar a largura -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8"> <!-- Ajuste colunas (ex: col-lg-8, col-md-10) -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
 
-            <!-- marca-->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.marca.id_for_label }}" class="form-label">Marca</label>
-                    {{ form.marca }}
-                </div>
-            </div>
+                        <!-- Placa -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.placa.id_for_label }}" class="form-label"><i class="fas fa-digital-tachograph"></i> Placa</label> {# Adicionado ícone #}
+                            {{ form.placa }}
+                            <div class="invalid-feedback">
+                                Por favor, insira uma placa válida.
+                            </div>
+                        </div>
 
-            <!--veiculo-->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.veiculo.id_for_label }}" class="form-label">Veiculo</label>
-                    {{ form.veiculo }}
-                </div>
-            </div>
+                        <!-- Marca -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.marca.id_for_label }}" class="form-label"><i class="fas fa-copyright"></i> Marca</label> {# Adicionado ícone #}
+                            {{ form.marca }}
+                            <div class="invalid-feedback">
+                                Por favor, selecione uma marca.
+                            </div>
+                        </div>
 
-            <!--km para troca de oleo -->
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label">KM troca oleo</label>
-                    {{ form.km_troca_oleo }}
+                        <!-- Modelo do Veículo -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car-alt"></i> Modelo do Veículo</label> {# Adicionado ícone #}
+                            {{ form.veiculo }}
+                            <div class="invalid-feedback">
+                                Por favor, insira o modelo do veículo.
+                            </div>
+                        </div>
+
+                        <!-- KM para troca de óleo -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label"><i class="fas fa-oil-can"></i> KM Próxima Troca de Óleo</label> {# Adicionado ícone e ajustado label #}
+                            {{ form.km_troca_oleo }}
+                            <div class="invalid-feedback">
+                                Por favor, insira o KM para a próxima troca de óleo.
+                            </div>
+                            <small class="form-text text-muted">Informe a quilometragem em que a próxima troca de óleo deve ser realizada.</small> {# Adicionado texto de ajuda #}
+                        </div>
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-between mt-5"> {# Adicionado mt-5 para espaçamento #}
+                            <button class="btn btn-success btn-lg" type="submit"><i class="fas fa-save"></i> Cadastrar</button> {# Aumentado tamanho do botão #}
+                            <a href="{% url 'listar_veiculo' %}" class="btn btn-secondary btn-lg"><i class="fas fa-list"></i> Lista de Veículos</a> {# Aumentado tamanho do botão #}
+                        </div>
+                    </form>
                 </div>
-            </div>
-    
-            <button class="btn btn-primary mb-2" type="submit">Cadastrar</button>
-            <a href="{% url 'listar_veiculo' %}" class="mx-2">Lista de veiculos</a>
-        </form>
-        <a href="{% url 'tela_controle' %}">Voltar para a tela principal</a>
+            </div> <!-- Fim da row -->
+        </div>
+        <div class="card-footer text-center">
+            <a href="{% url 'tela_controle' %}" class="btn btn-link text-dark"><i class="fas fa-arrow-left"></i> Voltar para a tela principal</a>
+        </div>
     </div>
-</body>
+</div>
 
 <script>
+    // Adiciona classes Bootstrap aos campos do formulário
     {% for field in form %}
         document.getElementById("{{ field.id_for_label }}").classList.add("form-control");
     {% endfor %}
+
+    // Validação do formulário
+    (function () {
+        'use strict';
+        window.addEventListener('load', function () {
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+    const placaInput = document.getElementById('{{form.placa.id_for_label}}');
+    if (placaInput) {
+        placaInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    }
 </script>
 {% endblock %}
