@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,9 +27,7 @@ SECRET_KEY = 'django-insecure-q)p2um#jpg0h5q@8)=b-bivuoo)z^y!*n^w)77lbp1yedsc%q7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    '10.83.0.2'
-]
+ALLOWED_HOSTS = ["10.83.0.2", "127.0.0.1"]
 
 
 # Application definition
@@ -40,10 +39,34 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
     'veiculos',
     'motoristas',
     'controle',
+    'autenticacao'
 ]
+
+REST_FRAMEWORK = {
+    # Configura as classes de autenticação padrão para suas views de API
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': False,
+   # 'BLACKLIST_AFTER_ROTATION': False,
+  #  'ALGORITHM': 'HS256',
+ #   'SIGNING_KEY': 'django-insecure-0niud82$9#e28d$ok6w&(6d)xd==d_e-ia^@zr--yq!-xb2azi',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,3 +162,7 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'listar_veiculo'
+LOGOUT_REDIRECT_URL = 'login'

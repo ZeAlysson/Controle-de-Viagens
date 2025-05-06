@@ -15,15 +15,20 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
 from django.views.generic.base import RedirectView
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
-    
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(url='controle/tela-principal', permanent=False)),
+    path('', RedirectView.as_view(url= reverse_lazy('tela_principal')), name='raiz'),
+    path('', include('autenticacao.urls')),
+    path('controle/', include('controle.urls')),
     path('veiculos/', include('veiculos.urls')),
     path('motoristas/', include('motoristas.urls')),
-    path('controle/', include('controle.urls')),
-
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
