@@ -8,4 +8,4 @@ class Motorista(models.Model):
     cnh = models.CharField(max_length=20)
 
     def __str__(self):
-        return f'Motorista: {self.nome} - Tell: {self.telefone} - CNH: {self.cnh}'
+        return f'Motorista: {self.nome} - Tel.: {self.telefone} - CNH: {self.cnh}'
