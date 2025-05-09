@@ -54,7 +54,7 @@
     </div>
 
     <div class="d-flex align-items-center">
-        <span class="text-white me-2 mr-2">{{ request.user.username }}</span>
+        <span class="text-white me-2 mr-2">Bem Vindo(a), <strong>{{ request.user.username }}</strong></span>
         <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
             <i class="fas fa-sign-out-alt"></i> Sair
         </a>

@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'veiculos',
     'motoristas',
     'controle',
-    'autenticacao'
+    'autenticacao',
+    'servidor'
 ]
 
 REST_FRAMEWORK = {
@@ -103,17 +104,13 @@ WSGI_APPLICATION = 'sistema.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': 'dev_test',
-    #     'USER': 'dev',
-    #     'PASSWORD': 'dev',
-    #     'HOST': 'localhost',
-    #     'PORT': '3306',
-    # },
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'controle_viagens',
+        'USER': 'postgres',
+        'PASSWORD': 'see@paraib@',
+        'HOST': '10.83.0.88',
+        'PORT': '5432',
     }
 }
 
