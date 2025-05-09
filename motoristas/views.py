@@ -38,3 +38,6 @@ def editar_motorista(request, motorista_id):
     else:
         form = MotoristaForm(instance=motorista)
     return render(request, 'motoristas/editar_motorista.html', {'form': form, 'motorista': motorista})
+
+def listar_viagens(request):
+    return render(request, 'global/templates/listagem_viagens.html')
