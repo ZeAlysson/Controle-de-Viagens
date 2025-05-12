@@ -16,7 +16,7 @@ def registrar_usuario(request):
                 return redirect('logado')
     else:
         form = RegistroForm()
-    return render(request, 'autenticacao/registro/registro.html', {'form': form})
+    return render(request, 'registro/registro.html', {'form': form})
 
 def login_admin(request):
     if request.method == "POST":
@@ -30,7 +30,7 @@ def login_admin(request):
                 return redirect('logado')
     else:
         form = LoginForm()
-    return render(request, 'login/login.html', {'form': form})
+    return render(request, 'login/admin/login.html', {'form': form})
 
 def login_servidores(request):
     if request.method == "POST":
@@ -58,7 +58,7 @@ def login_servidores(request):
 
 
 @login_required
-def logado():
+def logado(request):
     return redirect('raiz')
 
 
