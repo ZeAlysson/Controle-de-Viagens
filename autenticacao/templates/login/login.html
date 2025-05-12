@@ -31,14 +31,15 @@
                       <div class="form-outline flex-fill mb-0">
                         {{ form.cpf }}
                         <label class="form-label" for="{{ form.cpf.id_for_label }}">CPF</label>
-                        {% if form.cpf.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in form.username.errors %} {{ error }} {% endfor %}
-                            </div>
-                        {% endif %}
                       </div>
                     </div>
-
+                    {% if messages %}
+                      <div class="alert alert-danger" role="alert">
+                        {% for message in messages %}
+                          {{ message }}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
                   </div>

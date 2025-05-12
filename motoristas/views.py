@@ -1,9 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-
-from autenticacao.forms import LoginServidoresForm
 from controle.models import Controle
 from .forms import MotoristaForm
 from .models import Motorista
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -46,20 +45,16 @@ def listar_viagens(request):
     cpf = request.session.get("motorista_cpf")
     
     if not cpf:
-        return _retornar_erro_login("CPF inválido ou sessão expirada. Faça login novamente.")
-
+        messages.error(request, "CPF inválido ou sessão expirada. Faça login novamente.")
+        return redirect('login')
+    
     try:
         motorista = Motorista.objects.get(cpf=cpf)
     except Motorista.DoesNotExist:
-        return _retornar_erro_login("CPF não encontrado. Verifique e tente novamente.")
-
+        messages.error(request, "CPF não encontrado. Verifique e tente novamente.")
+        return redirect('login')
+    
     viagens = Controle.objects.filter(motorista=motorista)
     return render(request, 'global/templates/listagem_viagens.html', {'viagens': viagens})
 
-
-    
-def _retornar_erro_login(mensagem):
-    form = LoginServidoresForm()
-    form.add_error('cpf', mensagem)
-    return render(None, 'login/login.html', {'form': form})
     
