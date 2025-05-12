@@ -12,19 +12,43 @@
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
 
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
                 <h5 class="text-primary mb-3"><i class="fas fa-info-circle"></i> Informações Gerais</h5>
                 <div class="row mb-4">
                     <!-- Veículo -->
                     <div class="col-md-6 form-group">
                         <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car"></i> Veículo</label>
                         {{ form.veiculo }}
-                        <div class="invalid-feedback">Por favor, selecione um veículo.</div>
+                        {% if form.veiculo.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.veiculo.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um veículo.</div>
+                        {% endif %}
                     </div>
                     <!-- Motorista -->
                     <div class="col-md-6 form-group">
                         <label for="{{ form.motorista.id_for_label }}" class="form-label"><i class="fas fa-user"></i> Motorista</label>
                         {{ form.motorista }}
-                        <div class="invalid-feedback">Por favor, selecione um motorista.</div>
+                        {% if form.motorista.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.motorista.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um motorista.</div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -33,22 +57,46 @@
                     <div class="col-md-12 form-group">
                         <label for="{{ form.destino.id_for_label }}" class="form-label"><i class="fas fa-map-marker-alt"></i> Destino</label>
                         {{ form.destino }}
-                        <div class="invalid-feedback">Por favor, informe o destino.</div>
+                        {% if form.destino.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.destino.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe o destino.</div>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <!-- Setor -->
                     <div class="col-md-6 form-group">
-                        <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-building"></i> Setor</label>
+                        <label for="{{ form.setor.id_for_label }}" class="form-label"><i class="fas fa-building"></i> Setor</label>
                         {{ form.setor}}
-                        <div class="invalid-feedback">Por favor, selecione um setor.</div>
+                        {% if form.setor.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.setor.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um setor.</div>
+                        {% endif %}
                     </div>
                     <!-- Numero do processo -->
                     <div class="col-md-6 form-group">
-                        <label for="{{ form.motorista.id_for_label }}" class="form-label"><i class="fas fa-hashtag"></i> Número do Processo</label>
+                        <label for="{{ form.codigo_viagem.id_for_label }}" class="form-label"><i class="fas fa-hashtag"></i> Número do Processo</label>
                         {{ form.codigo_viagem }}
-                        <div class="invalid-feedback">Por favor, insira o número do processo.</div>
+                        {% if form.codigo_viagem.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.codigo_viagem.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, insira o número do processo.</div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -60,12 +108,28 @@
                     <div class="col-md-6 form-group">
                         <label for="{{ form.data_saida.id_for_label }}" class="form-label"><i class="fas fa-calendar-day"></i> Data Saída</label>
                         {{ form.data_saida }}
-                        <div class="invalid-feedback">Por favor, informe a data de saída.</div>
+                        {% if form.data_saida.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.data_saida.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a data de saída.</div>
+                        {% endif %}
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="{{ form.hora_saida.id_for_label }}" class="form-label"><i class="fas fa-clock"></i> Hora Saída</label>
                         {{ form.hora_saida }}
-                        <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
+                        {% if form.hora_saida.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.hora_saida.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
+                        {% endif %}
                     </div>
                 </div>
                 <!-- Data e Hora Retorno -->
@@ -73,12 +137,28 @@
                     <div class="col-md-6 form-group">
                         <label for="{{ form.data_retorno.id_for_label }}" class="form-label"><i class="fas fa-calendar-check"></i> Data Retorno</label>
                         {{ form.data_retorno }}
-                        <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
+                        {% if form.data_retorno.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.data_retorno.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
+                        {% endif %}
                     </div>
                     <div class="col-md-6 form-group">
                         <label for="{{ form.hora_retorno.id_for_label }}" class="form-label"><i class="fas fa-history"></i> Hora Retorno</label>
                         {{ form.hora_retorno }}
-                        <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
+                        {% if form.hora_retorno.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.hora_retorno.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
+                        {% endif %}
                     </div>
                 </div>
 
