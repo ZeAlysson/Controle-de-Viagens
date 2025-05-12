@@ -58,11 +58,10 @@ def login_servidores(request):
 
 
 @login_required
-def logado(request):
+def logado():
     return redirect('raiz')
 
 
-# Auxiliar que busca um Servidor ou Motorista
 def buscar_usuario_por_cpf(cpf):
     for model in (Servidor, Motorista):
         try:
