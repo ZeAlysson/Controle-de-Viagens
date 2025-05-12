@@ -22,9 +22,7 @@
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Placa</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Modelo</th>
-                            <th scope="col">KM Troca Óleo</th>
+                            <th scope="col">Veículo</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -33,9 +31,7 @@
                         <tr>
                             <th scope="row">{{ veiculo.id }}</th>
                             <td>{{ veiculo.placa|upper }}</td>
-                            <td>{{ veiculo.marca }}</td>
-                            <td>{{ veiculo.veiculo }}</td>
-                            <td>{{ veiculo.km_troca_oleo }} km</td>
+                            <td>{{ veiculo.modelo_veiculo }}</td>
                             <td>
                                 <a href="{% url 'editar_veiculo' veiculo.id %}" class="btn btn-sm btn-warning mr-1" title="Editar">
                                     <i class="fas fa-edit"></i>
