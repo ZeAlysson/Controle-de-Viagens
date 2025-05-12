@@ -4,6 +4,7 @@
 
 {% block content %}
 <section class="vh-100" style="background-color: #eee; overflow-y: hidden;">
+  <a class="btn btn-primary position-absolute top-0 end-0 m-3" href="{% url 'login_admin' %}">Administrador</a>
   <div class="container h-100">
     <div class="row justify-content-center h-100">
       <div class="col-lg-8 col-xl-9 d-flex align-items-center">
@@ -43,8 +44,6 @@
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
                   </div>
-
-
 
                    <div class="text-center">
                        <p class="small">Não tem uma conta? <a href="{% url 'registro' %}" class="fw-bold">Registre-se!</a></p>
