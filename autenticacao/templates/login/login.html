@@ -4,6 +4,7 @@
 
 {% block content %}
 <section class="vh-100" style="background-color: #eee; overflow-y: hidden;">
+  <a class="btn btn-primary position-absolute top-0 end-0 m-3" href="{% url 'login_admin' %}">Administrador</a>
   <div class="container h-100">
     <div class="row justify-content-center h-100">
       <div class="col-lg-8 col-xl-9 d-flex align-items-center">
@@ -26,38 +27,20 @@
                         </div>
                     {% endif %}
 
-                  <!-- Username -->
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      {{ form.username }}
-                      <label class="form-label" for="{{ form.username.id_for_label }}">Nome de Usuário</label>
-                      {% if form.username.errors %}
-                          <div class="invalid-feedback d-block">
-                              {% for error in form.username.errors %} {{ error }} {% endfor %}
-                          </div>
-                      {% else %}
-                          <div class="invalid-feedback">Por favor, insira seu nome de usuário.</div>
-                      {% endif %}
+                    <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        {{ form.cpf }}
+                        <label class="form-label" for="{{ form.cpf.id_for_label }}">CPF</label>
+                      </div>
                     </div>
-                  </div>
-
-                  <!-- Password -->
-                  <div class="d-flex flex-row align-items-center mb-4">
-                    <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
-                    <div class="form-outline flex-fill mb-0">
-                      {{ form.password }}
-                      <label class="form-label" for="{{ form.password.id_for_label }}">Senha</label>
-                       {% if form.password.errors %}
-                          <div class="invalid-feedback d-block">
-                              {% for error in form.password.errors %} {{ error }} {% endfor %}
-                          </div>
-                      {% else %}
-                          <div class="invalid-feedback">Por favor, insira sua senha.</div>
-                      {% endif %}
-                    </div>
-                  </div>
-
+                    {% if messages %}
+                      <div class="alert alert-danger" role="alert">
+                        {% for message in messages %}
+                          {{ message }}
+                        {% endfor %}
+                      </div>
+                    {% endif %}
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
                   </div>
@@ -83,27 +66,4 @@
   </div>
 </section>
 
-<script>
-// Adiciona classes Bootstrap aos campos do formulário
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.querySelector('form.needs-validation');
-
-    const fields = {
-        '{{ form.username.id_for_label }}': 'Seu nome de usuário',
-        '{{ form.password.id_for_label }}': 'Sua senha'
-    };
-
-    for (const id in fields) {
-        const input = document.getElementById(id);
-        if (input) {
-            input.classList.add('form-control');
-        }
-    }
-
-    document.querySelectorAll('.form-outline').forEach((formOutline) => {
-      new mdb.Input(formOutline).init();
-    });
-});
-</script>
 {% endblock %}
-
