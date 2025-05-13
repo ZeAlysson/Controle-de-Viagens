@@ -1,9 +1,14 @@
+from motoristas.models import Motorista
+from veiculos.models import Veiculo
 from .models import Controle
 from .forms import ControleForm
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-
+from django.db.models import Q
+from django.views.decorators.http import require_GET
+from django.http import JsonResponse
+from datetime import datetime
 
 def calcular_total_km_rodados(veiculo):
     return Controle.objects.filter(veiculo=veiculo).aggregate(Sum('km_percorrido'))['km_percorrido__sum']
@@ -72,3 +77,44 @@ def cadastrar_controle(request):
         form = ControleForm()
 
     return render(request, 'controle/cadastrar_controle.html', {'form': form})
+
+@require_GET
+def verificar_disponibilidade(request):
+    data_saida = request.GET.get('data_saida')
+    hora_saida = request.GET.get('hora_saida')
+    data_retorno = request.GET.get('data_retorno')
+    hora_retorno = request.GET.get('hora_retorno')
+
+    if not all([data_saida, hora_saida, data_retorno, hora_retorno]):
+        return JsonResponse({'error': 'Dados incompletos.'}, status=400)
+
+    try:
+        inicio = datetime.strptime(f"{data_saida} {hora_saida}", "%Y-%m-%d %H:%M")
+        fim = datetime.strptime(f"{data_retorno} {hora_retorno}", "%Y-%m-%d %H:%M")
+    except ValueError:
+        return JsonResponse({'error': 'Formato de data ou hora inválido.'}, status=400)
+
+    if inicio >= fim:
+        return JsonResponse({'error': 'Data de saída deve ser antes da de retorno.'}, status=400)
+
+    # Filtra controles que conflitam com o novo período
+    conflito = (
+        Q(data_retorno__gt=inicio.date()) |
+        (Q(data_retorno=inicio.date()) & Q(hora_retorno__gt=inicio.time()))
+    ) & (
+        Q(data_saida__lt=fim.date()) |
+        (Q(data_saida=fim.date()) & Q(hora_saida__lt=fim.time()))
+    )
+
+    controles_conflitantes = Controle.objects.filter(conflito)
+
+    veiculos_ocupados = controles_conflitantes.values_list('veiculo_id', flat=True)
+    motoristas_ocupados = controles_conflitantes.values_list('motorista_id', flat=True)
+
+    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados)
+    motoristas_disponiveis = Motorista.objects.exclude(id__in=motoristas_ocupados)
+
+    return JsonResponse({
+    'veiculos': [{'id': v.id, 'nome': str(v)} for v in veiculos_disponiveis],
+    'motoristas': [{'id': m.id, 'nome': str(m)} for m in motoristas_disponiveis],
+})

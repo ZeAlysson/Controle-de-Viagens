@@ -20,6 +20,68 @@
                     </div>
                 {% endif %}
 
+                <h5 class="text-primary mb-3"><i class="fas fa-calendar-alt"></i> Datas e Horas</h5>
+                <!-- Data e Hora Saída -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.data_saida.id_for_label }}" class="form-label"><i class="fas fa-calendar-day"></i> Data Saída</label>
+                        {{ form.data_saida }}
+                        {% if form.data_saida.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.data_saida.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a data de saída.</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.hora_saida.id_for_label }}" class="form-label"><i class="fas fa-clock"></i> Hora Saída</label>
+                        {{ form.hora_saida }}
+                        {% if form.hora_saida.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.hora_saida.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Data e Hora Retorno -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.data_retorno.id_for_label }}" class="form-label"><i class="fas fa-calendar-check"></i> Data Retorno</label>
+                        {{ form.data_retorno }}
+                        {% if form.data_retorno.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.data_retorno.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.hora_retorno.id_for_label }}" class="form-label"><i class="fas fa-history"></i> Hora Retorno</label>
+                        {{ form.hora_retorno }}
+                        {% if form.hora_retorno.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.hora_retorno.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <hr>
+
                 <h5 class="text-primary mb-3"><i class="fas fa-info-circle"></i> Informações Gerais</h5>
                 <div class="row mb-4">
                     <!-- Veículo -->
@@ -96,68 +158,6 @@
                             </div>
                         {% else %}
                             <div class="invalid-feedback">Por favor, insira o número do processo.</div>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <hr>
-
-                <h5 class="text-primary mb-3"><i class="fas fa-calendar-alt"></i> Datas e Horas</h5>
-                <!-- Data e Hora Saída -->
-                <div class="row mb-4">
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.data_saida.id_for_label }}" class="form-label"><i class="fas fa-calendar-day"></i> Data Saída</label>
-                        {{ form.data_saida }}
-                        {% if form.data_saida.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in form.data_saida.errors %}
-                                    <p class="mb-0">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="invalid-feedback">Por favor, informe a data de saída.</div>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.hora_saida.id_for_label }}" class="form-label"><i class="fas fa-clock"></i> Hora Saída</label>
-                        {{ form.hora_saida }}
-                        {% if form.hora_saida.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in form.hora_saida.errors %}
-                                    <p class="mb-0">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
-                        {% endif %}
-                    </div>
-                </div>
-                <!-- Data e Hora Retorno -->
-                <div class="row mb-4">
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.data_retorno.id_for_label }}" class="form-label"><i class="fas fa-calendar-check"></i> Data Retorno</label>
-                        {{ form.data_retorno }}
-                        {% if form.data_retorno.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in form.data_retorno.errors %}
-                                    <p class="mb-0">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
-                        {% endif %}
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.hora_retorno.id_for_label }}" class="form-label"><i class="fas fa-history"></i> Hora Retorno</label>
-                        {{ form.hora_retorno }}
-                        {% if form.hora_retorno.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in form.hora_retorno.errors %}
-                                    <p class="mb-0">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
                         {% endif %}
                     </div>
                 </div>
@@ -302,5 +302,78 @@
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = [
+            document.getElementById('id_data_saida'),
+            document.getElementById('id_hora_saida'),
+            document.getElementById('id_data_retorno'),
+            document.getElementById('id_hora_retorno'),
+        ];
+
+        const veiculoSelect = document.getElementById('id_veiculo');
+        const motoristaSelect = document.getElementById('id_motorista');
+        veiculoSelect.innerHTML = '';
+        motoristaSelect.innerHTML = '';
+        veiculoSelect.disabled = true;
+        motoristaSelect.disabled = true;
+
+        function fetchDisponibilidade() {
+            const data_saida = document.getElementById('id_data_saida').value;
+            const hora_saida = document.getElementById('id_hora_saida').value;
+            const data_retorno = document.getElementById('id_data_retorno').value;
+            const hora_retorno = document.getElementById('id_hora_retorno').value;
+
+            if (!data_saida || !hora_saida || !data_retorno || !hora_retorno) {
+                return; // espera os campos estarem todos preenchidos
+            }
+
+            const params = new URLSearchParams({
+                data_saida,
+                hora_saida,
+                data_retorno,
+                hora_retorno
+            });
+
+            fetch(`/controle/ajax/verificar-disponibilidade?${params}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.warn(data.error);
+                        return;
+                    }
+
+                    // Atualiza veículos
+                    veiculoSelect.innerHTML = '';
+                    data.veiculos.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nome;
+                        veiculoSelect.appendChild(option);
+                    });
+                    veiculoSelect.disabled = false;
+
+                    // Atualiza motoristas
+                    motoristaSelect.innerHTML = '';
+                    data.motoristas.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nome;
+                        motoristaSelect.appendChild(option);
+                    });
+                    motoristaSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar disponibilidade:', error);
+                });
+        }
+
+        // Detecta mudança nos campos de data/hora
+        inputs.forEach(input => {
+            input.addEventListener('change', fetchDisponibilidade);
+            input.addEventListener('blur', fetchDisponibilidade);
+        });
+    });
+
 </script>
 {% endblock %}
