@@ -6,9 +6,9 @@ from servidor.models import Servidor
 class Controle(models.Model):
     veiculo = models.ForeignKey(Veiculo, on_delete=models.CASCADE)
     motorista = models.ForeignKey(Motorista, on_delete=models.SET_NULL, null=True)
-    setor = models.CharField(max_length=50, null=True)
-    servidor = models.ForeignKey(Servidor, on_delete=models.SET_NULL, null=True)
-    codigo_viagem = models.CharField(max_length=20, null=True)
+    setor = models.CharField(max_length=50, null=True, blank=True) # Consider adding blank=True if setor can be empty
+    servidor = models.ForeignKey(Servidor, on_delete=models.SET_NULL, null=True, blank=True) # Add blank=True
+    codigo_viagem = models.CharField(max_length=20, null=True, blank=True) # Add blank=True
     data_saida = models.DateField()
     hora_saida = models.TimeField()
     km_saida = models.IntegerField()

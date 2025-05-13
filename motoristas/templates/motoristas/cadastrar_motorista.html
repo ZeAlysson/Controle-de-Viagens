@@ -32,20 +32,34 @@
 
                          <!-- CNH -->
                          <div class="form-group mb-4">
-                            <label for="{{ form.cnh.id_for_label }}" class="form-label">
-                                <i class="fas fa-id-card"></i> Número da CNH
+                            <label for="{{ form.categoria_cnh.id_for_label }}" class="form-label">
+                                <i class="fas fa-id-card"></i> Categoria da CNH
                                 <!-- Ícone de Ajuda (para Modal) -->
-                                <a href="images/cnh_registro.png" data-toggle="modal" data-target="#cnhHelpModal">
+                                <a href="images/categorias_cnh.png" data-toggle="modal" data-target="#cnhHelpModal">
                                     <i class="fas fa-question-circle text-muted ml-2"
                                    id="cnhHelpIcon"
-                                   style="cursor: pointer;"
-                                   title="Onde encontrar o número da CNH?"></i>
+                                   style="cursor: pointer;"></i>
                                 </a>
                             </label>
-                            {{ form.cnh }}
-                            <div class="invalid-feedback">Por favor, informe o número da CNH (apenas números).</div>
+                            {{ form.categoria_cnh }}
+                            <div class="invalid-feedback">Por favor, informe a categoria da CNH.</div>
                         </div>
 
+                        <!-- CPF -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.cpf.id_for_label }}" class="form-label"><i class="fas fa-id-card"></i> CPF</label>
+                            {{ form.cpf }}
+                            <div class="invalid-feedback">Por favor, informe um CPF válido.</div>
+                        </div>
+
+                        <!-- Limite de diárias -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.limite_diarias.id_for_label }}" class="form-label"><i class="fas fa-calendar-alt"></i> Limite de Diárias</label>
+                            {{ form.limite_diarias }}
+                            <div class="invalid-feedback">Por favor, informe o limite de diárias.</div>
+                            <small class="form-text text-muted">Informe o número máximo de diárias que o motorista pode realizar.</small>
+                        </div>
+                        
                         <!-- Botões -->
                         <div class="d-flex justify-content-between mt-5">
                             <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Cadastrar Motorista</button>
@@ -59,15 +73,14 @@
                 <div class="modal-dialog modal-dialog-centered modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="cnhHelpModalLabel"><i class="fas fa-info-circle"></i> Onde encontrar o Número de Registro da CNH</h5>
+                            <h5 class="modal-title" id="cnhHelpModalLabel"><i class="fas fa-info-circle"></i> Categorias de habilitação</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body text-center">
-                            <p>O número de registro da CNH geralmente fica localizado conforme indicado na imagem abaixo (pode variar ligeiramente dependendo do modelo da CNH):</p>
-                            <img src="{% static 'images/cnh_registro.png' %}" alt="Exemplo de localização do número da CNH" class="img-fluid rounded border" width="70%">
-                            <p class="mt-3">É um número composto apenas por dígitos.</p>
+                            <p>Categorias de habilitação mostram quais são os veículos que o motorista tem permissão para dirigir!</p>
+                            <img src="{% static 'images/categorias_cnh.png' %}" alt="Exemplo de localização do número da CNH" class="img-fluid rounded border" width="70%">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -125,16 +138,16 @@
             telefoneInput.setAttribute('maxlength', '15'); // (XX) XXXXX-XXXX tem 15 caracteres
         }
 
-        const cnhInput = document.getElementById('{{ form.cnh.id_for_label }}');
-        if (cnhInput) {
-            cnhInput.addEventListener('input', function (e) {
-                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
-                value = value.substring(0, 11); // Limita a 11 dígitos
-                e.target.value = value; // Atualiza o valor do input
-            });
-            // Define o atributo maxlength para o input
-            cnhInput.setAttribute('maxlength', '11'); // CNH normalmente tem 11 caracteres
-        }
+        // const cnhInput = document.getElementById('{{ form.cnh.id_for_label }}');
+        // if (cnhInput) {
+        //     cnhInput.addEventListener('input', function (e) {
+        //         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+        //         value = value.substring(0, 11); // Limita a 11 dígitos
+        //         e.target.value = value; // Atualiza o valor do input
+        //     });
+        //     // Define o atributo maxlength para o input
+        //     cnhInput.setAttribute('maxlength', '11'); // CNH normalmente tem 11 caracteres
+        // }
 
         // Lógica para o Modal de Ajuda da CNH
         if (cnhHelpIcon && cnhHelpModalEl) {

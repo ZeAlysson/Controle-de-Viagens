@@ -31,18 +31,32 @@
 
                         <!-- CNH -->
                         <div class="form-group mb-4">
-                            <label for="{{ form.cnh.id_for_label }}" class="form-label">
-                                <i class="fas fa-id-card"></i> Número da CNH
+                            <label for="{{ form.categoria_cnh.id_for_label }}" class="form-label">
+                                <i class="fas fa-id-card"></i> Categoria da CNH
                                 <!-- Ícone de Ajuda (para Modal) -->
-                                <a href="images/cnh_registro.png" data-toggle="modal" data-target="#cnhHelpModal">
+                                <a href="images/categorias_cnh.png" data-toggle="modal" data-target="#cnhHelpModal">
                                     <i class="fas fa-question-circle text-muted ml-2"
-                                id="cnhHelpIcon"
-                                style="cursor: pointer;"
-                                title="Onde encontrar o número da CNH?"></i>
+                                   id="cnhHelpIcon"
+                                   style="cursor: pointer;"></i>
                                 </a>
                             </label>
-                            {{ form.cnh }}
-                            <div class="invalid-feedback">Por favor, informe o número da CNH (apenas números).</div>
+                            {{ form.categoria_cnh }}
+                            <div class="invalid-feedback">Por favor, informe a categoria da CNH.</div>
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.cpf.id_for_label }}" class="form-label"><i class="fas fa-id-card"></i> CPF</label>
+                            {{ form.cpf }}
+                            <div class="invalid-feedback">Por favor, informe um CPF válido.</div>
+                        </div>
+
+                        <!-- Limite de diárias -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.limite_diarias.id_for_label }}" class="form-label"><i class="fas fa-calendar-alt"></i> Limite de Diárias</label>
+                            {{ form.limite_diarias }}
+                            <div class="invalid-feedback">Por favor, informe o limite de diárias.</div>
+                            <small class="form-text text-muted">Informe o número máximo de diárias que o motorista pode realizar.</small>
                         </div>
 
                         <!-- Botões -->
@@ -136,16 +150,16 @@
             telefoneInput.setAttribute('maxlength', '15'); // (XX) XXXXX-XXXX tem 15 caracteres
         }
 
-        const cnhInput = document.getElementById('{{ form.cnh.id_for_label }}');
-        if (cnhInput) {
-            cnhInput.addEventListener('input', function (e) {
-                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
-                value = value.substring(0, 11); // Limita a 11 dígitos
-                e.target.value = value; // Atualiza o valor do input
-            });
-            // Define o atributo maxlength para o input
-            cnhInput.setAttribute('maxlength', '11'); // CNH normalmente tem 11 caracteres
-        }
+        // const cnhInput = document.getElementById('{{ form.cnh.id_for_label }}');
+        // if (cnhInput) {
+        //     cnhInput.addEventListener('input', function (e) {
+        //         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+        //         value = value.substring(0, 11); // Limita a 11 dígitos
+        //         e.target.value = value; // Atualiza o valor do input
+        //     });
+        //     // Define o atributo maxlength para o input
+        //     cnhInput.setAttribute('maxlength', '11'); // CNH normalmente tem 11 caracteres
+        // }
         // Lógica para o Modal de Ajuda da CNH
         if (cnhHelpIcon && cnhHelpModalEl) {
             // Instancia o Modal do Bootstrap (usando a API JavaScript do Bootstrap 4/5)
