@@ -9,7 +9,7 @@ urlpatterns = [
     path('excluir-controle/<int:controle_id>/', excluir_controle, name='excluir_controle'),
     path('tela-controle/', tela_controle, name='tela_controle'),
     path('cadastrar-controle/', cadastrar_controle, name='cadastrar_controle'),
-
+    path('ajax/verificar-disponibilidade/', verificar_disponibilidade, name='verificar_disponibilidade'),
     # meus app
     path('veiculos/', include('veiculos.urls')),
     path('motoristas/', include('motoristas.urls')),

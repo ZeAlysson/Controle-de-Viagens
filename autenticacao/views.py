@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
-
+from django.contrib import messages
 from motoristas.models import Motorista
 from servidor.models import Servidor
 from .forms import LoginServidoresForm, RegistroForm, LoginForm
@@ -50,10 +50,9 @@ def login_servidores(request):
                     request.session[chave] = usuario.cpf
                     return redirect('listagem_viagens_motorista')
             
-            form.add_error('cpf', "CPF não encontrado. Verifique e tente novamente.")
-    else:
-        form = LoginServidoresForm()
-
+        messages.error(request, "CPF inválido ou sessão expirada. Faça login novamente.")
+        
+    form = LoginServidoresForm()
     return render(request, 'login/login.html', {'form': form})
 
 
