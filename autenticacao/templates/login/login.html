@@ -45,9 +45,10 @@
                     <button type="submit" class="btn btn-primary btn-lg">Entrar</button>
                   </div>
 
-                   <div class="text-center">
+                  <!--<div class="text-center">
                        <p class="small">Não tem uma conta? <a href="{% url 'registro' %}" class="fw-bold">Registre-se!</a></p>
                    </div>
+                  -->
                 </form>
 
               </div>
@@ -65,5 +66,15 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+
+    document.querySelectorAll('.form-outline').forEach((formOutline) => {
+    new mdb.Input(formOutline).init();
+
+    });
+  });
+</script>
 
 {% endblock %}

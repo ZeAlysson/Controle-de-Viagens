@@ -35,6 +35,7 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
+        {% if request.user.is_authenticated %}
         <ul class="navbar-nav">
             <li>
                 <a class="nav-link" href="{% url 'tela_controle' %}">
@@ -51,10 +52,19 @@
                 <a class="nav-link" href="{% url 'cadastrar_controle' %}"><i class="fas fa-plus-circle"></i> Cadastrar Viagem</a> <!-- Changed text -->
             </li>
         </ul>
+        {% else %}
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href=""><i class="fas fa-car-side"></i> Saudações! Segue o registro de suas viagens:</a>
+                </li>
+            </ul>
+        {% endif %}
     </div>
-
+       
     <div class="d-flex align-items-center">
-        <span class="text-white me-2 mr-2">Bem Vindo(a), <strong>{{ request.user.username }}</strong></span>
+        {% if request.user.is_authenticated %}
+            <span class="text-white mr-3">Bem Vindo(a), <strong>{{ request.user.username }}</strong>!</span>
+        {% endif %}
         <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">
             <i class="fas fa-sign-out-alt"></i> Sair
         </a>

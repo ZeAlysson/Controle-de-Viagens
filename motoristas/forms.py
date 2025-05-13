@@ -1,9 +1,11 @@
 from django import forms
 from .models import Motorista
+import re
+from validate_docbr import CPF  # Importe a classe CPF
 
 class MotoristaForm(forms.ModelForm):
     CATEGORIA_CNH_CHOICES = [
-       ('', '---------'),  # Adiciona uma opção vazia
+       ('', '---------'),
        ('A', 'A'),
        ('B', 'B'),
        ('C', 'C'),
@@ -20,17 +22,31 @@ class MotoristaForm(forms.ModelForm):
     class Meta:
         model = Motorista
         fields = ['nome', 'telefone', 'categoria_cnh', 'cpf', 'limite_diarias']
-         # Widgets podem ser definidos aqui também, mas já estão acima.
-         # Se definidos aqui, remova a definição dos campos acima.
-         # widgets = {
-         #     'nome': forms.TextInput(attrs={'placeholder': 'Ex: João da Silva', 'class': 'form-control'}),
-         #     'telefone': forms.TextInput(attrs={'placeholder': 'Ex: (11) 91234-5678', 'class': 'form-control'}),
-         #     'categoria_cnh': forms.Select(attrs={'class': 'form-control'}),  # Choices são definidos no campo acima
-         #     'cpf': forms.TextInput(attrs={'placeholder': 'Ex: 12345678901', 'class': 'form-control'}),
-         #     'limite_diarias': forms.NumberInput(attrs={'placeholder': 'Ex: 10', 'class': 'form-control'}),
-         # }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        # Garante que as choices atualizadas sejam usadas
         self.fields['categoria_cnh'].choices = self.CATEGORIA_CNH_CHOICES
+
+    def clean_cpf(self):
+        cpf_valor = self.cleaned_data.get('cpf')
+        cpf_validator = CPF()
+
+        if cpf_valor:
+            # Remove caracteres não numéricos para a validação e armazenamento
+            cpf_numeros = re.sub(r'\D', '', cpf_valor)
+
+            if not cpf_validator.validate(cpf_numeros):  # Usa o validador do validate_docbr
+                raise forms.ValidationError("CPF inválido. Verifique os dígitos.")
+
+            # Verifica se o CPF já existe no banco de dados,
+            # excluindo a instância atual se estiver editando
+            instance = getattr(self, 'instance', None)
+            query = Motorista.objects.filter(cpf=cpf_numeros)
+            if instance and instance.pk:
+                query = query.exclude(pk=instance.pk)
+            
+            if query.exists():
+                raise forms.ValidationError("Este CPF já está cadastrado.")
+            
+            return cpf_numeros  # Retorna o CPF limpo (apenas números)
+        return cpf_valor  # Retorna o valor original se estiver vazio (deixe a validação de campo obrigatório tratar)

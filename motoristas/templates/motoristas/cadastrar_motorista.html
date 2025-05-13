@@ -15,6 +15,14 @@
                     <form method="post" class="needs-validation" novalidate>
                         {% csrf_token %}
 
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
                         <!-- Nome -->
                         <div class="form-group mb-4">
                             <label for="{{ form.nome.id_for_label }}" class="form-label"><i class="fas fa-user-tag"></i> Nome Completo</label>
@@ -49,7 +57,15 @@
                         <div class="form-group mb-4">
                             <label for="{{ form.cpf.id_for_label }}" class="form-label"><i class="fas fa-id-card"></i> CPF</label>
                             {{ form.cpf }}
-                            <div class="invalid-feedback">Por favor, informe um CPF válido.</div>
+                            {% if form.cpf.errors %}
+                                <div class="alert alert-danger my-2">
+                                    {% for error in form.cpf.errors %}
+                                        <p class="mb-0">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="invalid-feedback">Por favor, informe um CPF válido com 11 dígitos.</div>
+                            <small class="form-text text-muted">Digite apenas os 11 números do CPF.</small>
                         </div>
 
                         <!-- Limite de diárias -->
@@ -158,6 +174,19 @@
             // Adiciona evento de clique ao ícone para mostrar o modal
             cnhHelpIcon.addEventListener('click', function() {
                 cnhHelpModal.show(); // Mostra o modal
+            });
+        }
+
+        // Máscara e validação para o campo CPF
+        const cpfInput = document.getElementById('{{ form.cpf.id_for_label }}');
+        if (cpfInput) {
+            cpfInput.setAttribute('maxlength', '11'); // Limita o input a 11 caracteres
+            cpfInput.setAttribute('pattern', '\\d{11}'); // Validação HTML5 para 11 dígitos
+            
+            cpfInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+                value = value.substring(0, 11); // Garante que não ultrapasse 11 dígitos
+                e.target.value = value; // Atualiza o valor do input
             });
         }
     });
