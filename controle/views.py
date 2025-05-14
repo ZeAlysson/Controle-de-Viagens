@@ -78,7 +78,7 @@ def cadastrar_controle(request):
 
     return render(request, 'controle/cadastrar_controle.html', {'form': form})
 
-@require_GET
+@require_GET #TODO filtrar pelas diarias
 def verificar_disponibilidade(request):
     data_saida = request.GET.get('data_saida')
     hora_saida = request.GET.get('hora_saida')
@@ -111,8 +111,8 @@ def verificar_disponibilidade(request):
     veiculos_ocupados = controles_conflitantes.values_list('veiculo_id', flat=True)
     motoristas_ocupados = controles_conflitantes.values_list('motorista_id', flat=True)
 
-    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados)
-    motoristas_disponiveis = Motorista.objects.exclude(id__in=motoristas_ocupados)
+    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados).order_by("modelo_veiculo");
+    motoristas_disponiveis = Motorista.objects.exclude(id__in=motoristas_ocupados).order_by("nome")
 
     return JsonResponse({
     'veiculos': [{'id': v.id, 'nome': str(v)} for v in veiculos_disponiveis],

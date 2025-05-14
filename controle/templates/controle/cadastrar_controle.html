@@ -50,6 +50,7 @@
                         {% endif %}
                     </div>
                 </div>
+                <div id="errosAjax" ></div>
                 <!-- Data e Hora Retorno -->
                 <div class="row mb-4">
                     <div class="col-md-6 form-group">
@@ -334,38 +335,55 @@
                 data_retorno,
                 hora_retorno
             });
-
+            
+            const divErros = document.getElementById("errosAjax");
+            divErros.innerHTML = '';
             fetch(`/controle/ajax/verificar-disponibilidade?${params}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.warn(data.error);
-                        return;
-                    }
-
-                    // Atualiza veículos
-                    veiculoSelect.innerHTML = '';
-                    data.veiculos.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = item.id;
-                        option.textContent = item.nome;
-                        veiculoSelect.appendChild(option);
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw data;
                     });
-                    veiculoSelect.disabled = false;
-
-                    // Atualiza motoristas
-                    motoristaSelect.innerHTML = '';
-                    data.motoristas.forEach(item => {
-                        const option = document.createElement('option');
-                        option.value = item.id;
-                        option.textContent = item.nome;
-                        motoristaSelect.appendChild(option);
-                    });
-                    motoristaSelect.disabled = false;
-                })
-                .catch(error => {
-                    console.error('Erro ao buscar disponibilidade:', error);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Limpa erros anteriores
+                const divErros = document.getElementById("errosAjax");
+                divErros.innerHTML = '';
+            
+                // Atualiza veículos
+                veiculoSelect.innerHTML = '';
+                data.veiculos.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.nome;
+                    veiculoSelect.appendChild(option);
                 });
+                veiculoSelect.disabled = false;
+            
+                // Atualiza motoristas
+                motoristaSelect.innerHTML = '';
+                data.motoristas.forEach(item => {
+                    const option = document.createElement('option');
+                    option.value = item.id;
+                    option.textContent = item.nome;
+                    motoristaSelect.appendChild(option);
+                });
+                motoristaSelect.disabled = false;
+            })
+            .catch(error => {
+                divErros.innerHTML = '';
+
+                const p = document.createElement('p');
+                p.classList.add("alert", "alert-danger", "w-50");
+                if (error.error) {
+                    p.textContent = error.error;
+                } else {
+                    p.textContent = 'Erro desconhecido.';
+                }
+                divErros.appendChild(p);
+            });
         }
 
         // Detecta mudança nos campos de data/hora
