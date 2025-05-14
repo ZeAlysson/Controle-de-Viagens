@@ -3,9 +3,10 @@ from controle.models import Controle
 from .forms import MotoristaForm
 from .models import Motorista
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser, login_url='login_admin')
 def cadastrar_motorista(request):
     if request.method == 'POST':
         form = MotoristaForm(request.POST)
@@ -18,17 +19,20 @@ def cadastrar_motorista(request):
     return render(request, 'motoristas/cadastrar_motorista.html', {'form': form})
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser, login_url='login_admin')
 def listar_motoristas(request):
     motoristas = Motorista.objects.all()
     return render(request, 'motoristas/listar_motoristas.html', {'motoristas': motoristas})
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser, login_url='login_admin')
 def excluir_motorista(request, motorista_id):
     motorista = get_object_or_404(Motorista, pk=motorista_id)
     motorista.delete()
     return redirect('listar_motoristas')
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser, login_url='login_admin')
 def editar_motorista(request, motorista_id):
     motorista = get_object_or_404(Motorista, pk=motorista_id)
 

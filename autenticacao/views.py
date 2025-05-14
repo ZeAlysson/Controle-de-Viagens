@@ -1,10 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from motoristas.models import Motorista
 from servidor.models import Servidor
-from .forms import LoginServidoresForm, RegistroForm, LoginForm
+from .forms import LoginServidoresForm, RegistroForm, AdminLoginForm
 
 def registrar_usuario(request):
     if request.method == "POST":
@@ -13,23 +13,32 @@ def registrar_usuario(request):
             user = form.save()
             if user != None:
                 login(request=request, user=user)
-                return redirect('logado')
+                messages.success(request, f"Usuário {user.username} registrado com sucesso!")
+                return redirect('login_admin')
     else:
         form = RegistroForm()
     return render(request, 'registro/registro.html', {'form': form})
 
 def login_admin(request):
     if request.method == "POST":
-        form = LoginForm(request.POST)
-        if form.is_valid:
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user != None:
-                login(request=request, user=user)
-                return redirect('logado')
+        form = AdminLoginForm(request, data=request.POST) # Usar AdminLoginForm
+        if form.is_valid():
+            user = form.get_user() # Método correto para obter o usuário do AuthenticationForm
+            if user is not None:
+                if user.is_staff: # ESSENCIAL: Verificar se o usuário é staff/admin
+                    login(request, user)
+                    messages.success(request, f"Bem-vindo, Administrador {user.username}!")
+                    return redirect('tela_principal')  # Ou sua URL de dashboard admin
+                else:
+                    messages.error(request, "Acesso negado. Esta conta não tem permissões de administrador.")
+            else:
+                # O formulário já trata "usuário ou senha inválidos" através de form.errors
+                # mas pode-se adicionar uma mensagem genérica se preferir.
+                messages.error(request, "Nome de usuário ou senha inválidos.")
+        # else: # O formulário não é válido, os erros serão exibidos no template
+        #     messages.error(request, "Por favor, corrija os erros abaixo.")
     else:
-        form = LoginForm()
+        form = AdminLoginForm()
     return render(request, 'login/admin/login.html', {'form': form})
 
 def login_servidores(request):
@@ -57,6 +66,7 @@ def login_servidores(request):
 
 
 @login_required
+@user_passes_test(lambda u: u.is_staff)
 def logado(request):
     return redirect('raiz')
 

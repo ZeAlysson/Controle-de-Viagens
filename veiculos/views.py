@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import VeiculoForm
 from .models import Veiculo
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def cadastrar_veiculo(request):
     if request.method == 'POST':
         form = VeiculoForm(request.POST)
@@ -16,17 +17,20 @@ def cadastrar_veiculo(request):
     return render(request, 'veiculos/cadastrar_veiculo.html', {'form': form})
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def listar_veiculo(request):
     veiculo = Veiculo.objects.all()
     return render(request, 'veiculos/listar_veiculo.html', {'veiculos': veiculo})
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def excluir_veiculo(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, pk=veiculo_id)
     veiculo.delete()
     return redirect('listar_veiculo')
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def editar_veiculo(request, veiculo_id):
     veiculo = get_object_or_404(Veiculo, pk=veiculo_id)
 

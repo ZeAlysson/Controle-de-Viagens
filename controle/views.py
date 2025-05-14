@@ -4,7 +4,7 @@ from .models import Controle
 from .forms import ControleForm
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
@@ -14,6 +14,7 @@ def calcular_total_km_rodados(veiculo):
     return Controle.objects.filter(veiculo=veiculo).aggregate(Sum('km_percorrido'))['km_percorrido__sum']
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def tela_controle(request):
     # consulta por período
     data_inicio = request.GET.get('data_inicio')
@@ -31,6 +32,7 @@ def tela_controle(request):
     return render(request, 'controle/tela_principal.html', {'controles': controles})
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def visualizar_controle(request, controle_id):
     controle = get_object_or_404(Controle, pk=controle_id)
 
@@ -45,6 +47,7 @@ def visualizar_controle(request, controle_id):
     return render(request, 'controle/visualizar_controle.html', {'controle': controle, 'total_km_rodados': total_km_rodados, 'alerta_troca_oleo': alerta_troca_oleo})
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def editar_controle(request, controle_id):
     controle = get_object_or_404(Controle, pk=controle_id)
     total_km_rodados = calcular_total_km_rodados(controle.veiculo)
@@ -60,6 +63,7 @@ def editar_controle(request, controle_id):
 
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def excluir_controle(request, controle_id):
     controle = get_object_or_404(Controle, pk=controle_id)
     controle.delete()
@@ -67,6 +71,7 @@ def excluir_controle(request, controle_id):
 
 
 @login_required
+@user_passes_test(lambda u: u.is_superuser)
 def cadastrar_controle(request):
     if request.method == 'POST':
         form = ControleForm(request.POST)
