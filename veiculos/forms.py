@@ -1,31 +1,29 @@
 from django import forms
 from veiculos.models import Veiculo  # Certifique-se de importar o modelo correspondente
+from brutils import is_valid_license_plate 
+import re
 
 class VeiculoForm(forms.ModelForm):
     MARCAS_CHOICES = [
         ('', '---------'), # Adiciona uma opção vazia
-        ('Chevrolet', 'Chevrolet'),
-        ('Fiat', 'Fiat'),
-        ('Ford', 'Ford'),
-        ('Honda', 'Honda'),
-        ('Hyundai', 'Hyundai'),
-        ('Jeep', 'Jeep'),
-        ('Nissan', 'Nissan'),
-        ('Peugeot', 'Peugeot'),
-        ('Renault', 'Renault'),
-        ('Toyota', 'Toyota'),
-        ('Volkswagen', 'Volkswagen'),
-        # Marcas premium/outras
-        ('Audi', 'Audi'),
-        ('BMW', 'BMW'),
-        ('Caoa Chery', 'Caoa Chery'),
-        ('Citroën', 'Citroën'),
-        ('Kia', 'Kia'),
-        ('Land Rover', 'Land Rover'),
-        ('Mercedes-Benz', 'Mercedes-Benz'),
-        ('Mitsubishi', 'Mitsubishi'),
-        ('Volvo', 'Volvo'),
-        # Adicione outras marcas conforme necessário
+        # Chevrolet
+        ('Chevrolet Onix', 'Chevrolet Onix'),
+        # Fiat
+        ('Fiat Strada', 'Fiat Strada'),
+        ('Fiat Argo', 'Fiat Argo'),
+        ('Fiat Mobi', 'Fiat Mobi'),
+        ('Fiat Toro', 'Fiat Toro'),
+        ('Fiat Pulse', 'Fiat Pulse'),
+        # Volkswagen
+        ('Volkswagen Gol', 'Volkswagen Gol'), # Embora descontinuado, ainda popular
+        ('Volkswagen Polo', 'Volkswagen Polo'),
+        ('Volkswagen T-Cross', 'Volkswagen T-Cross'),
+        ('Volkswagen Nivus', 'Volkswagen Nivus'),
+        # Hyundai
+        ('Hyundai HB20', 'Hyundai HB20'),
+        ('Hyundai HB20S', 'Hyundai HB20S'),
+        # Jeep
+        ('Jeep Renegade', 'Jeep Renegade'),
     ]
 
     # Use ModelForm fields diretamente ou customize widgets se necessário
@@ -51,3 +49,31 @@ class VeiculoForm(forms.ModelForm):
         # Garante que as choices atualizadas sejam usadas
         self.fields['modelo_veiculo'].choices = self.MARCAS_CHOICES
 
+    def clean_placa(self):
+        placa_valor = self.cleaned_data.get('placa')
+
+        if placa_valor:
+            # Remove caracteres não alfanuméricos e converte para maiúsculas.
+            # A brutils.placa.is_valid também faz limpeza, mas é bom padronizar aqui.
+            placa_limpa = re.sub(r'[^A-Z0-9]', '', str(placa_valor).upper())
+
+            # A função is_valid da brutils já verifica o comprimento e o formato.
+            if not is_valid_license_plate(placa_limpa):
+                raise forms.ValidationError(
+                    "Formato de placa inválido. Use AAA1234 ou AAA1A23 (Mercosul) e verifique os caracteres."
+                )
+
+            # Verifica se a placa já existe no banco de dados,
+            # excluindo a instância atual se estiver editando
+            instance = getattr(self, 'instance', None)
+            query = Veiculo.objects.filter(placa=placa_limpa) # Use a placa_limpa para a consulta
+            if instance and instance.pk:
+                query = query.exclude(pk=instance.pk)
+
+            if query.exists():
+                raise forms.ValidationError("Esta placa já está cadastrada.")
+
+            return placa_limpa # Retorna a placa limpa e padronizada
+
+        # Se o campo puder ser opcional e vazio for válido, retorne placa_valor.
+        return placa_valor
