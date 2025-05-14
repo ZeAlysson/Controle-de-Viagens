@@ -11,12 +11,12 @@ class Controle(models.Model):
     codigo_viagem = models.CharField(max_length=20, null=True, blank=True) # Add blank=True
     data_saida = models.DateField()
     hora_saida = models.TimeField()
-    km_saida = models.IntegerField()
+    km_saida = models.IntegerField(null=True, blank=True) # Add blank=True
     destino = models.CharField(max_length=100)
     data_retorno = models.DateField()
     hora_retorno = models.TimeField()
-    km_retorno = models.IntegerField()
-    km_percorrido = models.IntegerField()
+    km_retorno = models.IntegerField(null=True, blank=True) # Add blank=True
+    km_percorrido = models.IntegerField(null=True, blank=True) # Add blank=True
 
     def formato_data_saida(self):
         return self.data_saida.strftime("%Y-%m-%d")

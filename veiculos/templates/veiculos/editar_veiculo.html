@@ -9,73 +9,86 @@
             <h2><i class="fas fa-edit"></i> Editar Veículo #{{ form.instance.id }}</h2>
         </div>
         <div class="card-body">
-            <form method="post" class="needs-validation" novalidate>
-                {% csrf_token %}
+             <!-- Adiciona row e colunas para controlar a largura -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8"> <!-- Ajuste colunas (ex: col-lg-8, col-md-10) -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
 
-                <!-- Placa -->
-                <div class="form-group mb-4">
-                    <label for="{{ form.placa.id_for_label }}" class="form-label"><i class="fas fa-digital-tachograph"></i> Placa</label>
-                    {{ form.placa }}
-                    <div class="invalid-feedback">Por favor, insira uma placa válida (ex: ABC1D23).</div>
-                    {% if form.placa.errors %}
-                        <div class="alert alert-danger mt-1 p-1">
-                            {% for error in form.placa.errors %}
-                                {{ error }}
-                            {% endfor %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        <!-- Placa -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.placa.id_for_label }}" class="form-label"><i class="fas fa-digital-tachograph"></i> Placa</label>
+                                {{ form.placa }}
+                                {% if form.placa.errors %}
+                                    <div class="alert alert-danger my-2">
+                                        {% for error in form.placa.errors %}
+                                                <p class="mb-0">{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+                                <div class="invalid-feedback">
+                                    Por favor, insira uma placa válida.
+                                </div>
                         </div>
-                    {% endif %}
-                </div>
 
-                <!-- modelo_veiculo -->
-                <div class="form-group mb-4">
-                    <label for="{{ form.modelo_veiculo.id_for_label }}" class="form-label"><i class="fas fa-copyright"></i> Modelo do Veículo</label>
-                    {{ form.modelo_veiculo }}
-                    <div class="invalid-feedback">Por favor, selecione um veículo.</div>
-                    {% if form.modelo_veiculo.errors %}
-                        <div class="alert alert-danger mt-1 p-1">
-                            {% for error in form.modelo_veiculo.errors %}
-                                {{ error }}
-                            {% endfor %}
+                        <!-- modelo_veiculo -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.modelo_veiculo.id_for_label }}" class="form-label"><i class="fas fa-copyright"></i> Modelo do Veículo</label>
+                            {{ form.modelo_veiculo }}
+                            <div class="invalid-feedback">Por favor, selecione um veículo.</div>
+                            {% if form.modelo_veiculo.errors %}
+                                <div class="alert alert-danger mt-1 p-1">
+                                    {% for error in form.modelo_veiculo.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                </div>
 
-                <!-- Modelo do Veículo 
-                <div class="form-group mb-4">
-                    <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car-alt"></i> Modelo</label>
-                    {{ form.veiculo }}
-                    <div class="invalid-feedback">Por favor, informe o modelo do veículo.</div>
-                    {% if form.veiculo.errors %}
-                        <div class="alert alert-danger mt-1 p-1">
-                            {% for error in form.veiculo.errors %}
-                                {{ error }}
-                            {% endfor %}
+                        <!-- Modelo do Veículo 
+                        <div class="form-group mb-4">
+                            <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car-alt"></i> Modelo</label>
+                            {{ form.veiculo }}
+                            <div class="invalid-feedback">Por favor, informe o modelo do veículo.</div>
+                            {% if form.veiculo.errors %}
+                                <div class="alert alert-danger mt-1 p-1">
+                                    {% for error in form.veiculo.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
-                    {% endif %}
-                </div>
 
 
-      
-                <div class="form-group mb-4">
-                    <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label"><i class="fas fa-oil-can"></i> KM Próxima Troca de Óleo</label>
-                    {{ form.km_troca_oleo }}
-                    <div class="invalid-feedback">Por favor, insira um valor válido para a quilometragem da próxima troca.</div>
-                    <small class="form-text text-muted">Informe a quilometragem em que a próxima troca de óleo deve ser realizada.</small>
-                    {% if form.km_troca_oleo.errors %}
-                        <div class="alert alert-danger mt-1 p-1">
-                            {% for error in form.km_troca_oleo.errors %}
-                                {{ error }}
-                            {% endfor %}
+            
+                        <div class="form-group mb-4">
+                            <label for="{{ form.km_troca_oleo.id_for_label }}" class="form-label"><i class="fas fa-oil-can"></i> KM Próxima Troca de Óleo</label>
+                            {{ form.km_troca_oleo }}
+                            <div class="invalid-feedback">Por favor, insira um valor válido para a quilometragem da próxima troca.</div>
+                            <small class="form-text text-muted">Informe a quilometragem em que a próxima troca de óleo deve ser realizada.</small>
+                            {% if form.km_troca_oleo.errors %}
+                                <div class="alert alert-danger mt-1 p-1">
+                                    {% for error in form.km_troca_oleo.errors %}
+                                        {{ error }}
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div> -->
+
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Alterações</button>
+                            <a href="{% url 'listar_veiculo' %}" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
                         </div>
-                    {% endif %}
-                </div> -->
-
-                <!-- Botões -->
-                <div class="d-flex justify-content-between mt-5">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Alterações</button>
-                    <a href="{% url 'listar_veiculo' %}" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                    </form>
                 </div>
-            </form>
+            </div> <!-- Fim da row -->   
         </div>
     </div>
 </div>

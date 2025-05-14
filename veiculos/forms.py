@@ -57,7 +57,6 @@ class VeiculoForm(forms.ModelForm):
             # A brutils.placa.is_valid também faz limpeza, mas é bom padronizar aqui.
             placa_limpa = re.sub(r'[^A-Z0-9]', '', str(placa_valor).upper())
 
-            # A função is_valid da brutils já verifica o comprimento e o formato.
             if not is_valid_license_plate(placa_limpa):
                 raise forms.ValidationError(
                     "Formato de placa inválido. Use AAA1234 ou AAA1A23 (Mercosul) e verifique os caracteres."

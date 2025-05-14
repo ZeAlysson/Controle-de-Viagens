@@ -375,5 +375,13 @@
         });
     });
 
+    const destinoInput = document.getElementById('{{ form.destino.id_for_label }}');
+    // Adiciona evento para transformar o valor em maiúsculas
+    if (destinoInput) {
+        destinoInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    }
+
 </script>
 {% endblock %}

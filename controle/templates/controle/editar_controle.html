@@ -12,19 +12,105 @@
             <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
 
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {% for error in form.non_field_errors %}
+                            <p class="mb-0">{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <h5 class="text-primary mb-3"><i class="fas fa-calendar-alt"></i> Datas e Horas</h5>
+                <!-- Data e Hora Saída -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.data_saida.id_for_label }}" class="form-label"><i class="fas fa-calendar-day"></i> Data Saída</label>
+                        {{ form.data_saida }}
+                        {% if form.data_saida.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.data_saida.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a data de saída.</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.hora_saida.id_for_label }}" class="form-label"><i class="fas fa-clock"></i> Hora Saída</label>
+                        {{ form.hora_saida }}
+                        {% if form.hora_saida.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.hora_saida.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <!-- Data e Hora Retorno -->
+                <div class="row mb-4">
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.data_retorno.id_for_label }}" class="form-label"><i class="fas fa-calendar-check"></i> Data Retorno</label>
+                        {{ form.data_retorno }}
+                        {% if form.data_retorno.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.data_retorno.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.hora_retorno.id_for_label }}" class="form-label"><i class="fas fa-history"></i> Hora Retorno</label>
+                        {{ form.hora_retorno }}
+                        {% if form.hora_retorno.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.hora_retorno.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <hr>
+
                 <h5 class="text-primary mb-3"><i class="fas fa-info-circle"></i> Informações Gerais</h5>
                 <div class="row mb-4">
                     <!-- Veículo -->
                     <div class="col-md-6 form-group">
                         <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-car"></i> Veículo</label>
                         {{ form.veiculo }}
-                        <div class="invalid-feedback">Por favor, selecione um veículo.</div>
+                        {% if form.veiculo.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.veiculo.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um veículo.</div>
+                        {% endif %}
                     </div>
                     <!-- Motorista -->
                     <div class="col-md-6 form-group">
                         <label for="{{ form.motorista.id_for_label }}" class="form-label"><i class="fas fa-user"></i> Motorista</label>
                         {{ form.motorista }}
-                        <div class="invalid-feedback">Por favor, selecione um motorista.</div>
+                        {% if form.motorista.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.motorista.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um motorista.</div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -33,52 +119,46 @@
                     <div class="col-md-12 form-group">
                         <label for="{{ form.destino.id_for_label }}" class="form-label"><i class="fas fa-map-marker-alt"></i> Destino</label>
                         {{ form.destino }}
-                        <div class="invalid-feedback">Por favor, informe o destino.</div>
+                        {% if form.destino.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.destino.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, informe o destino.</div>
+                        {% endif %}
                     </div>
                 </div>
 
                 <div class="row mb-4">
                     <!-- Setor -->
                     <div class="col-md-6 form-group">
-                        <label for="{{ form.veiculo.id_for_label }}" class="form-label"><i class="fas fa-building"></i> Setor</label>
+                        <label for="{{ form.setor.id_for_label }}" class="form-label"><i class="fas fa-building"></i> Setor</label>
                         {{ form.setor}}
-                        <div class="invalid-feedback">Por favor, selecione um setor.</div>
+                        {% if form.setor.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.setor.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um setor.</div>
+                        {% endif %}
                     </div>
                     <!-- Numero do processo -->
                     <div class="col-md-6 form-group">
-                        <label for="{{ form.motorista.id_for_label }}" class="form-label"><i class="fas fa-hashtag"></i> Número do Processo</label>
+                        <label for="{{ form.codigo_viagem.id_for_label }}" class="form-label"><i class="fas fa-hashtag"></i> Número do Processo</label>
                         {{ form.codigo_viagem }}
-                        <div class="invalid-feedback">Por favor, insira o número do processo.</div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <h5 class="text-primary mb-3"><i class="fas fa-calendar-alt"></i> Datas e Horas</h5>
-                <!-- Data e Hora Saída -->
-                <div class="row mb-4">
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.data_saida.id_for_label }}" class="form-label"><i class="fas fa-calendar-day"></i> Data Saída</label>
-                        {{ form.data_saida }}
-                        <div class="invalid-feedback">Por favor, informe a data de saída.</div>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.hora_saida.id_for_label }}" class="form-label"><i class="fas fa-clock"></i> Hora Saída</label>
-                        {{ form.hora_saida }}
-                        <div class="invalid-feedback">Por favor, informe a hora de saída.</div>
-                    </div>
-                </div>
-                <!-- Data e Hora Retorno -->
-                <div class="row mb-4">
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.data_retorno.id_for_label }}" class="form-label"><i class="fas fa-calendar-check"></i> Data Retorno</label>
-                        {{ form.data_retorno }}
-                        <div class="invalid-feedback">Por favor, informe a data de retorno.</div>
-                    </div>
-                    <div class="col-md-6 form-group">
-                        <label for="{{ form.hora_retorno.id_for_label }}" class="form-label"><i class="fas fa-history"></i> Hora Retorno</label>
-                        {{ form.hora_retorno }}
-                        <div class="invalid-feedback">Por favor, informe a hora de retorno.</div>
+                        {% if form.codigo_viagem.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.codigo_viagem.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, insira o número do processo.</div>
+                        {% endif %}
                     </div>
                 </div>
 
@@ -105,15 +185,12 @@
                         {{ form.km_percorrido }}
                         <small class="form-text text-muted">Calculado automaticamente.</small>
                     </div>
-                    <div class="col-md-6 form-group align-self-center">
-                        <p class="alert alert-info p-2 mb-0"><i class="fas fa-info-circle"></i> Quilometragem total do veículo: <strong>{{ total_km_rodados|default:"N/A" }} km</strong></p>
-                    </div>
                 </div>
 
                 <!-- Botões -->
                 <div class="d-flex justify-content-between mt-5">
-                    <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Alterações</button>
-                    <a href="{% url 'tela_principal' %}" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                    <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Salvar Viagem</button>
+                    <a href="{% url 'tela_principal' %}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Voltar</a>
                 </div>
             </form>
         </div>
@@ -142,33 +219,29 @@
 </div>
 
 <script>
+    // Adiciona classes Bootstrap aos campos do formulário
     document.addEventListener('DOMContentLoaded', function () {
         const form = document.querySelector('form');
         const kmSaidaInput = document.getElementById("id_km_saida");
         const kmRetornoInput = document.getElementById("id_km_retorno");
         const kmPercorridoInput = document.getElementById("id_km_percorrido");
         const kmRetornoFeedback = document.getElementById("kmRetornoFeedback");
-        const dataSaidaInput = document.getElementById("id_data_saida");
-        const dataRetornoInput = document.getElementById("id_data_retorno");
 
         // Adiciona classe 'form-control' a todos os inputs, selects e textareas
         form.querySelectorAll('input, select, textarea').forEach(function(field) {
             if (field.type !== 'checkbox' && field.type !== 'radio') {
                 field.classList.add('form-control');
             }
+            // Adiciona 'is-invalid' se o campo tiver erros (opcional, depende da validação do Django)
+            // if (field.closest('.form-group').querySelector('.errorlist')) {
+            //     field.classList.add('is-invalid');
+            // }
         });
-
-        // Formata as datas (se necessário, ajuste o formato esperado pelo input type="date")
-        // O Django geralmente renderiza type="date" corretamente, mas se precisar forçar:
-        // const data_saida_formatada = "{{ form.instance.data_saida|date:'Y-m-d' }}";
-        // const data_retorno_formatada = "{{ form.instance.data_retorno|date:'Y-m-d' }}";
-        // if (dataSaidaInput && data_saida_formatada) dataSaidaInput.value = data_saida_formatada;
-        // if (dataRetornoInput && data_retorno_formatada) dataRetornoInput.value = data_retorno_formatada;
 
         // Desabilita e estiliza o campo KM Percorrido
         if (kmPercorridoInput) {
             kmPercorridoInput.readOnly = true;
-            kmPercorridoInput.classList.add('bg-light');
+            kmPercorridoInput.classList.add('bg-light'); // Estilo visual para indicar que é readonly
         }
 
         // Calcula o Km percorrido dinamicamente
@@ -229,5 +302,86 @@
             }
         });
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const inputs = [
+            document.getElementById('id_data_saida'),
+            document.getElementById('id_hora_saida'),
+            document.getElementById('id_data_retorno'),
+            document.getElementById('id_hora_retorno'),
+        ];
+
+        const veiculoSelect = document.getElementById('id_veiculo');
+        const motoristaSelect = document.getElementById('id_motorista');
+        veiculoSelect.innerHTML = '';
+        motoristaSelect.innerHTML = '';
+        veiculoSelect.disabled = true;
+        motoristaSelect.disabled = true;
+
+        function fetchDisponibilidade() {
+            const data_saida = document.getElementById('id_data_saida').value;
+            const hora_saida = document.getElementById('id_hora_saida').value;
+            const data_retorno = document.getElementById('id_data_retorno').value;
+            const hora_retorno = document.getElementById('id_hora_retorno').value;
+
+            if (!data_saida || !hora_saida || !data_retorno || !hora_retorno) {
+                return; // espera os campos estarem todos preenchidos
+            }
+
+            const params = new URLSearchParams({
+                data_saida,
+                hora_saida,
+                data_retorno,
+                hora_retorno
+            });
+
+            fetch(`/controle/ajax/verificar-disponibilidade?${params}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.warn(data.error);
+                        return;
+                    }
+
+                    // Atualiza veículos
+                    veiculoSelect.innerHTML = '';
+                    data.veiculos.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nome;
+                        veiculoSelect.appendChild(option);
+                    });
+                    veiculoSelect.disabled = false;
+
+                    // Atualiza motoristas
+                    motoristaSelect.innerHTML = '';
+                    data.motoristas.forEach(item => {
+                        const option = document.createElement('option');
+                        option.value = item.id;
+                        option.textContent = item.nome;
+                        motoristaSelect.appendChild(option);
+                    });
+                    motoristaSelect.disabled = false;
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar disponibilidade:', error);
+                });
+        }
+
+        // Detecta mudança nos campos de data/hora
+        inputs.forEach(input => {
+            input.addEventListener('change', fetchDisponibilidade);
+            input.addEventListener('blur', fetchDisponibilidade);
+        });
+    });
+
+    const destinoInput = document.getElementById('{{ form.destino.id_for_label }}');
+    // Adiciona evento para transformar o valor em maiúsculas
+    if (destinoInput) {
+        destinoInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    }
+
 </script>
 {% endblock %}
