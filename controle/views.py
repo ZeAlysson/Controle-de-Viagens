@@ -1,3 +1,4 @@
+from calendar import monthrange
 from motoristas.models import Motorista
 from veiculos.models import Veiculo
 from .models import Controle
@@ -6,6 +7,8 @@ from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+from django.db.models import Count, Q, F
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
 from datetime import datetime
@@ -83,7 +86,7 @@ def cadastrar_controle(request):
 
     return render(request, 'controle/cadastrar_controle.html', {'form': form})
 
-@require_GET
+@require_GET #TODO filtrar pelas diarias
 def verificar_disponibilidade(request):
     data_saida = request.GET.get('data_saida')
     hora_saida = request.GET.get('hora_saida')
@@ -96,6 +99,8 @@ def verificar_disponibilidade(request):
     try:
         inicio = datetime.strptime(f"{data_saida} {hora_saida}", "%Y-%m-%d %H:%M")
         fim = datetime.strptime(f"{data_retorno} {hora_retorno}", "%Y-%m-%d %H:%M")
+        inicio_mes = inicio.replace(day=1)
+        fim_mes = inicio.replace(day=monthrange(inicio.year, inicio.month)[1])
     except ValueError:
         return JsonResponse({'error': 'Formato de data ou hora inválido.'}, status=400)
 
@@ -111,13 +116,28 @@ def verificar_disponibilidade(request):
         (Q(data_saida=fim.date()) & Q(hora_saida__lt=fim.time()))
     )
 
+    
     controles_conflitantes = Controle.objects.filter(conflito)
 
     veiculos_ocupados = controles_conflitantes.values_list('veiculo_id', flat=True)
     motoristas_ocupados = controles_conflitantes.values_list('motorista_id', flat=True)
 
-    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados)
-    motoristas_disponiveis = Motorista.objects.exclude(id__in=motoristas_ocupados)
+    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados).order_by("modelo_veiculo");
+    motoristas_disponiveis = (
+        Motorista.objects
+        .exclude(id__in=motoristas_ocupados)
+        .annotate(
+            diarias_mes=Count(
+                'controles',
+                filter=Q(
+                    controles__data_saida__gte=inicio_mes,
+                    controles__data_saida__lte=fim_mes
+                )
+            )
+        )
+        .exclude(diarias_mes__gte=F('limite_diarias'))
+        .order_by("nome")
+    )
 
     return JsonResponse({
     'veiculos': [{'id': v.id, 'nome': str(v)} for v in veiculos_disponiveis],

@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Cadastrar Servidor{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-user-plus"></i> Cadastrar Novo Servidor</h2>
+        </div>
+        <div class="card-body">
+            <!-- Adiciona row e colunas para controlar a largura -->
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8"> <!-- Ajuste colunas (ex: col-lg-6, col-md-8) -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Nome -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.nome.id_for_label }}" class="form-label"><i class="fas fa-user-tag"></i> Nome Completo</label>
+                            {{ form.nome }}
+                            <div class="invalid-feedback">Por favor, informe o nome completo do servidor.</div>
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.telefone.id_for_label }}" class="form-label"><i class="fas fa-phone"></i> Telefone</label>
+                            {{ form.telefone }}
+                            <div class="invalid-feedback">Por favor, informe um número de telefone válido.</div>
+                            <small class="form-text text-muted">Formato sugerido: (XX) XXXXX-XXXX</small>
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.cpf.id_for_label }}" class="form-label"><i class="fas fa-id-card"></i> CPF</label>
+                            {{ form.cpf }}
+                            {% if form.cpf.errors %}
+                                <div class="alert alert-danger my-2">
+                                    {% for error in form.cpf.errors %}
+                                        <p class="mb-0">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="invalid-feedback">Por favor, informe um CPF válido com 11 dígitos.</div>
+                            <small class="form-text text-muted">Digite apenas os 11 números do CPF.</small>
+                        </div>
+                        
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="submit" class="btn btn-success btn-lg"><i class="fas fa-save"></i> Cadastrar Servidor</button>
+                            <a href="{% url 'listar_servidores' %}" class="btn btn-secondary btn-lg"><i class="fas fa-arrow-left"></i> Voltar para Lista</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Adiciona classes Bootstrap aos campos do formulário
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const cnhHelpIcon = document.getElementById('cnhHelpIcon'); // Pega o ícone de ajuda
+        const cnhHelpModalEl = document.getElementById('cnhHelpModal'); // Pega o elemento do modal
+
+
+        // Adiciona classe 'form-control' a todos os inputs, selects e textareas
+        form.querySelectorAll('input, select, textarea').forEach(function(field) {
+            if (field.type !== 'checkbox' && field.type !== 'radio') {
+                field.classList.add('form-control');
+            }
+        });
+
+        // Validação Bootstrap
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+
+        // Máscara para o campo de telefone
+        const telefoneInput = document.getElementById('{{ form.telefone.id_for_label }}');
+        if (telefoneInput) {
+            telefoneInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+                value = value.substring(0, 11); // Limita a 11 dígitos
+
+                if (value.length > 10) {
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+                } else if (value.length > 5) {
+                    value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2'); // Formato (XX) XXXXX
+                } else if (value.length > 2) {
+                    value = value.replace(/(\d{2})/, '($1)'); // Formato (XX
+                } else {
+                    value = value.replace(/(\d)/, '($1'); // Formato (X
+                }
+                e.target.value = value; // Atualiza o valor do input
+            });
+            // Define o atributo maxlength para o input (considerando os caracteres da máscara)
+            telefoneInput.setAttribute('maxlength', '15'); // (XX) XXXXX-XXXX tem 15 caracteres
+        }
+
+        // const cnhInput = document.getElementById('{{ form.cnh.id_for_label }}');
+        // if (cnhInput) {
+        //     cnhInput.addEventListener('input', function (e) {
+        //         let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+        //         value = value.substring(0, 11); // Limita a 11 dígitos
+        //         e.target.value = value; // Atualiza o valor do input
+        //     });
+        //     // Define o atributo maxlength para o input
+        //     cnhInput.setAttribute('maxlength', '11'); // CNH normalmente tem 11 caracteres
+        // }
+
+        // Lógica para o Modal de Ajuda da CNH
+        if (cnhHelpIcon && cnhHelpModalEl) {
+            // Instancia o Modal do Bootstrap (usando a API JavaScript do Bootstrap 4/5)
+            // Certifique-se de que o JavaScript do Bootstrap está carregado no seu base.html
+            const cnhHelpModal = new bootstrap.Modal(cnhHelpModalEl);
+
+            // Adiciona evento de clique ao ícone para mostrar o modal
+            cnhHelpIcon.addEventListener('click', function() {
+                cnhHelpModal.show(); // Mostra o modal
+            });
+        }
+
+        // Máscara e validação para o campo CPF
+        const cpfInput = document.getElementById('{{ form.cpf.id_for_label }}');
+        if (cpfInput) {
+            cpfInput.setAttribute('maxlength', '11'); // Limita o input a 11 caracteres
+            cpfInput.setAttribute('pattern', '\\d{11}'); // Validação HTML5 para 11 dígitos
+            
+            cpfInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+                value = value.substring(0, 11); // Garante que não ultrapasse 11 dígitos
+                e.target.value = value; // Atualiza o valor do input
+            });
+        }
+    });
+</script>
+{% endblock %}

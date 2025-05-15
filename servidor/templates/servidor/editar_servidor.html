@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Editar servidor{% endblock title %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-dark text-white text-center">
+            <h2><i class="fas fa-user-edit"></i> Editar servidor #{{ form.instance.id }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8"> <!-- Ajuste colunas (ex: col-lg-6, col-md-8) -->
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {% for error in form.non_field_errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Nome -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.nome.id_for_label }}" class="form-label"><i class="fas fa-user-tag"></i> Nome Completo</label>
+                            {{ form.nome }}
+                            <div class="invalid-feedback">Por favor, informe o nome completo do servidor.</div>
+                        </div>
+
+                        <!-- Telefone -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.telefone.id_for_label }}" class="form-label"><i class="fas fa-phone"></i> Telefone</label>
+                            {{ form.telefone }}
+                            <div class="invalid-feedback">Por favor, informe um número de telefone válido.</div>
+                            <small class="form-text text-muted">Formato sugerido: (XX) XXXXX-XXXX</small>
+                        </div>
+
+                        <!-- CPF -->
+                        <div class="form-group mb-4">
+                            <label for="{{ form.cpf.id_for_label }}" class="form-label"><i class="fas fa-id-card"></i> CPF</label>
+                            {{ form.cpf }}
+                            {% if form.cpf.errors %}
+                                <div class="alert alert-danger my-2">
+                                    {% for error in form.cpf.errors %}
+                                        <p class="mb-0">{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                            <div class="invalid-feedback">Por favor, informe um CPF válido com 11 dígitos.</div>
+                            <small class="form-text text-muted">Digite apenas os 11 números do CPF.</small>
+                        </div>
+                        <!-- Botões -->
+                        <div class="d-flex justify-content-between mt-5">
+                            <button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-save"></i> Salvar Alterações</button>
+                            <a href="{% url 'listar_servidores' %}" class="btn btn-secondary btn-lg"><i class="fas fa-times"></i> Cancelar</a>
+                        </div>
+                    </form>
+                </div>
+            </div> <!-- Fim da row -->
+        </div>
+    </div>
+</div>
+
+<script>
+    // Adiciona classes Bootstrap aos campos do formulário
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        const cnhHelpIcon = document.getElementById('cnhHelpIcon'); // Pega o ícone de ajuda
+        const cnhHelpModalEl = document.getElementById('cnhHelpModal'); // Pega o elemento do modal
+
+        // Adiciona classe 'form-control' a todos os inputs, selects e textareas
+        form.querySelectorAll('input, select, textarea').forEach(function(field) {
+            if (field.type !== 'checkbox' && field.type !== 'radio') {
+                field.classList.add('form-control');
+            }
+        });
+
+        // Validação Bootstrap
+        form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+
+        const telefoneInput = document.getElementById('{{ form.telefone.id_for_label }}');
+        if (telefoneInput) {
+            
+            let initialValue = telefoneInput.value.replace(/\D/g, '');
+            if (initialValue.length > 0) {
+                 if (initialValue.length > 10) {
+                    telefoneInput.value = initialValue.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
+                } else if (initialValue.length > 5) {
+                    telefoneInput.value = initialValue.replace(/^(\d{2})(\d{5}).*/, '($1) $2');
+                } else if (initialValue.length > 2) {
+                    telefoneInput.value = initialValue.replace(/^(\d{2}).*/, '($1)');
+                } else {
+                    telefoneInput.value = initialValue.replace(/^(\d*)/, '($1');
+                }
+            }
+
+            telefoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+                value = value.substring(0, 11); // Limita a 11 dígitos
+
+                if (value.length > 10) {
+                    value = value.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3'); // Formato (XX) XXXXX-XXXX
+                } else if (value.length > 5) {
+                    value = value.replace(/(\d{2})(\d{0,5})/, '($1) $2'); // Formato (XX) XXXXX
+                } else if (value.length > 2) {
+                    value = value.replace(/(\d{2})/, '($1'); // Formato (XX
+                } else {
+                    value = value.replace(/(\d)/, '($1'); // Formato (X
+                }
+                e.target.value = value;
+            });
+            // Define o atributo maxlength para o input (considerando os caracteres da máscara)
+            telefoneInput.setAttribute('maxlength', '15'); // (XX) XXXXX-XXXX tem 15 caracteres
+        }
+
+               // Máscara e validação para o campo CPF
+        const cpfInput = document.getElementById('{{ form.cpf.id_for_label }}');
+        if (cpfInput) {
+            cpfInput.setAttribute('maxlength', '11'); // Limita o input a 11 caracteres
+            cpfInput.setAttribute('pattern', '\\d{11}'); // Validação HTML5 para 11 dígitos
+            
+            cpfInput.addEventListener('input', function (e) {
+                let value = e.target.value.replace(/\D/g, ''); // Remove tudo que não for dígito
+                value = value.substring(0, 11); // Garante que não ultrapasse 11 dígitos
+                e.target.value = value; // Atualiza o valor do input
+            });
+        }
+    });
+</script>
+{% endblock %}
