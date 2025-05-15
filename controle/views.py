@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count, Q, F
 from django.views.decorators.http import require_GET
 from django.http import JsonResponse
-from datetime import datetime
+from datetime import datetime, date
 
 def calcular_total_km_rodados(veiculo):
     return Controle.objects.filter(veiculo=veiculo).aggregate(Sum('km_percorrido'))['km_percorrido__sum']
@@ -19,20 +19,25 @@ def calcular_total_km_rodados(veiculo):
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
 def tela_controle(request):
-    # consulta por período
     data_inicio = request.GET.get('data_inicio')
     data_fim = request.GET.get('data_fim')
 
-    # consulta no intervalo
     controles = Controle.objects.all()
     if data_inicio:
-        controles = controles.filter(data_saida__gte=data_inicio)
+        controles = controles.filter(data_saida=data_inicio)
     if data_fim:
         controles = controles.filter(data_saida__lte=data_fim)
 
     controles = controles.order_by('-data_saida', '-hora_saida')
 
-    return render(request, 'controle/tela_principal.html', {'controles': controles})
+    return render(
+        request,
+        'controle/tela_principal.html',
+        {
+            'controles': controles,
+            'today': date.today().isoformat(),
+        }
+    )
 
 @login_required
 @user_passes_test(lambda u: u.is_superuser)
