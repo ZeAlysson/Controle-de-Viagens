@@ -174,5 +174,6 @@ class ControleForm(forms.ModelForm):
                 f"até {conflict.data_retorno.strftime('%d/%m/%Y')} {conflict.hora_retorno.strftime('%H:%M')}."
             )
             self.add_error('motorista', error_msg)
-            
+        
+        print("ESTOU SAINDO DO CLEAN")
         return cleaned_data

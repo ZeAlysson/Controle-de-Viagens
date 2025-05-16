@@ -1,9 +1,9 @@
 from django import forms
 from veiculos.models import Veiculo  # Certifique-se de importar o modelo correspondente
-from brutils import is_valid_license_plate 
 import re
 
 class VeiculoForm(forms.ModelForm):
+    #TODO ver maneira melhor
     MARCAS_CHOICES = [
         ('', '---------'), # Adiciona uma opção vazia
         # Chevrolet
@@ -15,7 +15,7 @@ class VeiculoForm(forms.ModelForm):
         ('Fiat Toro', 'Fiat Toro'),
         ('Fiat Pulse', 'Fiat Pulse'),
         # Volkswagen
-        ('Volkswagen Gol', 'Volkswagen Gol'), # Embora descontinuado, ainda popular
+        ('Volkswagen Gol', 'Volkswagen Gol'),
         ('Volkswagen Polo', 'Volkswagen Polo'),
         ('Volkswagen T-Cross', 'Volkswagen T-Cross'),
         ('Volkswagen Nivus', 'Volkswagen Nivus'),
@@ -57,10 +57,10 @@ class VeiculoForm(forms.ModelForm):
             # A brutils.placa.is_valid também faz limpeza, mas é bom padronizar aqui.
             placa_limpa = re.sub(r'[^A-Z0-9]', '', str(placa_valor).upper())
 
-            if not is_valid_license_plate(placa_limpa):
-                raise forms.ValidationError(
-                    "Formato de placa inválido. Use AAA1234 ou AAA1A23 (Mercosul) e verifique os caracteres."
-                )
+            # if not is_valid_license_plate(placa_limpa):
+            #     raise forms.ValidationError(
+            #         "Formato de placa inválido. Use AAA1234 ou AAA1A23 (Mercosul) e verifique os caracteres."
+            #     )
 
             # Verifica se a placa já existe no banco de dados,
             # excluindo a instância atual se estiver editando

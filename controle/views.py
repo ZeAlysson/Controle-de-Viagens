@@ -86,12 +86,14 @@ def cadastrar_controle(request):
         if form.is_valid():
             form.save()
             return redirect('tela_controle')
+        else:
+            print(form.errors)
     else:
         form = ControleForm()
 
     return render(request, 'controle/cadastrar_controle.html', {'form': form})
 
-@require_GET #TODO filtrar pelas diarias
+@require_GET
 def verificar_disponibilidade(request):
     data_saida = request.GET.get('data_saida')
     hora_saida = request.GET.get('hora_saida')
