@@ -10,6 +10,21 @@
         </a>
     </div>
 
+    <!-- Filtro por data -->
+    <form method="get" class="mb-4">
+        <div class="row align-items-end">
+            <div class="col-auto">
+                <label for="data_inicio" class="form-label mb-0">Data Inicial</label>
+                <input type="date" id="data_inicio" name="data_inicio" class="form-control"
+                       value="{{ request.GET.data_inicio|default:today }}">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtrar</button>
+                <a href="{% url 'tela_principal' %}" class="btn btn-secondary">Limpar</a>
+            </div>
+        </div>
+    </form>
+
     <div class="card shadow-lg">
         <div class="card-header bg-dark text-white">
             <h4 class="mb-0"><i class="fas fa-list-ul"></i> Registros de Viagens</h4>
