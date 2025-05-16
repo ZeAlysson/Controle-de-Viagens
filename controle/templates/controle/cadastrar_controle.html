@@ -115,25 +115,9 @@
                     </div>
                 </div>
 
-                <!-- Servidor -->
-                <div class="col-md-12 form-group">
-                        <label for="{{ form.servidor.id_for_label }}" class="form-label"><i class="fas fa-user"></i> Servidor</label>
-                        {{ form.servidor }}
-                        {% if form.servidor.errors %}
-                            <div class="invalid-feedback d-block">
-                                {% for error in form.servidor.errors %}
-                                    <p class="mb-0">{{ error }}</p>
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="invalid-feedback">Por favor, selecione um servidor.</div>
-                        {% endif %}
-                    </div>
-                </div>
-
-                <!-- Destino -->
                 <div class="row mb-4">
-                    <div class="col-md-12 form-group">
+                    <!-- Destino -->
+                    <div class="col-md-6 form-group">
                         <label for="{{ form.destino.id_for_label }}" class="form-label"><i class="fas fa-map-marker-alt"></i> Destino</label>
                         {{ form.destino }}
                         {% if form.destino.errors %}
@@ -144,6 +128,21 @@
                             </div>
                         {% else %}
                             <div class="invalid-feedback">Por favor, informe o destino.</div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Servidor -->
+                    <div class="col-md-6 form-group">
+                        <label for="{{ form.servidor.id_for_label }}" class="form-label"><i class="fas fa-user"></i> Servidor</label>
+                        {{ form.servidor }}
+                        {% if form.servidor.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.servidor.errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="invalid-feedback">Por favor, selecione um servidor.</div>
                         {% endif %}
                     </div>
                 </div>
