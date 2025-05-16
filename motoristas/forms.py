@@ -1,6 +1,5 @@
 from django import forms
 from .models import Motorista
-from servidor.models import Servidor
 import re
 from validate_docbr import CPF  # Importe a classe CPF
 
@@ -48,11 +47,6 @@ class MotoristaForm(forms.ModelForm):
             
             if query_motorista.exists():
                 raise forms.ValidationError("Este CPF já está cadastrado para um motorista.")
-            
-            # Verifica se o CPF já existe no banco de dados para servidores
-            query_servidor = Servidor.objects.filter(cpf=cpf_numeros)
-            if query_servidor.exists():
-                raise forms.ValidationError("Este CPF já está cadastrado para um servidor.")
             
             return cpf_numeros  # Retorna o CPF limpo (apenas números)
         return cpf_valor  # Retorna o valor original se estiver vazio (deixe a validação de campo obrigatório tratar)

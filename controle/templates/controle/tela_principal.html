@@ -41,6 +41,7 @@
                             <th>Número do Processo</th>
                             <th>Veículo</th>
                             <th>Motorista</th>
+                            <th>Servidor</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -53,8 +54,9 @@
                             <td>{{ controle.destino }}</td>
                             <td>{{ controle.codigo_viagem }}</td>
                             {# Assumindo que o controle tem um campo 'veiculo' relacionado #}
-                            <td>{{ controle.veiculo.placa }}</td> {# Assumindo relação com Veiculo #}
+                            <td>{{ controle.veiculo.placa}} - {{controle.veiculo.modelo_veiculo}}</td> {# Assumindo relação com Veiculo #}
                             <td>{{ controle.motorista.nome }}</td> {# Assumindo relação com Motorista #}
+                            <td>{{ controle.servidor }}</td>
                             <td>
                                 <a href="{% url 'editar_controle' controle.id %}" class="btn btn-sm btn-warning mr-1" title="Editar">
                                     <i class="fas fa-edit"></i>

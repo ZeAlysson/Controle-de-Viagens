@@ -18,11 +18,6 @@ class Controle(models.Model):
     km_retorno = models.IntegerField(null=True, blank=True) # Add blank=True
     km_percorrido = models.IntegerField(null=True, blank=True) # Add blank=True
 
-    def formato_data_saida(self):
-        return self.data_saida.strftime("%Y-%m-%d")
-
-    def formato_data_retorno(self):
-        return self.data_retorno.strftime("%Y-%m-%d")
 
     def __str__(self):
         return f'Motorista: {self.motorista.nome} - Saída: {self.data_saida} {self.hora_saida} - Carro: {self.veiculo.veiculo} ({self.veiculo.marca}) - Retorno: {self.data_retorno} {self.hora_retorno}'

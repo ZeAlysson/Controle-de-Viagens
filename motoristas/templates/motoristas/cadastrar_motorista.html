@@ -180,7 +180,7 @@
         // Máscara e validação para o campo CPF
         const cpfInput = document.getElementById('{{ form.cpf.id_for_label }}');
         if (cpfInput) {
-            cpfInput.setAttribute('maxlength', '11'); // Limita o input a 11 caracteres
+            cpfInput.setAttribute('maxlength', '15'); // Limita o input a 11 caracteres
             cpfInput.setAttribute('pattern', '\\d{11}'); // Validação HTML5 para 11 dígitos
             
             cpfInput.addEventListener('input', function (e) {

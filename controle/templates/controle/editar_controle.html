@@ -406,5 +406,13 @@
     });
     }
 
+    const servidorInput = document.getElementById('{{ form.servidor.id_for_label }}');
+    if (servidorInput) {
+        servidorInput.setAttribute('maxlength', '30'); // Limita o input a 50 caracteres
+        servidorInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    }
+
 </script>
 {% endblock %}

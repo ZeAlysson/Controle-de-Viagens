@@ -37,18 +37,24 @@
                                 </div>
                         </div>
 
-                        <!-- modelo_veiculo -->
+                        <!-- Modelo do Veículo -->
                         <div class="form-group mb-4">
                             <label for="{{ form.modelo_veiculo.id_for_label }}" class="form-label"><i class="fas fa-copyright"></i> Modelo do Veículo</label>
                             {{ form.modelo_veiculo }}
-                            <div class="invalid-feedback">Por favor, selecione um veículo.</div>
-                            {% if form.modelo_veiculo.errors %}
-                                <div class="alert alert-danger mt-1 p-1">
-                                    {% for error in form.modelo_veiculo.errors %}
-                                        {{ error }}
+                            <div class="invalid-feedback">Por favor, selecione um modelo ou cadastre um novo.</div>
+                        </div>
+
+                        <div class="form-group mb-4" id="div_modelo_personalizado" style="display: none;">
+                            <label for="{{ form.modelo_personalizado.id_for_label }}" class="form-label"><i class="fas fa-car"></i> Modelo Personalizado de Veículo</label>
+                            {{ form.modelo_personalizado }}
+                            {% if form.modelo_personalizado.errors %}
+                                <div class="alert alert-danger my-2">
+                                    {% for error in form.modelo_personalizado.errors %}
+                                        <p class="mb-0">{{ error }}</p>
                                     {% endfor %}
                                 </div>
                             {% endif %}
+                            <div class="invalid-feedback">Por favor, informe o modelo do veículo.</div>
                         </div>
 
                         <!-- Modelo do Veículo 
@@ -120,6 +126,34 @@
                     this.value = this.value.toUpperCase();
                 });
             }
+
+        document.addEventListener('DOMContentLoaded', function () {
+        const selectModelo = document.getElementById('{{ form.modelo_veiculo.id_for_label }}');
+        const divPersonalizado = document.getElementById('div_modelo_personalizado');
+        if (selectModelo && divPersonalizado) {
+            function togglePersonalizado() {
+                if (selectModelo.value === 'MODELO PERSONALIZADO') {
+                    divPersonalizado.style.display = '';
+                } else {
+                    divPersonalizado.style.display = 'none';
+                    // Limpa o campo se não estiver visível
+                    const input = divPersonalizado.querySelector('input');
+                    if (input) input.value = '';
+                }
+            }
+            selectModelo.addEventListener('change', togglePersonalizado);
+            togglePersonalizado(); // Executa ao carregar a página
+        }
+    });
+
+    // Adiciona máscara para o campo modelo personalizado de veículo
+    const modeloPersonalizadoInput = document.getElementById('{{ form.modelo_personalizado.id_for_label }}');
+    if (modeloPersonalizadoInput) {
+    modeloPersonalizadoInput.addEventListener('input', function() {
+        this.value = this.value.toUpperCase();
+    });
+    }
+
     });
 </script>
 {% endblock %}
