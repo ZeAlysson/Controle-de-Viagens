@@ -26,7 +26,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url= reverse_lazy('tela_principal')), name='raiz'),
     path('', include('autenticacao.urls')),
-    path('servidor/', include('servidor.urls')),
     path('motorista/', include('motoristas.urls')),
     path('controle/', include('controle.urls')),
     path('veiculos/', include('veiculos.urls')),

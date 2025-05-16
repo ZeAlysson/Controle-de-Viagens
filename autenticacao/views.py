@@ -3,8 +3,11 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
 from motoristas.models import Motorista
-from servidor.models import Servidor
 from .forms import LoginServidoresForm, RegistroForm, AdminLoginForm
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework.exceptions import AuthenticationFailed
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 
 def registrar_usuario(request):
     if request.method == "POST":
@@ -46,18 +49,12 @@ def login_servidores(request):
         form = LoginServidoresForm(request.POST)
         if form.is_valid():
             cpf = form.cleaned_data['cpf']
-            usuario = buscar_usuario_por_cpf(cpf)
+            usuario = Motorista.objects.get(cpf=cpf)
 
             if usuario:
-                # Armazena o CPF na sessão com base no tipo
-                if isinstance(usuario, Servidor):
-                    chave = 'servidor_cpf'
-                    request.session[chave] = usuario.cpf
-                    return redirect('listagem_viagens_servidor')
-                else:
-                    chave = 'motorista_cpf'
-                    request.session[chave] = usuario.cpf
-                    return redirect('listagem_viagens_motorista')
+                chave = 'motorista_cpf'
+                request.session[chave] = usuario.cpf
+                return redirect('listagem_viagens_motorista')
             
         messages.error(request, "CPF inválido ou sessão expirada. Faça login novamente.")
         
@@ -71,10 +68,5 @@ def logado(request):
     return redirect('raiz')
 
 
-def buscar_usuario_por_cpf(cpf):
-    for model in (Servidor, Motorista):
-        try:
-            return model.objects.get(cpf=cpf)
-        except model.DoesNotExist:
-            continue
-    return None
+    
+        
