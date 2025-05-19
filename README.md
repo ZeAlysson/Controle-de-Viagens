@@ -97,6 +97,16 @@ Para evitar problemas com o banco de dados, é necessário migrar os modelos de 
    ```sh
    python manage.py migrate
    ```
+
+# 7. carregar dados do arquivo .csv para o banco
+
+  Depois de criar o BD Postgres e fazer a migrações do Django, é hora de popular a tabela Setor com dados existentes. Para isso, rode na raiz do projeto o seguinte comando no terminal:
+  
+  1. Popula a tabela com os dados da secretaria:
+   ```sh
+   python banco\ configs/insert_setores.py
+   ```
+
 ## Requisitos:
 - Python
 - Django

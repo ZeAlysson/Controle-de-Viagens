@@ -135,7 +135,6 @@ def verificar_disponibilidade(request):
     
     motoristas_disponiveis = []
     for motorista in motoristas_sem_conflitos_datas:
-        print(motorista.nome, motorista.diarias_restantes)
         if motorista.diarias_restantes >= quantidade_diaria_nova_viagem:
             motoristas_disponiveis.append(motorista)
 
