@@ -25,6 +25,8 @@ class Controle(models.Model):
 
     def __str__(self):
         return f'Motorista: {self.motorista.nome} - Saída: {self.data_saida} {self.hora_saida} - Carro: {self.veiculo.veiculo} ({self.veiculo.marca}) - Retorno: {self.data_retorno} {self.hora_retorno}'
+
+class Setor:
     
 # class Estado (models.Model):
 #     nome = models.CharField(max_length=50)
