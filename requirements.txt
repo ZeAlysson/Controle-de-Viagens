@@ -3,8 +3,14 @@ brutils==2.2.0
 Django==4.2.4
 djangorestframework==3.16.0
 djangorestframework_simplejwt==5.5.0
+numpy==2.2.6
+pandas==2.2.3
 psycopg2-binary==2.9.10
 PyJWT==2.9.0
+python-dateutil==2.9.0.post0
+pytz==2025.2
+six==1.17.0
 sqlparse==0.4.4
+typing_extensions==4.13.2
 tzdata==2023.3
 validate-docbr==1.10.0
