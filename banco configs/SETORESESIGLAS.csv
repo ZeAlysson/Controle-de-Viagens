@@ -1,0 +1,221 @@
+SETOR;SIGLA;CIDADE
+01 GERENCIA REGIONAL DE ENSINO;1-GRE;João Pessoa
+02 GERNCIA REGIONAL DE ENSINO;2-GRE;Guarabira
+03 GERENCIA REGIONAL DE ENSINO;3-GRE;Campina Grande
+04 GERENCIA REGIONAL DE ENSINO;4-GRE;Cuité
+05 GERENCIA REGIONAL DE ENSINO;5-GRE;Monteiro
+06 GERENCIA REGIONAL DE ENSINO;6-GRE;Patos
+07 GERENCIA REGIONAL DE ENSINO;7-GRE;Itaporanga
+08 GERENCIA REGIONAL DE ENSINO;8-GRE;Catolé do Rocha
+09 GERENCIA REGIONAL DE ENSINO;9-GRE;Cajazeiras
+10 GERENCIA REGIONAL DE ENSINO;10-GRE;Sousa
+11 GERENCIA REGIONAL DE ENSINO;11-GRE;Princesa Isabel
+12 GERENCIA REGIONAL DE ENSINO;12-GRE;Itabaiana
+13 GERENCIA REGIONAL DE ENSINO;13-GRE;Pombal
+14 GERENCIA REGIONAL DE ENSINO;14-GRE;Mamanguape
+15 GERENCIA REGIONAL DE ENSINO;15-GRE;Queimadas
+16 GERENCIA REGIONAL DE ENSINO;16-GRE;João Pessoa
+ARQUITETURA;ARQUITETURA;João Pessoa
+Arquivo;ARQV;João Pessoa
+ASSESSORA ESPECIAL DE GABINETE;AEG;João Pessoa
+ASSESSORIA DE COMUNICACAO;ASCOM;João Pessoa
+Assessoria de Controle Interno;ASCIN;João Pessoa
+Assessoria de Governança e Gestão de Risco;ASGOV;João Pessoa
+Assessoria de Logística e Eventos;ASLOG;João Pessoa
+Assessoria Especial de Gabinete;ASESG;João Pessoa
+ASSESSORIA ESPECIAL DO SECRETÁRIO;AES;João Pessoa
+Assessoria Jurídica;ASJUR;João Pessoa
+Assessoria Técnico-Normativa;ASTEC;João Pessoa
+ASSESSORIA TECNICO-NORMATIVA;ATN;João Pessoa
+ATN - Desativado;DESATIVADO-ATN;Água Branca
+Biblioteca Pública Estadual Augusto dos Anjos;BPEAA;João Pessoa
+CENTRO ESTADUAL DE ARTE;CEARTE;João Pessoa
+CENTRO ESTADUAL DE LÍNGUAS;CELIN;João Pessoa
+CHEFIA DE GABINETE;CG;João Pessoa
+COMISSAO EXECUTIVA DE ESCOLAS INTEGRAIS;CEEI;João Pessoa
+Comissão para criação do Núcleo de Suporte Especializado em Readaptação;SUPERE;João Pessoa
+Comissão para Pacificação de Conflitos;COPAC;João Pessoa
+COMISSAO PERMANENTE DE APURACAO PARA SANCOES ADMINISTRATIVAS;CPASA;João Pessoa
+COMISSAO PERMANENTE DE AVALIACAO DE DOCUMENTOS;CPAD;João Pessoa
+Comissão Permanente de Estratégia de Governo Digital;CPEGD;João Pessoa
+COMISSAO PERMANENTE DE INQUERITO;CPI;João Pessoa
+CONSELHO ESTADUAL DE ALIMENTACAO ESCOLAR;CEAE;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO;CEE;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - ARQUIVO;CEE-ARQUIVO;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - ASSESSORIA ADMINISTRATIVA;CEE-ASS-ADM;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - ASSESSORIA DA PRESIDENCIA;CEE-ASS-PRES;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - ASSESSORIA TECNICA;CEE-AT;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - CAMARA DE EDUCACAO INFANTIL E ENSINO FUNDAMENTAL;CEE-CEIEF;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - CAMARA DE ENSINO MEDIO EDUCACAO PROFISSIONAL E ENSINO SUPERIOR;CEE-CEMES;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - CONSELHEIROS;CEE-CONS;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - PRESIDENCIA;CEE-PRES;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - PROTOCOLO;CEE-PRT;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - REVISAO E FORMULACAO DE PARECERES E RESOLUCOES;CEE-RFPR;João Pessoa
+CONSELHO ESTADUAL DE EDUCACAO - SECRETARIA EXECUTIVA;CEE-SEC-EXE;João Pessoa
+CONTROLE INTERNO;CI;João Pessoa
+COORDENACAO DE BANDAS ESCOLARES;CBE;João Pessoa
+COORDENACAO DE MANUTENCAO;INATIVADO-CM;João Pessoa
+DESATIVADO - COMISSAO DE PRESTACOES DE CONTAS PARCIAIS;DESATIVADO-CPCP;João Pessoa
+DIRETORIA EXECUTIVA DE DESENVOLVIMENTO ESTUDANTIL;DEDE;João Pessoa
+DIVISAO DE PROTOCOLO;DIPRO;João Pessoa
+DIVISAO DE TRANSPORTES;DITRAN;João Pessoa
+ENGENHARIA;ENGENHARIA;João Pessoa
+ESCOLA ESTADUAL DE MÚSICA ANTHENOR NAVARRO;EEMAN;João Pessoa
+FUNDACAO CENTRO INTEGRADO DE APOIO AO PORTADOR DE DEFICIENCIA;FUNAD;João Pessoa
+GABINETE DO SECRETARIO;GS;João Pessoa
+GERENCIA ADMINISTRATIVA;GAD;João Pessoa
+GERENCIA DE ACOMPANHAMENTO E MANUTENCAO DE OBRAS;GAMOB/COTESE;João Pessoa
+Gerência de Administração;GEADM;João Pessoa
+Gerência de Assistência Escolar Integrada;GEAEI;João Pessoa
+Gerência de Contratos e Convênios;GCNTC;João Pessoa
+Gerência de Gestão de Pessoas;GGEPS;João Pessoa
+Gerência de Gestão Documental, Normatização e Modernização;GGDOC;João Pessoa
+GERENCIA DE GESTAO PACTUADA;GGPAC;João Pessoa
+Gerência de Licitações;GELIC;João Pessoa
+Gerência de Obras;GEOBS;João Pessoa
+Gerência de Planejamento, Orçamento e Finanças;GEPOF;João Pessoa
+GERENCIA DE PLANEJAMENTO ORCAMENTO E FINANCAS;GPOF;João Pessoa
+GERENCIA DE RECURSOS HUMANOS;GEREH;João Pessoa
+GERENCIA DE TECNOLOGIA DA INFORMACAO;GTECI;João Pessoa
+GERENCIA DO PROGRAMA DE EXPANSAO DA EDUCACAO PROFISSIONAL;PROEP;João Pessoa
+GERENCIA DO PROGRAMA DE FORTALECIMENTO DA ESCOLA;GPROFESC;João Pessoa
+Gerência Exec. de Acomp. aos Sistemas de Ensino da Educ. Básica e aos Prog. e Projetos Educacionais;GEPPE;João Pessoa
+Gerência Exec. de Gestão Pedagógica e Desenv. Curricular da Educação Infantil, Ensino Fund. e Médio;GEGEP;João Pessoa
+GERENCIA EXECUTIVA DA DIVERSIDADE E INCLUSAO;GEDI;João Pessoa
+GERENCIA EXECUTIVA DA EDUCACAO DE JOVENS E ADULTOS;GEEJA;João Pessoa
+GERENCIA EXECUTIVA DA EDUCACAO INFANTIL E ENSINO FUNDAMENTAL;GEEIEF;João Pessoa
+GERENCIA EXECUTIVA DA EDUCACAO PROFISSIONALIZANTE;GEEP;João Pessoa
+GERENCIA EXECUTIVA DE ACOMPANHAMENTO DA GESTAO ESCOLAR;GEAGE;João Pessoa
+GERENCIA EXECUTIVA DE ASSISTENCIA ESCOLAR INTEGRADA;GEAESI;João Pessoa
+GERENCIA EXECUTIVA DE DESENV ESCOLAR ACOMPANHAMENTO E APOIO A GESTAO PARA RESULTADOS DE APRENDIZAGEM;GEDRA;João Pessoa
+GERENCIA EXECUTIVA DE DESENVOLVIMENTO CIENTIFICO E TECNOLOGICO;GEDCT;João Pessoa
+GERÊNCIA EXECUTIVA DE EDUCAÇÃO DAS ESCOLAS CIDADÃS INTEGRAIS;GEECI;João Pessoa
+Gerência Executiva de Educação das Escolas Cidadãs Técnicas;GEECT;João Pessoa
+GERENCIA EXECUTIVA DO ENSINO MEDIO;GEEM;João Pessoa
+Gerência Executivo de Cooperação com os Municípios para Desenvolvimento da Aprendizagem;GECMD;João Pessoa
+Gerência Executivo de Desenvolvimento e Protagonismo Estudantil;GEDPE;João Pessoa
+Gerência Executivo de Formação e Desenvolvimento dos Profissionais da Educação;GEFDP;João Pessoa
+GERENCIA OPERACIONAL DA EDUCACAO INFANTIL;GOEI;João Pessoa
+GERENCIA OPERACIONAL DE ACOMPANHAMENTO DO ENSINO FUNDAMENTAL;GOAEF;João Pessoa
+Gerência Operacional de Acompanhamento e Desenvolvimento da Gestão Pedagógica;GOADP;João Pessoa
+GERENCIA OPERACIONAL DE ACOMPANHAMENTO E ORIENTACAO A ESCOLA;GOAOE;João Pessoa
+GERENCIA OPERACIONAL DE ASSISTENCIA AO ESTUDANTE;GOAE;João Pessoa
+Gerência Operacional de Avaliação Educacional e Desenvolvimento Acadêmico;GOAED;João Pessoa
+Gerência Operacional de Desenvolvimento, Acompanhamento e Apoio à Gestão Escolar;GOAAG;João Pessoa
+Gerência Operacional de Desenvolvimento Curricular e Formação;GODCF;João Pessoa
+Gerência Operacional de Desenvolvimento das Competências Socioeducacionais;GODCS;João Pessoa
+Gerência Operacional de Desenvolvimento do Currículo e Formação;GODEF;João Pessoa
+Gerência Operacional de Educação Científica, Projetos Culturais, Esportivos e Olimpíadas Estudantis;GOECE;João Pessoa
+Gerência Operacional de Educação para Pessoas Privadas de Liberdade;GOEPL;João Pessoa
+Gerência Operacional de Estatística, Informação, Indicadores Educacionais, Estudos e Pesquisas;GOEIP;João Pessoa
+GERENCIA OPERACIONAL DE ESTUDOS PROGRAMAS E PROJETOS;GOEPP;João Pessoa
+Gerência Operacional de Fortalecimento da Alfabetização e Ensino Fundamental;GOFAF;João Pessoa
+Gerência Operacional de Fortalecimento da Gestão Municipal e Planejamento de Rede;GOFMP;João Pessoa
+Gerência Operacional de Gestão de Programas e Projetos Educacionais;GOPPE;João Pessoa
+Gerência Operacional de Gestão e Acompanhamento para Resultados Educacionais e Desenv. Integral;GOGAR;João Pessoa
+GERENCIA OPERACIONAL DE INFORMACAO COOPERACAO E ARTICULACAO;GOICA;João Pessoa
+GERENCIA OPERACIONAL DE REGISTRO E VIDA ESCOLAR;GORVE;João Pessoa
+GERENCIA OPERACIONAL DESPORTIVA;GODE;João Pessoa
+Gerência Oper. de Desenv. Curric. da Educ. Infantil, Ensino Fundamental, Ensino Médio e Ens. Noturno;GODCE;João Pessoa
+Gerência Oper. de Gestão e Acomp. para Resultados Educacionais, Desenv. Integral e Ensino Técnico;GOGRE;João Pessoa
+Ger Exec Ed Especial, Diversidade, Inclusão, Dir Humanos, P Indígenas, Quilombolas Com Tradicionais;GEEDI;João Pessoa
+INTEGRA EDUCACAO PB -- EX-SOMA --;INTEGRA;João Pessoa
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;2-GRE-NUAFS;Guarabira
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;9-GRE-NUAFS;Cajazeiras
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;7-GRE-NUAFS;Itaporanga
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;14-GRE-NUAFS;Mamanguape
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;6-GRE-NUAFS;Patos
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;3-GRE-NUAFS;Campina Grande
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;1-GRE-NUAFS;João Pessoa
+Núcleo Administrativo-Financeiro, Suprimentos e Logística;12-GRE-NUAFS;Itabaiana
+NUCLEO ADMINISTRATIVO-FINANCEIRO, SUPRIMENTOS E LOGISTICA;8-GRE-NUAFS;Catolé do Rocha
+Núcleo da Prestação de Contas da Alimentação Escolar;NPCAE;João Pessoa
+Núcleo de Acompanhamento, Controle e Execução Financeira de Programas Educacionais;NUAPC;João Pessoa
+Núcleo de Acumulação de Cargos;NUACC;João Pessoa
+Núcleo de Aquisição de Alimentação Escolar;NUAAE;João Pessoa
+NUCLEO DE CONTROLE E REGISTRO DE PATRIMONIO;NUCORP;João Pessoa
+Núcleo de Cooperação com os Municípios;1-GRE-NUCOM;João Pessoa
+Núcleo de Cooperação com os Municípios;2-GRE-NUCOM;Guarabira
+Núcleo de Cooperação com os Municípios;9-GRE-NUCOM;Cajazeiras
+Núcleo de Cooperação com os Municípios;14-GRE-NUCOM;Mamanguape
+Núcleo de Cooperação com os Municípios;6-GRE-NUCOM;Patos
+Núcleo de Cooperação com os Municípios;4-GRE-NUCOM;Cuité
+Núcleo de Cooperação com os Municípios;8-GRE-NUCOM;Catolé do Rocha
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;2-GRE-NUDEA;Guarabira
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;5-GRE-NUDEA;Monteiro
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;1-GRE-NUDEA;João Pessoa
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;11-GRE-NUDEA;Princesa Isabel
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;6-GRE-NUDEA;Patos
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;8-GRE-NUDEA;Catolé do Rocha
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;9-GRE-NUDEA;Cajazeiras
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;3-GRE-NUDEA;Campina Grande
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;4-GRE-NUDEA;Cuité
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;14-GRE-NUDEA;Mamanguape
+Núcleo de Desenvolvimento da Escola e da Aprendizagem;16-GRE-NUDEA;João Pessoa
+Núcleo de Desenvolvimento e Protagonismo Estudantil;2-GRE-NUDPE;Guarabira
+Núcleo de Desenvolvimento e Protagonismo Estudantil;1-GRE-NUDPE;João Pessoa
+Núcleo de Desenvolvimento e Protagonismo Estudantil;14-GRE-NUDPE;Mamanguape
+Núcleo de Desenvolvimento e Protagonismo Estudantil;6-GRE-NUDPE;Patos
+NUCLEO DE GESTAO DE TRANSPORTE ESCOLAR;NUGTE;João Pessoa
+Núcleo de Infraestrutura e Suporte de Tecnologia da Informação;6-GRE-NUTCI;Patos
+Núcleo de Infraestrutura e Suporte de Tecnologia da Informação;1-GRE-NUTCI;João Pessoa
+Núcleo de Infraestrutura e Suporte de Tecnologia da Informação;2-GRE-NUTCI;Guarabira
+Núcleo de Infraestrutura e Suporte de Tecnologia da Informação;14-GRE-NUTCI;Mamanguape
+Núcleo de Infraestrutura e Suporte de Tecnologia da Informação;9-GRE-NUTCI;Cajazeiras
+NUCLEO DE MATERIAL DIDATICO;NUMAD;João Pessoa
+NUCLEO DE MOVIMENTACAO DE PESSOAL;NUMOP;João Pessoa
+Núcleo de Nutrição Escolar;NUNUE;João Pessoa
+NUCLEO DE PRESTACAO DE CONTAS;NPC;João Pessoa
+NUCLEO DE PRODUCAO GRAFICA;NUPROG;João Pessoa
+NUCLEO DE SERVICOS GERAIS;NUSEG;João Pessoa
+NUCLEO DE TECNOLOGIA EDUCACIONAL - JOAO PESSOA;NTE-JPA;João Pessoa
+Ouvidoria;OUVID;João Pessoa
+OUVIDORIA;OUVIDORIA;João Pessoa
+POSSE;POSSE;João Pessoa
+Programa Alfabetiza Mais Paraíba;PAMPB;João Pessoa
+PROGRAMA DE INCLUSÃO ATRAVÉS DA MÚSICA E DAS ARTES;PRIMA;João Pessoa
+PROGRAMA DE TECNOLOGIAS EDUCACIONAIS;PROINFO;João Pessoa
+PROJETO FUNDESCOLA;PROFESC;João Pessoa
+SECRETARIA ADMINISTRATIVA DA CIENCIA E TECNOLOGIA;SACT;João Pessoa
+SECRETARIA EXECUTIVA DA CIENCIA E TECNOLOGIA;SECT;João Pessoa
+SECRETARIA EXECUTIVA DA GESTAO PEDAGOGICA;SEGEP;João Pessoa
+SECRETARIA EXECUTIVA DE ADMINISTRACAO DE SUPRIMENTOS E LOGISTICA;SEASL;João Pessoa
+Secretaria Executiva de Cooperação com os Municípios;SECOM;João Pessoa
+Subgerência da Gestão da Alimentação Escolar;SGGAE;João Pessoa
+Subgerência de Acompanhamento das Prestação de Contas dos Convênios;SGPCC;João Pessoa
+SUBGERENCIA DE ACOMPANHAMENTO E CONTROLE DA EXECUCAO DOS PROGRAMAS EDUCACIONAIS;SGPROG;João Pessoa
+Subgerência de Acompanhamento e Controle de Contratos;SGCON;João Pessoa
+SUBGERÊNCIA DE ACOMPANHAMENTO E CONTROLE DE CONVÊNIOS;SGACV;João Pessoa
+Subgerência de Acompanhamento e Manutenção de Obras;SGMOB;João Pessoa
+Subgerência de Armazenamento, Conservação e Preservação de Documentos;SGCAD;João Pessoa
+SUBGERENCIA DE ATENDIMENTO;SGATEN;João Pessoa
+Subgerência de Cadastro de Patrimônio Imóvel para Recuperação ou Reforma;SGREF;João Pessoa
+Subgerência de Classificação da Saúde e Segurança do Trabalho;SGCST;João Pessoa
+Subgerência de Contabilidade;SGCONT;João Pessoa
+Subgerência de Contratações das Aquisições;SGCAQ;João Pessoa
+SUBGERENCIA DE CONTROLE DE CONTRATOS E CONVENIOS;SGCCC;João Pessoa
+SUBGERENCIA DE CONTROLE DE PESSOAL;SGCONP;João Pessoa
+Subgerência de Controle de Pessoas e do Acompanhamento da Vida Funcional;SGCPA;João Pessoa
+Subgerência de Controle e Registro de Patrimônio;SGREG;João Pessoa
+SUBGERENCIA DE DESENVOLVIMENTO;SGDES;João Pessoa
+Subgerência de Desenvolvimento e Capacitação de Profissionais;SGDCP;João Pessoa
+SUBGERENCIA DE DESENVOLVIMENTO E FORMACAO DOS PROFISSIONAIS DA SEECT/PB;SGFOR;João Pessoa
+Subgerência de Elaboração e Avaliação de Projetos Arquitetônicos;SGPRO;João Pessoa
+SUBGERENCIA DE ESTATISTICA;SGEST;João Pessoa
+SUBGERENCIA DE FINANCAS;SGFIN;João Pessoa
+Subgerência de Infraestrutura, Atendimento e Conectividade;SGIAC;João Pessoa
+Subgerência de Infraestrutura e Atendimento à Rede;SGIAR;João Pessoa
+Subgerência de Movimentação de Pessoas;SGMOP;João Pessoa
+Subgerência de Padronização;SGPAD;João Pessoa
+Subgerência de Planejamento de Aquisições;SGPLQ;João Pessoa
+Subgerência de Planejamento e Orçamento;SGPAN;João Pessoa
+SUBGERENCIA DE PLANEJAMENTO E ORCAMENTO;SGPLAN;João Pessoa
+Subgerência de Produção Gráfica;SGRAF;João Pessoa
+Subgerência de Protocolo e Registro de Documentos;SGPRE;João Pessoa
+Subgerência de Provisão de Recrutamento e Avaliação de Profissionais;SGPRA;João Pessoa
+Subgerência de Registro de Preços;SGRPR;João Pessoa
+Subgerência de Serviços Gerais;SGSER;João Pessoa
+SUBGERENCIA DE SUPORTE;SGSUP;João Pessoa
+Subgerência de Transportes;SGTRA;João Pessoa
+SUGERENCIA DE FINANCAS;SGFIN;João Pessoa
+SUPLETIVO;SUPLETIVO;João Pessoa
