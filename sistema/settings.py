@@ -159,7 +159,7 @@ STATICFILES_DIRS = [
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'listar_veiculo'
+LOGIN_REDIRECT_URL = 'tela_principal'
 LOGOUT_REDIRECT_URL = 'login'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True 
