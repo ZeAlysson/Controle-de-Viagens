@@ -326,12 +326,14 @@
             document.getElementById('id_hora_retorno'),
         ];
 
-        const veiculoSelect = document.getElementById('id_veiculo');
-        const motoristaSelect = document.getElementById('id_motorista');
-        veiculoSelect.innerHTML = '';
-        motoristaSelect.innerHTML = '';
-        veiculoSelect.disabled = true;
-        motoristaSelect.disabled = true;
+        const veiculoSelect = document.getElementById('id_veiculo'); // Ainda precisamos da referência se houver outra lógica
+        const motoristaSelect = document.getElementById('id_motorista'); // Ainda precisamos da referência
+
+        // REMOVER OU COMENTAR AS SEGUINTES LINHAS:
+        // veiculoSelect.innerHTML = '';
+        // motoristaSelect.innerHTML = '';
+        // veiculoSelect.disabled = true; 
+        // motoristaSelect.disabled = true;
 
         function fetchDisponibilidade() {
             const data_saida = document.getElementById('id_data_saida').value;
@@ -340,14 +342,15 @@
             const hora_retorno = document.getElementById('id_hora_retorno').value;
 
             if (!data_saida || !hora_saida || !data_retorno || !hora_retorno) {
-                return; // espera os campos estarem todos preenchidos
+                return; 
             }
 
             const params = new URLSearchParams({
                 data_saida,
                 hora_saida,
                 data_retorno,
-                hora_retorno
+                hora_retorno,
+                controle_id: {{ form.instance.id|default:"null" }} // Passa o ID do controle atual para excluir da verificação
             });
 
             fetch(`/controle/ajax/verificar-disponibilidade?${params}`)
@@ -355,35 +358,54 @@
                 .then(data => {
                     if (data.error) {
                         console.warn(data.error);
+                        // Aqui você poderia exibir o erro em algum lugar na UI se desejado
                         return;
                     }
 
+                    // NÃO ATUALIZAR OS SELECTS DE VEÍCULO E MOTORISTA
+                    // As seções abaixo que manipulam veiculoSelect e motoristaSelect devem ser removidas ou comentadas:
+                    /*
                     // Atualiza veículos
                     veiculoSelect.innerHTML = '';
                     data.veiculos.forEach(item => {
                         const option = document.createElement('option');
                         option.value = item.id;
                         option.textContent = item.nome;
+                        // Se o veículo atual da instância estiver na lista, selecione-o
+                        if (item.id == {{ form.instance.veiculo.id|default:"null" }}) {
+                            option.selected = true;
+                        }
                         veiculoSelect.appendChild(option);
                     });
-                    veiculoSelect.disabled = false;
+                    // veiculoSelect.disabled = false; // Não reabilitar
+                    */
 
+                    /*
                     // Atualiza motoristas
                     motoristaSelect.innerHTML = '';
                     data.motoristas.forEach(item => {
                         const option = document.createElement('option');
                         option.value = item.id;
                         option.textContent = item.nome;
+                        // Se o motorista atual da instância estiver na lista, selecione-o
+                        if (item.id == {{ form.instance.motorista.id|default:"null" }}) {
+                            option.selected = true;
+                        }
                         motoristaSelect.appendChild(option);
                     });
-                    motoristaSelect.disabled = false;
+                    // motoristaSelect.disabled = false; // Não reabilitar
+                    */
                 })
                 .catch(error => {
                     console.error('Erro ao buscar disponibilidade:', error);
                 });
         }
 
-        // Detecta mudança nos campos de data/hora
+        // Chama fetchDisponibilidade uma vez no carregamento para popular com base nas datas/horas iniciais,
+        // mas como os campos estarão desabilitados pelo Django, isso não terá efeito neles.
+        // Se as datas/horas puderem ser alteradas, a função ainda será útil para validação no backend.
+        // fetchDisponibilidade(); // Pode ser útil se você quiser mostrar algum feedback de disponibilidade mesmo sem alterar os selects
+
         inputs.forEach(input => {
             input.addEventListener('change', fetchDisponibilidade);
             input.addEventListener('blur', fetchDisponibilidade);
@@ -404,6 +426,14 @@
         codigo_viagem.addEventListener('input', function() {
             this.value = this.value.toUpperCase();
     });
+    }
+
+    const servidorInput = document.getElementById('{{ form.servidor.id_for_label }}');
+    if (servidorInput) {
+        servidorInput.setAttribute('maxlength', '30'); // Limita o input a 50 caracteres
+        servidorInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
     }
 
 </script>

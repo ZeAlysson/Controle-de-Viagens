@@ -407,11 +407,19 @@
         });
     }
 
-        const codigo_viagem = document.getElementById('{{form.codigo_viagem.id_for_label}}');
-        if (codigo_viagem) {
-            codigo_viagem.setAttribute('maxlength', '30'); // Limita o input a 50 caracteres
-            codigo_viagem.addEventListener('input', function() {
-                this.value = this.value.toUpperCase();
+    const codigo_viagem = document.getElementById('{{form.codigo_viagem.id_for_label}}');
+    if (codigo_viagem) {
+        codigo_viagem.setAttribute('maxlength', '30'); // Limita o input a 50 caracteres
+        codigo_viagem.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
+    }
+
+    const servidorInput = document.getElementById('{{ form.servidor.id_for_label }}');
+    if (servidorInput) {
+        servidorInput.setAttribute('maxlength', '30'); // Limita o input a 50 caracteres
+        servidorInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
         });
     }
 
