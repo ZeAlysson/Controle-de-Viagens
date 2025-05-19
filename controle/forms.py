@@ -27,6 +27,7 @@ class ControleForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+               
 
     def clean(self):
         cleaned_data = super().clean()
@@ -37,6 +38,8 @@ class ControleForm(forms.ModelForm):
         hora_retorno = cleaned_data.get('hora_retorno')
         km_saida = cleaned_data.get('km_saida')
         km_retorno = cleaned_data.get('km_retorno')
+        veiculo = cleaned_data.get('veiculo')
+        motorista = cleaned_data.get('motorista')
 
         # Obter veículo e motorista corretamente para validação
         # Se estiver editando, os campos foram marcados como required=False,
@@ -64,54 +67,46 @@ class ControleForm(forms.ModelForm):
         if km_saida is not None and km_retorno is not None and km_retorno <= km_saida:
             self.add_error('km_retorno', "Km de retorno deve ser maior que Km de saída.")
 
-        # Validação de disponibilidade para veículo (usando veiculo_obj)
-        if veiculo_obj and data_saida and hora_saida and data_retorno and hora_retorno:
-            conflitos_veiculo = Controle.objects.filter(
-                veiculo=veiculo_obj,
-                data_saida__lt=data_retorno,
-                data_retorno__gt=data_saida
-            ).exclude(pk=self.instance.pk if self.instance and self.instance.pk else None).filter(
-                Q(hora_saida__lt=hora_retorno, hora_retorno__gt=hora_saida) |
-                Q(data_saida__lt=data_retorno, data_retorno__gt=data_saida) # Lógica de sobreposição de tempo
+       # Consulta base para controles existentes
+        base_query = Controle.objects.all()
+        # Se estiver editando uma instância existente, exclua-a da verificação de conflito
+        if self.instance and self.instance.pk:
+            base_query = base_query.exclude(pk=self.instance.pk)
+
+        # Condição de sobreposição: (FimExistente > NovoInício) E (InícioExistente < NovoFim)
+        # FimExistente > NovoInício
+        q_existing_end_gt_new_start = (
+            Q(data_retorno__gt=data_saida) |
+            (Q(data_retorno=data_saida) & Q(hora_retorno__gt=hora_saida))
+        )
+        # InícioExistente < NovoFim
+        q_existing_start_lt_new_end = (
+            Q(data_saida__lt=data_retorno) |
+            (Q(data_saida=data_retorno) & Q(hora_saida__lt=hora_retorno))
+        )
+        
+        overlap_condition = q_existing_end_gt_new_start & q_existing_start_lt_new_end
+
+        # Verifica sobreposição de veículo
+        conflicting_veiculo_qs = base_query.filter(veiculo=veiculo).filter(overlap_condition)
+        if conflicting_veiculo_qs.exists():
+            conflict = conflicting_veiculo_qs.first()
+            error_msg = (
+                f"Veículo '{veiculo}' já está agendado em um período conflitante: "
+                f"de {conflict.data_saida.strftime('%d/%m/%Y')} {conflict.hora_saida.strftime('%H:%M')} "
+                f"até {conflict.data_retorno.strftime('%d/%m/%Y')} {conflict.hora_retorno.strftime('%H:%M')}."
             )
-            # Refinar a lógica de sobreposição de tempo se necessário, considerando dias diferentes.
-            # A query acima é uma simplificação. Uma lógica mais precisa para datetime overlap:
-            # (StartA <= EndB) and (EndA >= StartB)
-            # (datetime_saida <= datetime_retorno_outro) and (datetime_retorno >= datetime_saida_outro)
+            self.add_error('veiculo', error_msg)
 
-            # Simplificando a verificação de conflito para o exemplo:
-            # Esta é uma verificação básica, pode precisar de ajuste para cobrir todos os casos de sobreposição de datetime.
-            conflitos_veiculo_check = Controle.objects.filter(
-                veiculo=veiculo_obj,
-                data_retorno__gt=data_saida, # Retorno do outro é depois da minha saída
-                data_saida__lt=data_retorno   # Saída do outro é antes do meu retorno
+        # Verifica sobreposição de motorista
+        conflicting_motorista_qs = base_query.filter(motorista=motorista).filter(overlap_condition)
+        if conflicting_motorista_qs.exists():
+            conflict = conflicting_motorista_qs.first()
+            error_msg = (
+                f"'{motorista}' já está agendado em um período conflitante: "
+                f"de {conflict.data_saida.strftime('%d/%m/%Y')} {conflict.hora_saida.strftime('%H:%M')} "
+                f"até {conflict.data_retorno.strftime('%d/%m/%Y')} {conflict.hora_retorno.strftime('%H:%M')}."
             )
-            if self.instance and self.instance.pk:
-                conflitos_veiculo_check = conflitos_veiculo_check.exclude(pk=self.instance.pk)
-            
-            # Aqui você precisa de uma lógica mais robusta para verificar a sobreposição de horários
-            # entre (data_saida, hora_saida) e (data_retorno, hora_retorno) com os registros existentes.
-            # Por simplicidade, vamos assumir que a view AJAX lida com a lógica fina de disponibilidade
-            # e aqui focamos em outros erros. Se as datas foram alteradas e o veículo/motorista é fixo,
-            # um erro de conflito deve ser gerado se o novo período conflitar.
-
-            # Exemplo de erro se o período conflitar com o veículo fixo:
-            # if conflitos_veiculo_check.exists(): # Adapte esta condição
-            #     self.add_error(None, f"O veículo '{veiculo_obj}' (inalterável) não está disponível para o novo período selecionado devido a outra reserva.")
-
-
-        # Validação de disponibilidade para motorista (usando motorista_obj)
-        if motorista_obj and data_saida and hora_saida and data_retorno and hora_retorno:
-            # Similar à validação de veículo
-            conflitos_motorista_check = Controle.objects.filter(
-                motorista=motorista_obj,
-                data_retorno__gt=data_saida,
-                data_saida__lt=data_retorno
-            )
-            if self.instance and self.instance.pk:
-                conflitos_motorista_check = conflitos_motorista_check.exclude(pk=self.instance.pk)
-            
-            # if conflitos_motorista_check.exists(): # Adapte esta condição
-            #     self.add_error(None, f"O motorista '{motorista_obj}' (inalterável) não está disponível para o novo período selecionado devido a outra reserva.")
+            self.add_error('motorista', error_msg)
 
         return cleaned_data

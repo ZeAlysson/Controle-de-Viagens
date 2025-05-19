@@ -16,7 +16,7 @@
             <div class="col-auto">
                 <label for="data_inicio" class="form-label mb-0">Data Inicial</label>
                 <input type="date" id="data_inicio" name="data_inicio" class="form-control"
-                       value="{{ request.GET.data_inicio|default:today }}">
+                       value="{{ request.GET.data_inicio }}">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i> Filtrar</button>

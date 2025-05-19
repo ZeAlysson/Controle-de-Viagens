@@ -404,7 +404,7 @@
         // Chama fetchDisponibilidade uma vez no carregamento para popular com base nas datas/horas iniciais,
         // mas como os campos estarão desabilitados pelo Django, isso não terá efeito neles.
         // Se as datas/horas puderem ser alteradas, a função ainda será útil para validação no backend.
-        // fetchDisponibilidade(); // Pode ser útil se você quiser mostrar algum feedback de disponibilidade mesmo sem alterar os selects
+        fetchDisponibilidade(); // Pode ser útil se você quiser mostrar algum feedback de disponibilidade mesmo sem alterar os selects
 
         inputs.forEach(input => {
             input.addEventListener('change', fetchDisponibilidade);
