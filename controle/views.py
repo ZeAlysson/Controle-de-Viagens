@@ -95,56 +95,49 @@ def cadastrar_controle(request):
 
 @require_GET
 def verificar_disponibilidade(request):
+    
     data_saida = request.GET.get('data_saida')
-    hora_saida = request.GET.get('hora_saida')
     data_retorno = request.GET.get('data_retorno')
-    hora_retorno = request.GET.get('hora_retorno')
 
-    if not all([data_saida, hora_saida, data_retorno, hora_retorno]):
+    if not all([data_saida, data_retorno]):
         return JsonResponse({'error': 'Dados incompletos.'}, status=400)
 
     try:
-        inicio = datetime.strptime(f"{data_saida} {hora_saida}", "%Y-%m-%d %H:%M")
-        fim = datetime.strptime(f"{data_retorno} {hora_retorno}", "%Y-%m-%d %H:%M")
-        inicio_mes = inicio.replace(day=1)
-        fim_mes = inicio.replace(day=monthrange(inicio.year, inicio.month)[1])
+        inicio_nova_viagem = datetime.strptime(f"{data_saida}", "%Y-%m-%d")
+        fim_nova_viagem = datetime.strptime(f"{data_retorno}", "%Y-%m-%d")                                                                                               
     except ValueError:
         return JsonResponse({'error': 'Formato de data ou hora inválido.'}, status=400)
 
-    if inicio >= fim:
+    if inicio_nova_viagem > fim_nova_viagem:
         return JsonResponse({'error': 'Data de saída deve ser antes da de retorno.'}, status=400)
+    
+    quantidade_diaria_nova_viagem = 0
+    if inicio_nova_viagem == fim_nova_viagem:
+        quantidade_diaria_nova_viagem = 0.5
+    else:
+        quantidade_diaria_nova_viagem = (fim_nova_viagem.date() - inicio_nova_viagem.date()).days + 1
 
     # Filtra controles que conflitam com o novo período
     conflito = (
-        Q(data_retorno__gt=inicio.date()) |
-        (Q(data_retorno=inicio.date()) & Q(hora_retorno__gt=inicio.time()))
+        Q(data_retorno__gt=inicio_nova_viagem.date()) |
+        Q(data_retorno=inicio_nova_viagem.date())
     ) & (
-        Q(data_saida__lt=fim.date()) |
-        (Q(data_saida=fim.date()) & Q(hora_saida__lt=fim.time()))
+        Q(data_saida__lt=fim_nova_viagem.date()) |
+        (Q(data_saida=fim_nova_viagem.date()))
     )
-
-    
     controles_conflitantes = Controle.objects.filter(conflito)
 
     veiculos_ocupados = controles_conflitantes.values_list('veiculo_id', flat=True)
     motoristas_ocupados = controles_conflitantes.values_list('motorista_id', flat=True)
 
-    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados).order_by("modelo_veiculo");
-    motoristas_disponiveis = (
-        Motorista.objects
-        .exclude(id__in=motoristas_ocupados)
-        .annotate(
-            diarias_mes=Count(
-                'controles',
-                filter=Q(
-                    controles__data_saida__gte=inicio_mes,
-                    controles__data_saida__lte=fim_mes
-                )
-            )
-        )
-        .exclude(diarias_mes__gte=F('limite_diarias'))
-        .order_by("nome")
-    )
+    veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados).order_by("modelo_veiculo")
+    motoristas_sem_conflitos_datas = Motorista.objects.exclude(id__in=motoristas_ocupados).order_by("nome")
+    
+    motoristas_disponiveis = []
+    for motorista in motoristas_sem_conflitos_datas:
+        print(motorista.nome, motorista.diarias_restantes)
+        if motorista.diarias_restantes >= quantidade_diaria_nova_viagem:
+            motoristas_disponiveis.append(motorista)
 
     return JsonResponse({
     'veiculos': [{'id': v.id, 'nome': str(v)} for v in veiculos_disponiveis],

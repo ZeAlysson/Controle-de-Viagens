@@ -322,9 +322,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const inputs = [
             document.getElementById('id_data_saida'),
-            document.getElementById('id_hora_saida'),
             document.getElementById('id_data_retorno'),
-            document.getElementById('id_hora_retorno'),
         ];
 
         const veiculoSelect = document.getElementById('id_veiculo');
@@ -336,19 +334,15 @@
 
         function fetchDisponibilidade() {
             const data_saida = document.getElementById('id_data_saida').value;
-            const hora_saida = document.getElementById('id_hora_saida').value;
             const data_retorno = document.getElementById('id_data_retorno').value;
-            const hora_retorno = document.getElementById('id_hora_retorno').value;
 
-            if (!data_saida || !hora_saida || !data_retorno || !hora_retorno) {
+            if (!data_saida || !data_retorno) {
                 return; // espera os campos estarem todos preenchidos
             }
 
             const params = new URLSearchParams({
                 data_saida,
-                hora_saida,
-                data_retorno,
-                hora_retorno
+                data_retorno
             });
             
             const divErros = document.getElementById("errosAjax");
@@ -363,11 +357,9 @@
                 return response.json();
             })
             .then(data => {
-                // Limpa erros anteriores
                 const divErros = document.getElementById("errosAjax");
                 divErros.innerHTML = '';
-            
-                // Atualiza veículos
+        
                 veiculoSelect.innerHTML = '';
                 data.veiculos.forEach(item => {
                     const option = document.createElement('option');
@@ -377,7 +369,6 @@
                 });
                 veiculoSelect.disabled = false;
             
-                // Atualiza motoristas
                 motoristaSelect.innerHTML = '';
                 data.motoristas.forEach(item => {
                     const option = document.createElement('option');
