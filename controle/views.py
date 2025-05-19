@@ -94,6 +94,7 @@ def cadastrar_controle(request):
     return render(request, 'controle/cadastrar_controle.html', {'form': form})
 
 @require_GET
+@user_passes_test(lambda u: u.is_superuser)
 def verificar_disponibilidade(request):
     
     data_saida = request.GET.get('data_saida')
