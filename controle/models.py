@@ -7,7 +7,7 @@ class Setor(models.Model):
     cidade = models.CharField(max_length=30, null= False, blank=False)
 
     def __str__(self):
-        return f'{self.setor} ({self.sigla}) - {self.cidade}'
+        return f'{self.sigla} - {self.cidade}'
 
 class Controle(models.Model):
     veiculo = models.ForeignKey(Veiculo, on_delete=models.CASCADE)
