@@ -1,11 +1,18 @@
 from django.db import models
 from veiculos.models import Veiculo
 
+class Setor(models.Model):
+    setor = models.CharField(max_length=100, null=False, blank=False)
+    sigla = models.CharField(max_length=20, null=False, blank=False)
+    cidade = models.CharField(max_length=30, null= False, blank=False)
+
+    def __str__(self):
+        return f'{self.sigla} - {self.cidade}'
 
 class Controle(models.Model):
     veiculo = models.ForeignKey(Veiculo, on_delete=models.CASCADE)
     motorista = models.ForeignKey("motoristas.Motorista", on_delete=models.SET_NULL, null=True, related_name='controles')
-    setor = models.CharField(max_length=50, null=True, blank=True) # Consider adding blank=True if setor can be empty
+    setor = models.ForeignKey(Setor, on_delete=models.SET_NULL, null=True)
     servidor = models.CharField(max_length=100)
     codigo_viagem = models.CharField(max_length=20, null=True, blank=True) # Add blank=True
     data_saida = models.DateField()
@@ -21,7 +28,7 @@ class Controle(models.Model):
     def __str__(self):
         return f'Motorista: {self.motorista.nome} - Saída: {self.data_saida} {self.hora_saida} - Carro: {self.veiculo.veiculo} ({self.veiculo.marca}) - Retorno: {self.data_retorno} {self.hora_retorno}'
 
-    
+
 # class Estado (models.Model):
 #     nome = models.CharField(max_length=50)
 

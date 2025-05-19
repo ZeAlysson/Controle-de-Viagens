@@ -5,75 +5,6 @@ from django.db.models import Q
 from datetime import datetime
 
 class ControleForm(forms.ModelForm):
-    LISTA_SETORES = [
-        ('', '---------'),
-        ('01° GRE', '01° GRE'),
-        ('02° GRE', '02° GRE'),
-        ('06° GRE', '06° GRE'),
-        ('08° GRE', '08° GRE'),
-        ('13° GRE', '13° GRE'),
-        ('14ª GRE', '14ª GRE'),
-        ('3° GRE', '3° GRE'),
-        ('9º GRE', '9º GRE'),
-        ('AES', 'AES'),
-        ('ASCOM', 'ASCOM'),
-        ('ASLOG', 'ASLOG'),
-        ('ATN', 'ATN'),
-        ('CEAE', 'CEAE'),
-        ('CEEI', 'CEEI'),
-        ('CI', 'CI'),
-        ('CPAD', 'CPAD'),
-        ('CPI', 'CPI'),
-        ('DEDE', 'DEDE'),
-        ('GEADM', 'GEADM'),
-        ('GEAEI', 'GEAEI'),
-        ('GEAGE', 'GEAGE'),
-        ('GCNTC', 'GCNTC'),
-        ('GEDI', 'GEDI'),
-        ('GEDPE', 'GEDPE'),
-        ('GEDRA', 'GEDRA'),
-        ('GEECI', 'GEECI'),
-        ('GEECT', 'GEECT'),
-        ('GEEDI', 'GEEDI'),
-        ('GEEIEF', 'GEEIEF'),
-        ('GEEJA', 'GEEJA'),
-        ('GEEM', 'GEEM'),
-        ('GEEP', 'GEEP'),
-        ('GEFDP', 'GEFDP'),
-        ('GEGEP', 'GEGEP'),
-        ('GEGEPS', 'GEGEPS'),
-        ('GELIC', 'GELIC'),
-        ('GEOBS', 'GEOBS'),
-        ('GEPOF', 'GEPOF'),
-        ('GEPPE', 'GEPPE'),
-        ('GGEPS', 'GGEPS'),
-        ('GOADGP', 'GOADGP'),
-        ('GOADP', 'GOADP'),
-        ('GOPPE', 'GOPPE'),
-        ('GORVE', 'GORVE'),
-        ('GPROFESC', 'GPROFESC'),
-        ('GTECI', 'GTECI'),
-        ('NUGET', 'NUGET'),
-        ('NUSEG', 'NUSEG'),
-        ('OUVIDORIA', 'OUVIDORIA'),
-        ('PAMPB', 'PAMPB'),
-        ('PDDE', 'PDDE'),
-        ('PROFESC', 'PROFESC'),
-        ('SEASL', 'SEASL'),
-        ('SEGEP', 'SEGEP'),
-        ('SGCAD', 'SGCAD'),
-        ('SGCST', 'SGCST'),
-        ('SGGAE', 'SGGAE'),
-        ('SGIAC', 'SGIAC'),
-        ('SMH', 'SMH'),
-    ]
-
-    setor = forms.ChoiceField(
-        choices=LISTA_SETORES,
-        label='Setor',
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
-
     class Meta:
         model = Controle
         widgets = {
@@ -96,26 +27,6 @@ class ControleForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['setor'].choices = self.LISTA_SETORES
-        
-        for field_name, field in self.fields.items():
-            if not field.widget.attrs.get('class'):
-                field.widget.attrs['class'] = 'form-control'
-            
-            if field_name in ['data_saida', 'data_retorno'] and self.instance and getattr(self.instance, field_name):
-                field.initial = getattr(self.instance, field_name).strftime('%Y-%m-%d')
-
-            if field_name == 'km_percorrido':
-                field.widget.attrs['readonly'] = True
-        
-        if self.instance and self.instance.pk:
-            # Se estiver editando, desabilite os campos e torne-os não obrigatórios no formulário.
-            # O ModelForm usará os valores da instância para esses campos ao salvar.
-            self.fields['veiculo'].widget.attrs['disabled'] = True
-            self.fields['veiculo'].required = False
-            
-            self.fields['motorista'].widget.attrs['disabled'] = True
-            self.fields['motorista'].required = False
 
     def clean(self):
         cleaned_data = super().clean()
