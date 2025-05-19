@@ -26,7 +26,9 @@ class Motorista(models.Model):
             if viagem.data_saida == viagem.data_retorno:
                 diarias += 0.5
                 continue
-            diarias += 1
+            inicio_viagem = datetime.strptime(f"{viagem.data_saida}", "%Y-%m-%d")
+            fim_viagem = datetime.strptime(f"{viagem.data_retorno}", "%Y-%m-%d")
+            diarias += (fim_viagem.date() - inicio_viagem.date()).days + 1 
 
         return self.limite_diarias - diarias
 
