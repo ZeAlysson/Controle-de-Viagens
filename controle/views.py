@@ -94,6 +94,7 @@ def cadastrar_controle(request):
     return render(request, 'controle/cadastrar_controle.html', {'form': form})
 
 @require_GET
+@user_passes_test(lambda u: u.is_superuser)
 def verificar_disponibilidade(request):
     
     data_saida = request.GET.get('data_saida')
@@ -135,7 +136,6 @@ def verificar_disponibilidade(request):
     
     motoristas_disponiveis = []
     for motorista in motoristas_sem_conflitos_datas:
-        print(motorista.nome, motorista.diarias_restantes)
         if motorista.diarias_restantes >= quantidade_diaria_nova_viagem:
             motoristas_disponiveis.append(motorista)
 
