@@ -75,7 +75,7 @@ class VeiculoForm(forms.ModelForm):
                 self.add_error('modelo_personalizado', 'Informe o modelo do veículo.')
             else:
                 cleaned_data['modelo_veiculo'] = modelo_personalizado  # Salva o modelo personalizado no campo do modelo
-
+            
         return cleaned_data
 
     def __init__(self, *args, **kwargs):

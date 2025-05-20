@@ -30,9 +30,9 @@
                             <td>{{ viagem.data_saida}}</td>
                             <td>{{ viagem.hora_saida }}</td>
                             <td>{{ viagem.destino }}</td>
-                            <td>{{ viagem.veiculo.placa }}</td> {# Assumindo relação com Veiculo #}
+                            <td>{{ viagem.veiculo.placa }} - {{viagem.veiculo.modelo_veiculo}}</td> {# Assumindo relação com Veiculo #}
                             <td>{{ viagem.motorista.nome }}</td> {# Assumindo relação com Motorista #}
-                            <td>{{ viagem.servidor.nome }}</td>
+                            <td>{{ viagem.servidor}}</td>
                         </tr>
                         {% empty %}
                         <tr>
