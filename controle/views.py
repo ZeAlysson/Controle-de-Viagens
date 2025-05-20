@@ -99,47 +99,64 @@ def verificar_disponibilidade(request):
     
     data_saida = request.GET.get('data_saida')
     data_retorno = request.GET.get('data_retorno')
+    id_controle = request.GET.get('id_controle')
 
     if not all([data_saida, data_retorno]):
         return JsonResponse({'error': 'Dados incompletos.'}, status=400)
 
     try:
-        inicio_nova_viagem = datetime.strptime(f"{data_saida}", "%Y-%m-%d")
-        fim_nova_viagem = datetime.strptime(f"{data_retorno}", "%Y-%m-%d")                                                                                               
+        data_saida = datetime.strptime(f"{data_saida}", "%Y-%m-%d")
+        data_retorno = datetime.strptime(f"{data_retorno}", "%Y-%m-%d")                                                                                               
     except ValueError:
         return JsonResponse({'error': 'Formato de data ou hora inválido.'}, status=400)
 
-    if inicio_nova_viagem > fim_nova_viagem:
+    if data_saida > data_retorno:
         return JsonResponse({'error': 'Data de saída deve ser antes da de retorno.'}, status=400)
     
-    quantidade_diaria_nova_viagem = 0
-    if inicio_nova_viagem == fim_nova_viagem:
-        quantidade_diaria_nova_viagem = 0.5
-    else:
-        quantidade_diaria_nova_viagem = (fim_nova_viagem.date() - inicio_nova_viagem.date()).days + 1
+    quantidade_diaria_nova_viagem = calcular_diarias_datas(data_saida=data_saida, data_retorno=data_retorno)
 
-    # Filtra controles que conflitam com o novo período
-    conflito = (
-        Q(data_retorno__gt=inicio_nova_viagem.date()) |
-        Q(data_retorno=inicio_nova_viagem.date())
-    ) & (
-        Q(data_saida__lt=fim_nova_viagem.date()) |
-        (Q(data_saida=fim_nova_viagem.date()))
-    )
-    controles_conflitantes = Controle.objects.filter(conflito)
+    controles_conflitantes = filtrar_controles_conflitantes(data_saida, data_retorno)
 
     veiculos_ocupados = controles_conflitantes.values_list('veiculo_id', flat=True)
     motoristas_ocupados = controles_conflitantes.values_list('motorista_id', flat=True)
 
     veiculos_disponiveis = Veiculo.objects.exclude(id__in=veiculos_ocupados).order_by("modelo_veiculo")
     motoristas_sem_conflitos_datas = Motorista.objects.exclude(id__in=motoristas_ocupados).order_by("nome")
-    
-    motoristas_disponiveis = []
-    for motorista in motoristas_sem_conflitos_datas:
-        if motorista.diarias_restantes >= quantidade_diaria_nova_viagem:
-            motoristas_disponiveis.append(motorista)
+
+    motoristas_disponiveis = None
+    if(id_controle is None):
+        motoristas_disponiveis = filtrar_motoristas_com_diarias_disponiveis(motoristas_sem_conflitos_datas, quantidade_diaria_nova_viagem)
+    else:
+        controle = Controle.objects.get(id=id_controle)
+        motorista = controle.motorista
+        motoristas_disponiveis = filtrar_motoristas_com_diarias_disponiveis(motoristas_sem_conflitos_datas, quantidade_diaria_nova_viagem, motorista)
 
     return JsonResponse({
     'veiculos': [{'id': v.id, 'nome': str(v)} for v in veiculos_disponiveis],
     'motoristas': [{'id': m.id, 'nome': str(m)} for m in motoristas_disponiveis],
-})
+    })
+
+def calcular_diarias_datas(data_saida, data_retorno):
+    if data_saida == data_retorno:
+        return 0.5
+    else:
+        return (data_retorno.date() - data_saida.date()).days + 1
+
+def filtrar_controles_conflitantes(data_saida, data_retorno):
+    conflito = (
+        Q(data_retorno__gt=data_saida.date()) |
+        Q(data_retorno=data_saida.date())
+    ) & (
+        Q(data_saida__lt=data_retorno.date()) |
+        (Q(data_saida=data_retorno.date()))
+    )
+    return Controle.objects.filter(conflito)
+
+def filtrar_motoristas_com_diarias_disponiveis(motoristas, quantidade_diaria_nova_viagem, motorista_da_viagem=None):
+    motoristas_disponiveis = []
+    if motorista_da_viagem != None:
+        motoristas_disponiveis.append(motorista_da_viagem)
+    for motorista in motoristas:
+        if motorista.diarias_restantes >= quantidade_diaria_nova_viagem:
+            motoristas_disponiveis.append(motorista)
+    return motoristas_disponiveis
