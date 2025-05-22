@@ -113,7 +113,7 @@ def verificar_disponibilidade(request):
     if data_saida > data_retorno:
         return JsonResponse({'error': 'Data de saída deve ser antes da de retorno.'}, status=400)
     
-    quantidade_diaria_nova_viagem = calcular_diarias_datas(data_saida=data_saida, data_retorno=data_retorno)
+    quantidade_diaria_nova_viagem = Controle.calcular_diarias_entre_datas(data_saida, data_retorno)
 
     controles_conflitantes = filtrar_controles_conflitantes(data_saida, data_retorno)
 
@@ -128,19 +128,12 @@ def verificar_disponibilidade(request):
         motoristas_disponiveis = filtrar_motoristas_com_diarias_disponiveis(motoristas_sem_conflitos_datas, quantidade_diaria_nova_viagem)
     else:
         controle = Controle.objects.get(id=id_controle)
-        motorista = controle.motorista
-        motoristas_disponiveis = filtrar_motoristas_com_diarias_disponiveis(motoristas_sem_conflitos_datas, quantidade_diaria_nova_viagem, motorista)
+        motoristas_disponiveis = filtrar_motoristas_com_diarias_disponiveis(motoristas_sem_conflitos_datas, quantidade_diaria_nova_viagem, data_saida , controle)
 
     return JsonResponse({
     'veiculos': [{'id': v.id, 'nome': str(v)} for v in veiculos_disponiveis],
     'motoristas': [{'id': m.id, 'nome': str(m)} for m in motoristas_disponiveis],
     })
-
-def calcular_diarias_datas(data_saida, data_retorno):
-    if data_saida == data_retorno:
-        return 0.5
-    else:
-        return (data_retorno.date() - data_saida.date()).days + 1
 
 def filtrar_controles_conflitantes(data_saida, data_retorno):
     conflito = (
@@ -152,11 +145,20 @@ def filtrar_controles_conflitantes(data_saida, data_retorno):
     )
     return Controle.objects.filter(conflito)
 
-def filtrar_motoristas_com_diarias_disponiveis(motoristas, quantidade_diaria_nova_viagem, motorista_da_viagem=None):
+def filtrar_motoristas_com_diarias_disponiveis(motoristas, quantidade_diaria_nova_viagem, data_nova_viagem:date, controle:Controle=None):
     motoristas_disponiveis = []
-    if motorista_da_viagem != None:
-        motoristas_disponiveis.append(motorista_da_viagem)
+    if controle != None:
+        motorista_da_viagem = controle.motorista
+        diferença_entre_diarias = quantidade_diaria_nova_viagem - controle.quantidade_diarias
+        if diferença_entre_diarias > 0:
+            if diferença_entre_diarias <= motorista_da_viagem.diarias_restantes_pelo_mes(data_nova_viagem):
+                motoristas_disponiveis.append(motorista_da_viagem)
+        else:
+            motoristas_disponiveis.append(motorista_da_viagem)
+            
+        if (controle.quantidade_diarias - quantidade_diaria_nova_viagem) < motorista_da_viagem.diarias_restantes_pelo_mes(controle.data_saida):
+            motoristas_disponiveis.append(motorista_da_viagem)
     for motorista in motoristas:
-        if motorista.diarias_restantes >= quantidade_diaria_nova_viagem:
+        if motorista.diarias_restantes_mes_atual >= quantidade_diaria_nova_viagem:
             motoristas_disponiveis.append(motorista)
     return motoristas_disponiveis

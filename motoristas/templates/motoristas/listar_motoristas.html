@@ -26,7 +26,7 @@
                             <th scope="col">CPF</th>
                             <th scope="col">Categoria CNH</th>
                             <th scope="col">Limite Diárias</th>
-                            <th scope="col">Diárias Restantes</th>
+                            <th scope="col">Diárias Restantes do mes</th>
                             <th scope="col">Ações</th>
                         </tr>
                     </thead>
@@ -39,7 +39,7 @@
                             <td>{{ motorista.cpf }}</td>
                             <td>{{ motorista.categoria_cnh }}</td>
                             <td>{{ motorista.limite_diarias}}</td>  
-                            <td>{{motorista.diarias_restantes}}</td>
+                            <td>{{motorista.diarias_restantes_mes_atual}}</td>
                             <td>
                                 <a href="{% url 'editar_motorista' motorista.id %}" class="btn btn-sm btn-warning mr-1" title="Editar">
                                     <i class="fas fa-edit"></i>

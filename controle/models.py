@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from veiculos.models import Veiculo
 
@@ -24,6 +25,17 @@ class Controle(models.Model):
     km_retorno = models.IntegerField(null=True, blank=True) # Add blank=True
     km_percorrido = models.IntegerField(null=True, blank=True) # Add blank=True
 
+
+    @property
+    def quantidade_diarias(self) -> float:
+        self.quantidade_de_diarias_entre_datas(self.data_saida, self.data_retorno)
+
+    @staticmethod
+    def calcular_diarias_entre_datas(data_saida:date, data_retorno:date) -> float:
+        if data_saida == data_retorno:
+            return 0.5
+        else:
+            return (data_retorno.date() - data_saida.date()).days + 1
 
     def __str__(self):
         return f'Motorista: {self.motorista.nome} - Saída: {self.data_saida} {self.hora_saida} - Carro: {self.veiculo.veiculo} ({self.veiculo.marca}) - Retorno: {self.data_retorno} {self.hora_retorno}'
