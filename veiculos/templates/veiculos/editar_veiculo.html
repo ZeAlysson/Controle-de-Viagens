@@ -126,8 +126,8 @@
                     this.value = this.value.toUpperCase();
                 });
             }
-
-        document.addEventListener('DOMContentLoaded', function () {
+    });
+    document.addEventListener('DOMContentLoaded', function () {
         const selectModelo = document.getElementById('{{ form.modelo_veiculo.id_for_label }}');
         const divPersonalizado = document.getElementById('div_modelo_personalizado');
         if (selectModelo && divPersonalizado) {
@@ -149,11 +149,9 @@
     // Adiciona máscara para o campo modelo personalizado de veículo
     const modeloPersonalizadoInput = document.getElementById('{{ form.modelo_personalizado.id_for_label }}');
     if (modeloPersonalizadoInput) {
-    modeloPersonalizadoInput.addEventListener('input', function() {
-        this.value = this.value.toUpperCase();
-    });
+        modeloPersonalizadoInput.addEventListener('input', function() {
+            this.value = this.value.toUpperCase();
+        });
     }
-
-    });
 </script>
 {% endblock %}
