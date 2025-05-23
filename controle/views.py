@@ -155,9 +155,6 @@ def filtrar_motoristas_com_diarias_disponiveis(motoristas, quantidade_diaria_nov
                 motoristas_disponiveis.append(motorista_da_viagem)
         else:
             motoristas_disponiveis.append(motorista_da_viagem)
-            
-        if (controle.quantidade_diarias - quantidade_diaria_nova_viagem) < motorista_da_viagem.diarias_restantes_pelo_mes(controle.data_saida):
-            motoristas_disponiveis.append(motorista_da_viagem)
     for motorista in motoristas:
         if motorista.diarias_restantes_mes_atual >= quantidade_diaria_nova_viagem:
             motoristas_disponiveis.append(motorista)

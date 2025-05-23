@@ -18,7 +18,7 @@ class Motorista(models.Model):
         return self.__calcular_diarias_pelo_mes(hoje)
 
     def diarias_restantes_pelo_mes(self, data:date):
-        return self.__calcular_diarias_pelo_mes(date)
+        return self.__calcular_diarias_pelo_mes(data)
 
     def __calcular_diarias_pelo_mes(self, data:date):
         viagens_do_mes = Controle.objects.filter(
@@ -28,13 +28,7 @@ class Motorista(models.Model):
         )
         diarias = 0
         for viagem in viagens_do_mes:
-            if viagem.data_saida == viagem.data_retorno:
-                diarias += 0.5
-                continue
-            inicio_viagem = datetime.strptime(f"{viagem.data_saida}", "%Y-%m-%d")
-            fim_viagem = datetime.strptime(f"{viagem.data_retorno}", "%Y-%m-%d")
-            diarias += (fim_viagem.date() - inicio_viagem.date()).days + 1 
-
+            diarias += viagem.quantidade_diarias
         return self.limite_diarias - diarias
         
     def __str__(self):
